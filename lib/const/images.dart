@@ -14,4 +14,3 @@ const String filterCameraMan = 'assets/image/card_camera.jpg';
 const String filterServe = 'assets/image/card_serve.jpg';
 const String filterBand = 'assets/image/card_band.jpg';
 const String filterCard = 'assets/image/card_invitation.jpg';
-

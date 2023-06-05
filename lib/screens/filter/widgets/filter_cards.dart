@@ -1,3 +1,4 @@
+import 'package:event_management/screens/professions/professions.dart';
 import 'package:flutter/material.dart';
 
 import '../../../const/color.dart';
@@ -18,39 +19,49 @@ class FilterCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: isGrid
-          ? AlignmentDirectional.bottomStart
-          : AlignmentDirectional.center,
-      children: [
-        Container(
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) =>
+                const Scaffold(body: SafeArea(child: ScreenProfession(fromAnotherScreen: true,)))));
+      },
+      child: Stack(
+        alignment: isGrid
+            ? AlignmentDirectional.bottomStart
+            : AlignmentDirectional.center,
+        children: [
+          Container(
+              height: 110,
+              width: width,
+              decoration: BoxDecoration(
+                  boxShadow: const [BoxShadow(blurRadius: 4)],
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                      fit: BoxFit.cover, image: AssetImage(image)))),
+          Container(
             height: 110,
             width: width,
             decoration: BoxDecoration(
-                boxShadow: const [BoxShadow(blurRadius: 4)],
-                borderRadius: BorderRadius.circular(10),
-                image: DecorationImage(
-                    fit: BoxFit.cover, image: AssetImage(image)))),
-        Container(
-          height: 110,
-          width: width,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10), color: color),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            width: width-18,
-            child: Text(
-              title,
-              overflow: TextOverflow.ellipsis,
-              textAlign:isGrid? TextAlign.start: TextAlign.center,
-              style: const TextStyle(height: 1,
-                  color: white, fontSize: 20, fontWeight: FontWeight.bold),
+                borderRadius: BorderRadius.circular(10), color: color),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              width: width - 18,
+              child: Text(
+                title,
+                overflow: TextOverflow.ellipsis,
+                textAlign: isGrid ? TextAlign.start : TextAlign.center,
+                style: const TextStyle(
+                    height: 1,
+                    color: white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

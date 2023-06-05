@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 //Common
-const Color orange = Colors.orange;
+final Color orange = Colors.indigo[400]!;
 const Color grey = Colors.grey;
 const Color white = Colors.white;
 const Color black = Colors.black;
+final Color indigo = Colors.indigo[400]!;
 
 //Filter Screen
 final Color cardColorEventManagement = Colors.blue.withOpacity(0.4);

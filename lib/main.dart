@@ -1,8 +1,13 @@
-import 'package:event_management/screens/bottum_nav.dart';
+import 'package:event_management/screens/user/user_chose.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-void main() {
+import 'screens/authentication/number.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -20,7 +25,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         primarySwatch: Colors.orange,
       ),
-      home:  ScreenMain(),
+      // home: ScreenLogin(),
+      home: const ScreenUserChose(),
     );
   }
 }

@@ -49,8 +49,7 @@ class PostCard extends StatelessWidget {
                           children: const [
                             Text('Profession'),
                             SizedBox(width: 5),
-                            CircleAvatar(
-                                radius: 3, backgroundColor: grey),
+                            CircleAvatar(radius: 3, backgroundColor: grey),
                             Text('Place')
                           ],
                         )
