@@ -30,13 +30,16 @@ environment:
 dependencies:
   cloud_firestore: 4.8.0
   cupertino_icons: 1.0.2
-  firebase_auth: ^4.6.2
+  firebase_auth: 4.6.2
   firebase_core: 2.13.1
   flutter:
     sdk: flutter
   google_fonts: 4.0.3
   google_nav_bar: 5.0.6
+  grouped_list: 5.1.2
+  intl: ^0.18.1
   lottie: ^2.3.2
+  all_gallery_images: ^0.1.0+1
   pinput: 2.2.31
 
 dev_dependencies:
@@ -56,21 +59,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/image/5dcc5d9bce6550c6fc59b3c4cffae51c.jpg
-    - assets/image/beautiful-woman-long-red-dress-walks-around-city-with-her-husband.jpg
-    - assets/image/chuttersnap-aEnH4hJ_Mrs-unsplash.jpg
-    - assets/image/card_band.jpg
-    - assets/image/card_camera.jpg
-    - assets/image/card_dress.jpg
-    - assets/image/card_food.jpg
-    - assets/image/card_invitation.jpg
-    - assets/image/card_makeup.jpg
-    - assets/image/card_ring.jpg
-    - assets/image/card_serve.jpg
-    - assets/image/card_venue.jpg
-    - assets/image/userbackcard.jpg
-    - assets/lottie/otp_verification_lot.json
-    - assets/lottie/loading_plane_lot.json
+    - assets/image/
+    - assets/lottie/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

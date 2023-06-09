@@ -1,3 +1,4 @@
+import 'package:event_management/screens/bookings/widgets/works_card.dart';
 import 'package:flutter/material.dart';
 
 import '../../../const/color.dart';
@@ -63,59 +64,60 @@ class _ScreenOwerState extends State<ScreenOwer>
             ],
           ),
         ),
-        Expanded(
-          child: TabBarView(controller: tabController, children: const [
-            SizedBox(
-              child: Center(
-                child: Text('1'),
-              ),
-            ),
-            SizedBox(
-              child: Center(
-                child: Text('2'),
-              ),
-            ),
-            SizedBox(
-              child: Center(
-                child: Text('3'),
-              ),
-            ),
-            SizedBox(
-              child: Center(
-                child: Text('4'),
-              ),
-            ),
-            SizedBox(
-              child: Center(
-                child: Text('5'),
-              ),
-            ),
-            SizedBox(
-              child: Center(
-                child: Text('6'),
-              ),
-            ),
-            SizedBox(
-              child: Center(
-                child: Text('7'),
-              ),
-            ),
-            SizedBox(
-              child: Center(
-                child: Text('8'),
-              ),
-            ),
-            SizedBox(
-              child: Center(
-                child: Text('9'),
-              ),
-            ),
-            SizedBox(
-              child: Center(
-                child: Text('10'),
-              ),
-            ),
-          ]),
+        const Expanded(
+          child: WidgetCardWorks(),
+          // child: TabBarView(controller: tabController, children: const [
+          //   SizedBox(
+          //     child: Center(
+          //       child: Text('1'),
+          //     ),
+          //   ),
+          //   SizedBox(
+          //     child: Center(
+          //       child: Text('2'),
+          //     ),
+          //   ),
+          //   SizedBox(
+          //     child: Center(
+          //       child: Text('3'),
+          //     ),
+          //   ),
+          //   SizedBox(
+          //     child: Center(
+          //       child: Text('4'),
+          //     ),
+          //   ),
+          //   SizedBox(
+          //     child: Center(
+          //       child: Text('5'),
+          //     ),
+          //   ),
+          //   SizedBox(
+          //     child: Center(
+          //       child: Text('6'),
+          //     ),
+          //   ),
+          //   SizedBox(
+          //     child: Center(
+          //       child: Text('7'),
+          //     ),
+          //   ),
+          //   SizedBox(
+          //     child: Center(
+          //       child: Text('8'),
+          //     ),
+          //   ),
+          //   SizedBox(
+          //     child: Center(
+          //       child: Text('9'),
+          //     ),
+          //   ),
+          //   SizedBox(
+          //     child: Center(
+          //       child: Text('10'),
+          //     ),
+          //   ),
+          // ]),
         )
       ],
     );

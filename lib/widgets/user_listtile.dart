@@ -1,3 +1,4 @@
+import 'package:event_management/screens/profile/professions/profession.dart';
 import 'package:flutter/material.dart';
 
 import '../const/color.dart';
@@ -12,6 +13,14 @@ class UsersTile extends StatelessWidget {
     return ListView.separated(
       itemBuilder: (context, index) {
         return ListTile(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      const ScreenProfessionsProfile(isCleintView: true),
+                ));
+          },
           leading: const CircleAvatar(
             child: Icon(
               Icons.person,

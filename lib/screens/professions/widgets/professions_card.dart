@@ -1,3 +1,4 @@
+import 'package:event_management/screens/chat/person_chat/chatting_screen.dart';
 import 'package:event_management/screens/profile/professions/profession.dart';
 import 'package:event_management/screens/profile/user_profile.dart';
 import 'package:flutter/material.dart';
@@ -138,7 +139,13 @@ class ProfessionsCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ScreenChat()));
+                            },
                             child: const Text('Chat'),
                           ),
                           const VerticalDivider(),

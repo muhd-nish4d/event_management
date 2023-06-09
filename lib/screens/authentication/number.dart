@@ -92,6 +92,7 @@ class ScreenLogin extends StatelessWidget {
                         verificationFailed: (FirebaseAuthException e) {},
                         codeSent: (String verificationId, int? resendToken) {
                           ScreenLogin.verify = verificationId;
+                          log("verifcation id${verificationId}");
                         },
                         codeAutoRetrievalTimeout: (String verificationId) {},
                       );

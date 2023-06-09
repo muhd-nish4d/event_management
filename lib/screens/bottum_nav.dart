@@ -13,9 +13,10 @@ class ScreenMain extends StatelessWidget {
   ScreenMain({super.key});
   List<Widget> screens = const [
     ScreenHome(),
-    ScreenFilter(),
     ScreenProfession(fromAnotherScreen: false),
-    ScreenUserProfile(isProfessional: true)
+    ScreenFilter(),
+    ScreenUserProfile(isProfessional: true
+    )
   ];
   @override
   Widget build(BuildContext context) {

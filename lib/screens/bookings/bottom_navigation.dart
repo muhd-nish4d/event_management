@@ -1,24 +1,22 @@
 import 'package:event_management/screens/bookings/screens/over.dart';
 import 'package:event_management/screens/bookings/screens/pending.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../../const/color.dart';
-import '../bottum_nav.dart';
 
 ValueNotifier<int> currentSelectedScreen = ValueNotifier(0);
 
 class ScreenBookings extends StatelessWidget {
   ScreenBookings({super.key});
 
-  List pages = [ScreenPending(), ScreenOwer()];
+  List pages = const [ScreenPending(), ScreenOwer()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ValueListenableBuilder(
+      appBar: AppBar(title: Text("Bookings")),
+        body: ValueListenableBuilder(
             valueListenable: currentSelectedScreen,
             builder: (context, value, child) {
               return SafeArea(child: pages[value]);
@@ -52,7 +50,6 @@ class ScreenBookings extends StatelessWidget {
               },
             ),
           ),
-        )
-    );
+        ));
   }
 }

@@ -1,4 +1,6 @@
+import 'package:event_management/screens/chat/persons/chat_screen.dart';
 import 'package:event_management/screens/home/widgets/pro_post_card.dart';
+import 'package:event_management/screens/notification/notification_screen.dart';
 import 'package:flutter/material.dart';
 
 class ScreenHome extends StatelessWidget {
@@ -14,8 +16,21 @@ class ScreenHome extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               IconButton(
-                  onPressed: () {}, icon: const Icon(Icons.notifications)),
-              IconButton(onPressed: () {}, icon: const Icon(Icons.chat_bubble))
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ScreenNotifiaction()));
+                  },
+                  icon: const Icon(Icons.notifications)),
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ScreenChatPersons()));
+                  },
+                  icon: const Icon(Icons.chat_bubble))
             ],
           ),
           Expanded(

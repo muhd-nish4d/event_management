@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../const/color.dart';
+import '../widgets/works_card.dart';
 
 class ScreenPending extends StatefulWidget {
   const ScreenPending({super.key});
@@ -63,59 +64,58 @@ class _ScreenPendingState extends State<ScreenPending>
             ],
           ),
         ),
-        Expanded(
-          child: TabBarView(controller: tabController, children: const [
-            SizedBox(
-              child: Center(
-                child: Text('1'),
-              ),
-            ),
-            SizedBox(
-              child: Center(
-                child: Text('2'),
-              ),
-            ),
-            SizedBox(
-              child: Center(
-                child: Text('3'),
-              ),
-            ),
-            SizedBox(
-              child: Center(
-                child: Text('4'),
-              ),
-            ),
-            SizedBox(
-              child: Center(
-                child: Text('5'),
-              ),
-            ),
-            SizedBox(
-              child: Center(
-                child: Text('6'),
-              ),
-            ),
-            SizedBox(
-              child: Center(
-                child: Text('7'),
-              ),
-            ),
-            SizedBox(
-              child: Center(
-                child: Text('8'),
-              ),
-            ),
-            SizedBox(
-              child: Center(
-                child: Text('9'),
-              ),
-            ),
-            SizedBox(
-              child: Center(
-                child: Text('10'),
-              ),
-            ),
-          ]),
+        const Expanded(
+          child: WidgetCardWorks(),
+          // child: TabBarView(controller: tabController, children: const [
+          //   SizedBox(
+          //     child: WidgetCardWorks(),
+          //   ),
+          //   SizedBox(
+          //     child: Center(
+          //       child: Text('2'),
+          //     ),
+          //   ),
+          //   SizedBox(
+          //     child: Center(
+          //       child: Text('3'),
+          //     ),
+          //   ),
+          //   SizedBox(
+          //     child: Center(
+          //       child: Text('4'),
+          //     ),
+          //   ),
+          //   SizedBox(
+          //     child: Center(
+          //       child: Text('5'),
+          //     ),
+          //   ),
+          //   SizedBox(
+          //     child: Center(
+          //       child: Text('6'),
+          //     ),
+          //   ),
+          //   SizedBox(
+          //     child: Center(
+          //       child: Text('7'),
+          //     ),
+          //   ),
+          //   SizedBox(
+          //     child: Center(
+          //       child: Text('8'),
+          //     ),
+          //   ),
+          //   SizedBox(
+          //     child: Center(
+          //       child: Text('9'),
+          //     ),
+          //   ),
+          //   SizedBox(
+          //     child: Center(
+          //       child: Text('10'),
+          //     ),
+          //   ),
+          // ]),
         )
       ],
     );

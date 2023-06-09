@@ -1,7 +1,10 @@
 import 'package:event_management/screens/bookings/bottom_navigation.dart';
+import 'package:event_management/screens/chat/person_chat/chatting_screen.dart';
 import 'package:event_management/screens/profile/professions/tab_views/posts/posts_profession.dart';
 import 'package:event_management/screens/profile/professions/tab_views/work/booked_works.dart';
 import 'package:event_management/screens/profile/professions/widgets/professions_profile_card.dart';
+import 'package:event_management/screens/settings/settigs_menu.dart';
+import 'package:event_management/screens/upload/file_seleciton.dart';
 import 'package:flutter/material.dart';
 
 import '../../../const/color.dart';
@@ -46,7 +49,7 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
                             child: ElevatedButton(
                               onPressed: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => ScreenBookings()));
+                                    builder: (context) => const ScreenChat()));
                               },
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: orange,
@@ -60,10 +63,7 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
                           ),
                           itemsGapWidth,
                           ElevatedButton(
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => ScreenBookings()));
-                            },
+                            onPressed: () {},
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: orange,
                                 shape: RoundedRectangleBorder(
@@ -79,9 +79,20 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
                     : Row(
                         children: [
                           IconButton(
-                              onPressed: () {}, icon: const Icon(Icons.upload)),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ScreenFileShowing()));
+                              },
+                              icon: const Icon(Icons.upload)),
                           IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ScreenSettingsMenu()));
+                              },
                               icon: const Icon(Icons.menu_outlined))
                         ],
                       ),

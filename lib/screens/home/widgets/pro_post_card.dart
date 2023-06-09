@@ -1,4 +1,5 @@
 import 'package:event_management/const/color.dart';
+import 'package:event_management/screens/profile/professions/profession.dart';
 import 'package:flutter/material.dart';
 
 class PostCard extends StatelessWidget {
@@ -37,23 +38,28 @@ class PostCard extends StatelessWidget {
                     const SizedBox(
                       width: 10,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'Name',
-                          style: TextStyle(color: black),
-                        ),
-                        Row(
-                          children: const [
-                            Text('Profession'),
-                            SizedBox(width: 5),
-                            CircleAvatar(radius: 3, backgroundColor: grey),
-                            Text('Place')
-                          ],
-                        )
-                      ],
+                    GestureDetector(
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const ScreenProfessionsProfile(
+                              isCleintView: true))),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Name',
+                            style: TextStyle(color: black),
+                          ),
+                          Row(
+                            children: const [
+                              Text('Profession'),
+                              SizedBox(width: 5),
+                              CircleAvatar(radius: 3, backgroundColor: grey),
+                              Text('Place')
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                     const Spacer(),
                     IconButton(
@@ -80,10 +86,10 @@ class PostCard extends StatelessWidget {
                   children: [
                     IconButton(
                         onPressed: () {},
-                        icon: const Icon(Icons.favorite_border)),
+                        icon: const Icon(Icons.thumb_up_alt_outlined)),
                     IconButton(
                         onPressed: () {},
-                        icon: const Icon(Icons.comment_rounded))
+                        icon: const Icon(Icons.thumb_down_alt_outlined))
                   ],
                 ),
               ),
