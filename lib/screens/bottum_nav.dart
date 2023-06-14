@@ -15,8 +15,7 @@ class ScreenMain extends StatelessWidget {
     ScreenHome(),
     ScreenProfession(fromAnotherScreen: false),
     ScreenFilter(),
-    ScreenUserProfile(isProfessional: true
-    )
+    ScreenUserProfile(isProfessional: true)
   ];
   @override
   Widget build(BuildContext context) {

@@ -1,9 +1,15 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_management/const/color.dart';
 import 'package:event_management/screens/user/fillup/fillup_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../model/user_model.dart';
+
 class ScreenUserChose extends StatelessWidget {
-  const ScreenUserChose({super.key});
+  const ScreenUserChose({super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +20,20 @@ class ScreenUserChose extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             UserChoseButtonStyle(
-                isBuisness: false,
+                navigate: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          ScreenUserFillUp(type: UserType.cleint)));
+                },
                 screenSize: screenSize,
                 icon: Icons.person,
                 userType: 'As a Client'),
             UserChoseButtonStyle(
-                isBuisness: true,
+                navigate: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          ScreenUserFillUp(type: UserType.profession)));
+                },
                 screenSize: screenSize,
                 icon: Icons.work,
                 userType: 'As a Business Man'),
@@ -36,13 +50,13 @@ class UserChoseButtonStyle extends StatelessWidget {
     required this.screenSize,
     required this.userType,
     required this.icon,
-    required this.isBuisness,
+    this.navigate,
   });
 
   final Size screenSize;
   final String userType;
   final IconData icon;
-  final bool isBuisness;
+  final void Function()? navigate;
 
   @override
   Widget build(BuildContext context) {
@@ -54,11 +68,7 @@ class UserChoseButtonStyle extends StatelessWidget {
               backgroundColor: orange,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10))),
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) =>
-                    ScreenUserFillUp(isFullShow: isBuisness)));
-          },
+          onPressed: navigate,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

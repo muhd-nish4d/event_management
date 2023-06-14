@@ -24,7 +24,7 @@ class ProfessionsCard extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) =>
-                        const ScreenProfessionsProfile(isCleintView: true)));
+                        const ScreenProfessionsProfile(isCleintView: true,userDetails: null)));
               },
               child: Stack(
                 // alignment: Alignment.center,

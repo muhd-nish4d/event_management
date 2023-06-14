@@ -1,24 +1,40 @@
+import 'dart:io';
+
+import 'package:event_management/screens/user/fillup/fillup_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../const/color.dart';
 
 class CircleAvatarEdit extends StatelessWidget {
-  const CircleAvatarEdit({
-    super.key,
-  });
+  final ValueNotifier<File?> notifier;
+  const CircleAvatarEdit({super.key, required this.notifier});
+
+  
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {  
     return Stack(
       alignment: Alignment.bottomRight,
       children: [
-        const CircleAvatar(
-          backgroundColor: grey,
-          radius: 60,
-          child: Icon(Icons.person, size: 70, color: white),
-        ),
+        ValueListenableBuilder(
+            valueListenable: notifier,
+            builder: (context, value, child) {
+              return value == null
+                  ? const CircleAvatar(
+                      backgroundColor: grey,
+                      radius: 60,
+                      child: Icon(Icons.person, size: 70, color: white),
+                    )
+                  : CircleAvatar(
+                      backgroundImage: FileImage(File(value.path)),
+                      radius: 60,
+                    );
+            }),
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            pickImageProfile();
+          },
           icon: const Icon(
             Icons.edit,
             color: white,
@@ -27,5 +43,13 @@ class CircleAvatarEdit extends StatelessWidget {
         )
       ],
     );
+  }
+
+  Future<void> pickImageProfile() async {
+    final pickedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      notifier.value = File(pickedImage.path);
+    }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:event_management/model/user_model.dart';
 import 'package:event_management/screens/bookings/bottom_navigation.dart';
 import 'package:event_management/screens/chat/person_chat/chatting_screen.dart';
 import 'package:event_management/screens/profile/professions/tab_views/posts/posts_profession.dart';
@@ -6,14 +7,18 @@ import 'package:event_management/screens/profile/professions/widgets/professions
 import 'package:event_management/screens/settings/settigs_menu.dart';
 import 'package:event_management/screens/upload/file_seleciton.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../Bloc/fillup/fillup_bloc.dart';
 import '../../../const/color.dart';
 import '../../../const/sizes.dart';
 import '../../../widgets/user_listtile.dart';
 
 class ScreenProfessionsProfile extends StatefulWidget {
   final bool isCleintView;
-  const ScreenProfessionsProfile({super.key, required this.isCleintView});
+  final UserModel? userDetails;
+  const ScreenProfessionsProfile(
+      {super.key, required this.isCleintView, required this.userDetails});
 
   @override
   State<ScreenProfessionsProfile> createState() =>
@@ -28,6 +33,7 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
   void initState() {
     tabController =
         TabController(length: widget.isCleintView ? 3 : 4, vsync: this);
+    BlocProvider.of<FillupBloc>(context).add(FillUpInitialEvent());
     super.initState();
   }
 

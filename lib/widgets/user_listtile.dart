@@ -18,7 +18,7 @@ class UsersTile extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      const ScreenProfessionsProfile(isCleintView: true),
+                      const ScreenProfessionsProfile(isCleintView: true,userDetails: null),
                 ));
           },
           leading: const CircleAvatar(

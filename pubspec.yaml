@@ -28,19 +28,25 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  all_gallery_images: ^0.1.0+1
   cloud_firestore: 4.8.0
   cupertino_icons: 1.0.2
+  equatable: 2.0.5
   firebase_auth: 4.6.2
   firebase_core: 2.13.1
+  firebase_storage: ^11.2.2
   flutter:
     sdk: flutter
+  flutter_bloc: 8.1.3
   google_fonts: 4.0.3
   google_nav_bar: 5.0.6
   grouped_list: 5.1.2
-  intl: ^0.18.1
-  lottie: ^2.3.2
-  all_gallery_images: ^0.1.0+1
+  image_picker: ^0.8.8
+  intl: 0.18.1
+  lottie: 2.3.2
   pinput: 2.2.31
+  restart_app: ^1.1.2
+  shared_preferences: 2.1.2
 
 dev_dependencies:
   flutter_lints: ^2.0.0

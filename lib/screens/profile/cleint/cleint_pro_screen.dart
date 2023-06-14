@@ -1,5 +1,8 @@
+import 'package:event_management/screens/settings/settigs_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../Bloc/fillup/fillup_bloc.dart';
 import '../../../const/color.dart';
 import '../../../widgets/user_listtile.dart';
 
@@ -28,7 +31,9 @@ class ScreenCleintProfile extends StatelessWidget {
                 ),
               ),
               IconButton(
-                  onPressed: () {}, icon: const Icon(Icons.menu_outlined))
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ScreenSettingsMenu()));
+                  }, icon: const Icon(Icons.menu_outlined))
             ],
           ),
           const SizedBox(height: 20),
@@ -45,30 +50,42 @@ class ScreenCleintProfile extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'User name',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: const [
-                      Icon(Icons.work_outline_rounded),
-                      Text('Cleint'),
-                    ],
-                  ),
-                  Row(
-                    children: const [
-                      Icon(Icons.place_outlined),
-                      Text('Place'),
-                    ],
-                  ),
-                ],
+              BlocBuilder<FillupBloc, FillupState>(
+                builder: (context, state) {
+                  if (state is FillupLodingState) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (state is FilledUserState) {
+                    var user = state.userdatas;
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                         Text(
+                          user.ownerName ?? 'User Name',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: const [
+                            Icon(Icons.work_outline_rounded),
+                            Text('Cleint'),
+                          ],
+                        ),
+                        Row(
+                          children:  [
+                            Icon(Icons.phone),
+                            Text(user.phoneNumber ?? 'Phone No'),
+                          ],
+                        ),
+                      ],
+                    );
+                  }else{
+                    return Container();
+                  }
+                },
               )
             ],
           ),

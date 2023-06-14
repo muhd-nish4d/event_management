@@ -1,16 +1,16 @@
 import 'dart:developer';
 
+import 'package:event_management/Bloc/log/login_bloc.dart';
 import 'package:event_management/const/color.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
 import 'otp.dart';
 
 class ScreenLogin extends StatelessWidget {
   ScreenLogin({super.key});
-
-  static String verify = '';
 
   TextEditingController countryController = TextEditingController(text: '+91');
   // TextEditingController phoneController = TextEditingController();
@@ -83,30 +83,42 @@ class ScreenLogin extends StatelessWidget {
                 padding: const EdgeInsets.all(20.0),
                 child: SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      await FirebaseAuth.instance.verifyPhoneNumber(
-                        phoneNumber: "${countryController.text + phoneNumber}",
-                        verificationCompleted:
-                            (PhoneAuthCredential credential) {},
-                        verificationFailed: (FirebaseAuthException e) {},
-                        codeSent: (String verificationId, int? resendToken) {
-                          ScreenLogin.verify = verificationId;
-                          log("verifcation id${verificationId}");
-                        },
-                        codeAutoRetrievalTimeout: (String verificationId) {},
-                      );
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => ScreenOTP()));
+                  child: BlocConsumer<LoginBloc, LoginState>(
+                    listener: (context, state) {
+                      if (state is CodeSentState) {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ScreenOTP(
+                                phoneNumber:
+                                    "${countryController.text + phoneNumber}")));
+                      }
                     },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.indigo[400],
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10))),
-                    child: const Text(
-                      'Send OTP',
-                      style: TextStyle(color: white),
-                    ),
+                    builder: (context, state) {
+                      if (state is LogLoadingState) {
+                        return SizedBox(
+                          width: phoneSize.width * .2,
+                          child: LottieBuilder.asset(
+                              'assets/lottie/loading_plane_lot.json'),
+                        );
+                      }
+                      return ElevatedButton(
+                        onPressed: () async {
+                          BlocProvider.of<LoginBloc>(context).add(
+                              PhoneNumberSubmittedEvent(
+                                  "${countryController.text + phoneNumber}"));
+
+                          // BlocProvider.of<LoginBloc>(context).sentOtp(
+                          //     "${countryController.text + phoneNumber}");
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.indigo[400],
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10))),
+                        child: const Text(
+                          'Send OTP',
+                          style: TextStyle(color: white),
+                        ),
+                      );
+                    },
                   ),
                 ),
               )

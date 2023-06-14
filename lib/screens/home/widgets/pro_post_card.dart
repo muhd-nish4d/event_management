@@ -41,7 +41,7 @@ class PostCard extends StatelessWidget {
                     GestureDetector(
                       onTap: () => Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const ScreenProfessionsProfile(
-                              isCleintView: true))),
+                              userDetails: null, isCleintView: true))),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,

@@ -2,24 +2,23 @@ import 'dart:developer';
 
 import 'package:event_management/const/color.dart';
 import 'package:event_management/screens/authentication/number.dart';
+import 'package:event_management/screens/bottum_nav.dart';
 import 'package:event_management/screens/user/user_chose.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pinput/pinput.dart';
 
+import '../../Bloc/log/login_bloc.dart';
+
 class ScreenOTP extends StatelessWidget {
-  ScreenOTP({super.key});
-
-  TextEditingController countryController = TextEditingController(text: '');
-  TextEditingController phoneController = TextEditingController();
-
-  ValueNotifier<bool> isVisible = ValueNotifier(false);
+  final String phoneNumber;
+  ScreenOTP({super.key, required this.phoneNumber});
+  var code = '';
 
   @override
   Widget build(BuildContext context) {
-    var code = '';
-    final FirebaseAuth auth = FirebaseAuth.instance;
     final defaultPinTheme = PinTheme(
       width: 56,
       height: 56,
@@ -44,6 +43,7 @@ class ScreenOTP extends StatelessWidget {
       ),
     );
     Size phoneSize = MediaQuery.of(context).size;
+
     return Scaffold(
         body: SafeArea(
       child: Center(
@@ -56,7 +56,7 @@ class ScreenOTP extends StatelessWidget {
                   width: phoneSize.width * .5,
                   child:
                       Lottie.asset('assets/lottie/otp_verification_lot.json')),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               const Text(
                 "Phone Verification",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -72,58 +72,54 @@ class ScreenOTP extends StatelessWidget {
                 focusedPinTheme: focusedPinTheme,
                 submittedPinTheme: submittedPinTheme,
                 length: 6,
-                onChanged: (value) {
-                  code = value;
-                },
-                // validator: (s) {
-                //   return s == ScreenLogin.verify ? null : 'Pin is incorrect';
-                // },
-                // pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+                onChanged: (value) => code = value,
                 showCursor: true,
-                onCompleted: (pin) => print(pin),
-              ),
-              SizedBox(
-                width: phoneSize.width * .3,
-                child: ValueListenableBuilder(
-                  valueListenable: isVisible,
-                  builder: (context, value, child) {
-                    return Visibility(
-                        visible: value,
-                        child: LottieBuilder.asset(
-                            'assets/lottie/loading_plane_lot.json'));
-                  },
-                ),
+                onCompleted: (pin) => log(pin),
               ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      try {
-                        isVisible.value = true;
-                        PhoneAuthCredential credential =
-                            PhoneAuthProvider.credential(
-                                verificationId: ScreenLogin.verify,
-                                smsCode: code);
-
-                        // Sign the user in (or link) with the credential
-                        await auth.signInWithCredential(credential);
-                        Navigator.of(context).push(MaterialPageRoute(
+                  child: BlocConsumer<LoginBloc, LoginState>(
+                    listener: (context, state) {
+                      if (state is UserFilledState) {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => ScreenMain()));
+                      } else if (state is LoggedInState) {
+                        Navigator.of(context)
+                            .popUntil((route) => route.isFirst);
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => const ScreenUserChose(),
                         ));
-                      } catch (e) {
-                        log('Wrong OTP');
+                      } else if (state is ErrorState) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(SnackBar(content: Text(state.error)));
                       }
                     },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.indigo[400],
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10))),
-                    child: const Text(
-                      'Verify Phone Number',
-                      style: TextStyle(color: white),
-                    ),
+                    builder: (context, state) {
+                      if (state is LogLoadingState) {
+                        SizedBox(
+                          width: phoneSize.width * .3,
+                          child: LottieBuilder.asset(
+                              'assets/lottie/loading_plane_lot.json'),
+                        );
+                      }
+                      return ElevatedButton(
+                        onPressed: () async {
+                          BlocProvider.of<LoginBloc>(context)
+                              .add(OtpVerificationEvent(code));
+                          // BlocProvider.of<LoginBloc>(context).verifyOtp(code);
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.indigo[400],
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10))),
+                        child: const Text(
+                          'Verify Phone Number',
+                          style: TextStyle(color: white),
+                        ),
+                      );
+                    },
                   ),
                 ),
               )
