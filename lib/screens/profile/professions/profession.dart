@@ -126,8 +126,10 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
               floating: true,
               pinned: false,
             ),
-            const SliverToBoxAdapter(
-              child: ProfessionsProfileCard(),
+            SliverToBoxAdapter(
+              child: ProfessionsProfileCard(
+                  isCleintView: widget.isCleintView,
+                  profession: widget.userDetails!),
             ),
             SliverToBoxAdapter(
               child: DefaultTabController(

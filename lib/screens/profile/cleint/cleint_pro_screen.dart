@@ -32,35 +32,42 @@ class ScreenCleintProfile extends StatelessWidget {
               ),
               IconButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ScreenSettingsMenu()));
-                  }, icon: const Icon(Icons.menu_outlined))
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ScreenSettingsMenu()));
+                  },
+                  icon: const Icon(Icons.menu_outlined))
             ],
           ),
           const SizedBox(height: 20),
-          Row(
-            children: [
-              const CircleAvatar(
-                radius: 60,
-                child: Icon(
-                  Icons.person,
-                  color: white,
-                  size: 70,
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              BlocBuilder<FillupBloc, FillupState>(
-                builder: (context, state) {
-                  if (state is FillupLodingState) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (state is FilledUserState) {
-                    var user = state.userdatas;
-                    return Column(
+          BlocBuilder<FillupBloc, FillupState>(
+            builder: (context, state) {
+              if (state is FillupLodingState) {
+                return Center(child: CircularProgressIndicator());
+              } else if (state is FilledUserState) {
+                var user = state.userdatas;
+                return Row(
+                  children: [
+                    user.profileImage == null
+                        ? const CircleAvatar(
+                            radius: 60,
+                            child: Icon(
+                              Icons.person,
+                              color: white,
+                              size: 70,
+                            ),
+                          )
+                        : CircleAvatar(
+                            radius: 60,
+                            backgroundImage: NetworkImage(user.profileImage!),
+                          ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                         Text(
+                        Text(
                           user.ownerName ?? 'User Name',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20),
@@ -75,19 +82,19 @@ class ScreenCleintProfile extends StatelessWidget {
                           ],
                         ),
                         Row(
-                          children:  [
+                          children: [
                             Icon(Icons.phone),
                             Text(user.phoneNumber ?? 'Phone No'),
                           ],
                         ),
                       ],
-                    );
-                  }else{
-                    return Container();
-                  }
-                },
-              )
-            ],
+                    ),
+                  ],
+                );
+              } else {
+                return Container();
+              }
+            },
           ),
           const SizedBox(
             height: 10,

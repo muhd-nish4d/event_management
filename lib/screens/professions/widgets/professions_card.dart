@@ -4,162 +4,176 @@ import 'package:event_management/screens/profile/user_profile.dart';
 import 'package:flutter/material.dart';
 
 import '../../../const/color.dart';
+import '../../../model/user_model.dart';
 
 class ProfessionsCard extends StatelessWidget {
-  const ProfessionsCard({
-    super.key,
-  });
+  final UserModel professions;
+  const ProfessionsCard({super.key, required this.professions});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: const [BoxShadow(blurRadius: 4)]),
-      child: Column(
-        children: [
-          Expanded(
-            flex: 5,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>
-                        const ScreenProfessionsProfile(isCleintView: true,userDetails: null)));
-              },
-              child: Stack(
-                // alignment: Alignment.center,
-                children: [
-                  Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        decoration: const BoxDecoration(
-                            color: white,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10))),
-                        height: double.infinity,
-                        width: double.infinity,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(
-                                height: 100,
-                              ),
-                              const Text('Owner Name'),
-                              const Text(
-                                'Company Name',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 18),
-                              ),
-                              const Text('Profession'),
-                              Row(
-                                children: const [
-                                  Icon(
-                                    Icons.star,
-                                    color: Colors.yellow,
-                                    size: 15,
-                                  ),
-                                  Icon(
-                                    Icons.star,
-                                    color: Colors.yellow,
-                                    size: 15,
-                                  ),
-                                  Icon(
-                                    Icons.star,
-                                    color: Colors.yellow,
-                                    size: 15,
-                                  ),
-                                  Icon(
-                                    Icons.star,
-                                    color: Colors.yellow,
-                                    size: 15,
-                                  ),
-                                  Icon(
-                                    Icons.star,
-                                    color: grey,
-                                    size: 15,
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      )),
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Container(
-                      width: double.infinity,
-                      height: 80,
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              topRight: Radius.circular(10)),
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image:
-                                  AssetImage('assets/image/userbackcard.jpg'))),
-                    ),
-                  ),
-                  const Positioned(
-                      // alignment: Alignment.centerLeft,
-                      top: 50,
-                      left: 20,
-                      child: CircleAvatar(
-                        radius: 30,
-                        backgroundColor: grey,
-                        child: Icon(
-                          Icons.person,
-                          color: white,
-                          size: 40,
-                        ),
-                      ))
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-              flex: 1,
-              child: Container(
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10),
-                  ),
-                  color: white,
-                ),
-                child: Column(
+    return Card(
+      elevation: 5,
+      child: SizedBox(
+        // decoration: BoxDecoration(
+        //     borderRadius: BorderRadius.circular(10),
+        //     boxShadow: const [BoxShadow(blurRadius: 4)]),
+        child: Column(
+          children: [
+            Expanded(
+              flex: 6,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ScreenProfessionsProfile(
+                          isCleintView: true, userDetails: professions)));
+                },
+                child: Stack(
+                  // alignment: Alignment.center,
                   children: [
-                    const Divider(
-                      height: 0,
-                    ),
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ScreenChat()));
-                            },
-                            child: const Text('Chat'),
+                    Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                              color: white,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10))),
+                          height: double.infinity,
+                          width: double.infinity,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(
+                                  height: 100,
+                                ),
+                                Text(professions.ownerName ?? 'Owner Name'),
+                                Text(
+                                  professions.companyName ?? 'Company Name',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
+                                ),
+                                Text(professions.profession ?? 'Profession'),
+                                Row(
+                                  children: const [
+                                    Icon(
+                                      Icons.star,
+                                      color: Colors.yellow,
+                                      size: 15,
+                                    ),
+                                    Icon(
+                                      Icons.star,
+                                      color: Colors.yellow,
+                                      size: 15,
+                                    ),
+                                    Icon(
+                                      Icons.star,
+                                      color: Colors.yellow,
+                                      size: 15,
+                                    ),
+                                    Icon(
+                                      Icons.star,
+                                      color: Colors.yellow,
+                                      size: 15,
+                                    ),
+                                    Icon(
+                                      Icons.star,
+                                      color: grey,
+                                      size: 15,
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
-                          const VerticalDivider(),
-                          TextButton(
-                            onPressed: () {},
-                            child: const Text('Follow'),
-                          )
-                        ],
+                        )),
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: Container(
+                        width: double.infinity,
+                        height: 80,
+                        decoration: BoxDecoration(
+                            color: orange,
+                            borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10)),
+                            image: professions.coverImage!.isEmpty
+                                ? null
+                                : DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image:
+                                        NetworkImage(professions.coverImage!))),
                       ),
-                    )
+                    ),
+                    Positioned(
+                        // alignment: Alignment.centerLeft,
+                        top: 50,
+                        left: 20,
+                        child: professions.profileImage!.isEmpty
+                            ? const CircleAvatar(
+                                radius: 30,
+                                backgroundColor: grey,
+                                child: Icon(
+                                  Icons.person,
+                                  color: white,
+                                  size: 40,
+                                ),
+                              )
+                            : CircleAvatar(
+                                radius: 30,
+                                backgroundColor: grey,
+                                backgroundImage:
+                                    NetworkImage(professions.profileImage!),
+                              ))
                   ],
                 ),
-              )),
-        ],
+              ),
+            ),
+            Expanded(
+                flex: 1,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
+                    ),
+                    color: white,
+                  ),
+                  child: Column(
+                    children: [
+                      const Divider(
+                        height: 0,
+                      ),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ScreenChat()));
+                              },
+                              child: const Text('Chat'),
+                            ),
+                            const VerticalDivider(),
+                            TextButton(
+                              onPressed: () {},
+                              child: const Text('Follow'),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                )),
+          ],
+        ),
       ),
     );
   }

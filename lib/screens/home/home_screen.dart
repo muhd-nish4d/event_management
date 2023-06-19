@@ -34,10 +34,14 @@ class ScreenHome extends StatelessWidget {
             ],
           ),
           Expanded(
-            child: ListView.builder(
+            child: ListView.separated(
               itemBuilder: (context, index) {
                 return const PostCard();
               },
+              separatorBuilder: (context, index) {
+                return Divider();
+              },
+              itemCount: 10,
             ),
           )
         ],

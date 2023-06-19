@@ -8,16 +8,16 @@ class PostCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: Container(
+      padding: const EdgeInsets.all(0.0),
+      child: SizedBox(
           height: 340,
           width: double.infinity,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: const [
-                BoxShadow(
-                    blurRadius: 10, spreadRadius: 3, blurStyle: BlurStyle.outer)
-              ]),
+          // decoration: BoxDecoration(
+          //     borderRadius: BorderRadius.circular(10),
+          //     boxShadow: const [
+          //       BoxShadow(
+          //           blurRadius: 10, spreadRadius: 3, blurStyle: BlurStyle.outer)
+          //     ]),
           child: Column(
             children: [
               SizedBox(

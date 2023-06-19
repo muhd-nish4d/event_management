@@ -1,26 +1,23 @@
-import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_management/const/color.dart';
 import 'package:event_management/const/sizes.dart';
 import 'package:event_management/model/user_model.dart';
 import 'package:event_management/screens/bottum_nav.dart';
 import 'package:event_management/screens/user/fillup/widgets/circle_avatar_edit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Bloc/fillup/fillup_bloc.dart';
+import '../../../const/images.dart';
 import '../../../const/professions.dart';
+import '../../../widgets/image_background.dart';
 
 class ScreenUserFillUp extends StatefulWidget {
   final UserType type;
-  ScreenUserFillUp({
+  const ScreenUserFillUp({
     super.key,
     required this.type,
   });
@@ -31,8 +28,6 @@ class ScreenUserFillUp extends StatefulWidget {
 
 class _ScreenUserFillUpState extends State<ScreenUserFillUp> {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
-  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   ValueNotifier<String?> professionsDropDownNotifier = ValueNotifier(null);
 
@@ -58,185 +53,216 @@ class _ScreenUserFillUpState extends State<ScreenUserFillUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: BlocConsumer<FillupBloc, FillupState>(
-          listener: (context, state) {
-            if (state is FilledUserState) {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => ScreenMain()));
-            }
-          },
-          builder: (context, state) {
-            if (state is FillupLodingState) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            return ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: orange,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10))),
-              onPressed: () {
-                storeUserData();
-              },
-              child: const Text(
-                'Done',
-                style: TextStyle(color: white, fontWeight: FontWeight.bold),
-              ),
-            );
-          },
-        ),
-      ),
-      body: SafeArea(
-          child: SingleChildScrollView(
-        child: Column(
-          children: [
-            widget.type == UserType.profession
-                ? Stack(
-                    alignment: Alignment.centerLeft,
-                    children: [
-                      Column(
-                        children: [
-                          ValueListenableBuilder(
-                              valueListenable: userCoverImageNotifier,
-                              builder: (context, value, child) {
-                                return Container(
-                                    decoration: value == null
-                                        ? BoxDecoration(
-                                            color: orange,
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                  blurRadius: 4,
-                                                  offset: Offset(0, 4))
-                                            ],
-                                            borderRadius:
-                                                const BorderRadius.only(
-                                                    bottomLeft:
-                                                        Radius.circular(20),
-                                                    bottomRight:
-                                                        Radius.circular(20)))
-                                        : BoxDecoration(
-                                            image: DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: FileImage(File(
-                                                    userCoverImageNotifier
-                                                        .value!.path))),
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                  blurRadius: 4,
-                                                  offset: Offset(0, 4))
-                                            ],
-                                            borderRadius:
-                                                const BorderRadius.only(
-                                                    bottomLeft:
-                                                        Radius.circular(20),
-                                                    bottomRight:
-                                                        Radius.circular(20))),
-                                    height: 150,
-                                    width: double.infinity);
-                              }),
-                          const SizedBox(
-                            height: 150,
-                            width: double.infinity,
-                          ),
-                        ],
-                      ),
-                      Positioned(
-                        right: 3,
-                        bottom: 150,
-                        child: ElevatedButton(
-                            onPressed: () {
-                              pickImageCover();
-                            },
-                            child: const Text('Take Cover Image')),
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(width: 30),
-                          CircleAvatarEdit(notifier: userProfileImageNotifier),
-                        ],
-                      )
-                    ],
-                  )
-                : Padding(
-                    padding: EdgeInsets.symmetric(vertical: 50),
-                    child: CircleAvatarEdit(notifier: userProfileImageNotifier),
-                  ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                children: [
-                  TextField(
-                    controller: widget.type == UserType.profession
-                        ? companyController
-                        : ownerController,
-                    decoration: InputDecoration(
-                        hintText: widget.type == UserType.profession
-                            ? 'Company name'
-                            : 'Uesr name',
-                        border: const OutlineInputBorder()),
-                  ),
-                  itemsGapHeight,
-                  Visibility(
-                    visible: widget.type == UserType.profession,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: WidgetBackGround(
+        image: backgroundImage,
+        child: SafeArea(
+            child: SingleChildScrollView(
+          child: Column(
+            children: [
+              widget.type == UserType.profession
+                  ? Stack(
+                      alignment: Alignment.centerLeft,
                       children: [
-                        SizedBox(
-                          width: double.infinity,
-                          child: TextField(
-                            controller: ownerController,
-                            decoration: InputDecoration(
-                                hintText: 'Owner name',
-                                border: OutlineInputBorder()),
-                          ),
-                        ),
-                        itemsGapHeight,
-                        Card(
-                          child: SizedBox(
+                        Column(
+                          children: [
+                            ValueListenableBuilder(
+                                valueListenable: userCoverImageNotifier,
+                                builder: (context, value, child) {
+                                  return Container(
+                                      decoration: value == null
+                                          ? BoxDecoration(
+                                              color: orange,
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                    blurRadius: 4,
+                                                    offset: Offset(0, 4))
+                                              ],
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                      bottomLeft:
+                                                          Radius.circular(20),
+                                                      bottomRight:
+                                                          Radius.circular(20)))
+                                          : BoxDecoration(
+                                              image: DecorationImage(
+                                                  fit: BoxFit.cover,
+                                                  image: FileImage(File(
+                                                      userCoverImageNotifier
+                                                          .value!.path))),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                    blurRadius: 4,
+                                                    offset: Offset(0, 4))
+                                              ],
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                      bottomLeft:
+                                                          Radius.circular(20),
+                                                      bottomRight:
+                                                          Radius.circular(20))),
+                                      height: 150,
+                                      width: double.infinity);
+                                }),
+                            const SizedBox(
+                              height: 150,
                               width: double.infinity,
-                              child: ValueListenableBuilder(
-                                  valueListenable: professionsDropDownNotifier,
-                                  builder: (context, value, child) {
-                                    return DropdownButton(
-                                      value: value,
-                                      items: professions.map((String items) {
-                                        return DropdownMenuItem(
-                                          value: items,
-                                          child: Text(items,
-                                              overflow: TextOverflow.ellipsis),
-                                        );
-                                      }).toList(),
-                                      onChanged: (value) {
-                                        professionsDropDownNotifier.value =
-                                            value!;
-                                      },
-                                    );
-                                  })),
+                            ),
+                          ],
                         ),
+                        Positioned(
+                          right: 3,
+                          bottom: 150,
+                          child: ElevatedButton(
+                              onPressed: () {
+                                pickImageCover();
+                              },
+                              child: const Text('Take Cover Image')),
+                        ),
+                        Row(
+                          children: [
+                            const SizedBox(width: 30),
+                            CircleAvatarEdit(
+                                notifier: userProfileImageNotifier),
+                          ],
+                        )
                       ],
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 50),
+                      child:
+                          CircleAvatarEdit(notifier: userProfileImageNotifier),
                     ),
-                  ),
-                  widget.type == UserType.profession
-                      ? itemsGapHeight
-                      : const SizedBox(),
-                  TextField(
-                    controller: phoneController,
-                    decoration: const InputDecoration(
-                        hintText: 'Contact No:', border: OutlineInputBorder()),
-                  ),
-                  itemsGapHeight,
-                  TextField(
-                    controller: bioController,
-                    decoration: const InputDecoration(
-                        hintText: 'Bio', border: OutlineInputBorder()),
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      )),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  children: [
+                    WidgetFillupTextFieldForTwo(
+                      widget: widget,
+                      companyController: companyController,
+                      ownerController: ownerController,
+                    ),
+                    // TextField(
+                    //   controller: widget.type == UserType.profession
+                    //       ? companyController
+                    //       : ownerController,
+                    //   decoration: InputDecoration(
+                    //       prefixIcon: Icon(
+                    //         Icons.person,
+                    //         color: orange,
+                    //       ),
+                    //       hintText: widget.type == UserType.profession
+                    //           ? 'Company name'
+                    //           : 'Uesr name',
+                    //       border: OutlineInputBorder(
+                    //           borderRadius: BorderRadius.circular(10))),
+                    // ),
+                    itemsGapHeight,
+                    Visibility(
+                      visible: widget.type == UserType.profession,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          WidgetForFillupSingle(
+                              controller: ownerController,
+                              hint: 'Owner name',
+                              icon: Icons.person),
+                          // TextField(
+                          //   controller: ownerController,
+                          //   decoration: const InputDecoration(
+                          //       hintText: 'Owner name',
+                          //       border: OutlineInputBorder()),
+                          // ),
+                          itemsGapHeight,
+                          Card(
+                            child: SizedBox(
+                                width: double.infinity,
+                                child: ValueListenableBuilder(
+                                    valueListenable:
+                                        professionsDropDownNotifier,
+                                    builder: (context, value, child) {
+                                      return DropdownButton(
+                                        hint: const Text(
+                                            'Select your profession'),
+                                        value: value,
+                                        items: professions.map((String items) {
+                                          return DropdownMenuItem(
+                                            value: items,
+                                            child: Text(items,
+                                                overflow:
+                                                    TextOverflow.ellipsis),
+                                          );
+                                        }).toList(),
+                                        onChanged: (value) {
+                                          professionsDropDownNotifier.value =
+                                              value!;
+                                        },
+                                      );
+                                    })),
+                          ),
+                        ],
+                      ),
+                    ),
+                    widget.type == UserType.profession
+                        ? itemsGapHeight
+                        : const SizedBox(),
+                    WidgetForFillupSingle(
+                        controller: phoneController,
+                        hint: 'Contact No :',
+                        icon: Icons.phone),
+                    // TextField(
+                    //   controller: phoneController,
+                    //   decoration: const InputDecoration(
+                    //       hintText: 'Contact No:',
+                    //       border: OutlineInputBorder()),
+                    // ),
+                    itemsGapHeight,
+                    WidgetForFillupSingle(
+                        controller: bioController,
+                        hint: 'Bio',
+                        icon: Icons.note_alt),
+                    // TextField(
+                    //   controller: bioController,
+                    //   decoration: const InputDecoration(
+                    //       hintText: 'Bio', border: OutlineInputBorder()),
+                    // ),
+                    BlocConsumer<FillupBloc, FillupState>(
+                      listener: (context, state) {
+                        if (state is FilledUserState) {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ScreenMain()));
+                        }
+                      },
+                      builder: (context, state) {
+                        if (state is FillupLodingState) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
+                        return Align(
+                          alignment: Alignment.centerRight,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: orange,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10))),
+                            onPressed: () {
+                              storeUserData();
+                            },
+                            child: const Text(
+                              'Done',
+                              style: TextStyle(
+                                  color: white, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        )),
+      ),
     );
   }
 
@@ -307,4 +333,63 @@ class _ScreenUserFillUpState extends State<ScreenUserFillUp> {
   //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   //   await sharedPreferences.setString('user_model', jsonEncode(user.toMap()));
   // }
+}
+
+class WidgetForFillupSingle extends StatelessWidget {
+  const WidgetForFillupSingle({
+    super.key,
+    required this.controller,
+    required this.hint,
+    required this.icon,
+  });
+
+  final TextEditingController controller;
+  final String hint;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+          prefixIcon: Icon(icon, color: orange),
+          hintText: hint,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+    );
+  }
+}
+
+class WidgetFillupTextFieldForTwo extends StatelessWidget {
+  const WidgetFillupTextFieldForTwo({
+    super.key,
+    required this.widget,
+    required this.companyController,
+    required this.ownerController,
+  });
+
+  final ScreenUserFillUp widget;
+  final TextEditingController? companyController;
+  final TextEditingController ownerController;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: widget.type == UserType.profession
+          ? companyController
+          : ownerController,
+      decoration: InputDecoration(
+          prefixIcon: widget.type == UserType.profession
+              ? Icon(
+                  Icons.factory,
+                  color: orange,
+                )
+              : Icon(
+                  Icons.person,
+                  color: orange,
+                ),
+          hintText:
+              widget.type == UserType.profession ? 'Company name' : 'Uesr name',
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+    );
+  }
 }

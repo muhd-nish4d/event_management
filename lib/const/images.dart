@@ -1,3 +1,7 @@
+//Back Ground Image
+const String backgroundImage = 'assets/image/back_ground_image.jpg';
+
+
 //Home Screen
 const String proPostImage =
     'assets/image/beautiful-woman-long-red-dress-walks-around-city-with-her-husband.jpg';

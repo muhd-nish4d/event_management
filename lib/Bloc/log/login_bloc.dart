@@ -14,7 +14,6 @@ part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   LoginBloc() : super(LogInitialState()) {
     User? currentUser = firebaseAuth.currentUser;
     if (currentUser != null) {
@@ -108,14 +107,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     DocumentSnapshot documentSnapshot =
         await firestore.collection('users').doc(user.uid).get();
 
-    UserModel usersss =
-        UserModel.formMap(documentSnapshot.data() as Map<String, dynamic>);
-
     if (documentSnapshot.exists) {
-      saveUserDataToSP(usersss);
-      emit(UserFilledState());
-    } else {
-      emit(LoggedInState(user));
+      UserModel usersss =
+          UserModel.formMap(documentSnapshot.data() as Map<String, dynamic>);
+
+      if (documentSnapshot.data() != null) {
+        saveUserDataToSP(usersss);
+        emit(UserFilledState());
+      } else {
+        emit(LoggedInState(user));
+      }
     }
   }
 

@@ -1,16 +1,20 @@
+import 'package:event_management/Bloc/fillup/fillup_bloc.dart';
 import 'package:event_management/const/color.dart';
 import 'package:event_management/screens/home/home_screen.dart';
 import 'package:event_management/screens/professions/professions.dart';
 import 'package:event_management/screens/profile/user_profile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
+import '../model/user_model.dart';
 import 'filter/filter_screen.dart';
 
 ValueNotifier<int> currentIndexSelected = ValueNotifier(0);
 
 class ScreenMain extends StatelessWidget {
-  ScreenMain({super.key});
+  final UserModel? userDatas;
+  ScreenMain({super.key, this.userDatas});
   List<Widget> screens = const [
     ScreenHome(),
     ScreenProfession(fromAnotherScreen: false),
@@ -19,6 +23,7 @@ class ScreenMain extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<FillupBloc>(context).add(FillUpInitialEvent());
     return Scaffold(
         body: ValueListenableBuilder(
             valueListenable: currentIndexSelected,
@@ -27,7 +32,7 @@ class ScreenMain extends StatelessWidget {
             }),
         bottomNavigationBar: Container(
           decoration: const BoxDecoration(boxShadow: [
-            BoxShadow(blurRadius: 10, blurStyle: BlurStyle.outer)
+            BoxShadow(blurRadius: 1, blurStyle: BlurStyle.outer)
           ]),
           child: Padding(
             padding: const EdgeInsets.all(8.0),

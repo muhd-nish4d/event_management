@@ -1,3 +1,4 @@
+import 'package:event_management/Bloc/all_user/all_user_bloc_bloc.dart';
 import 'package:event_management/Bloc/fillup/fillup_bloc.dart';
 import 'package:event_management/screens/splash/splash_screen.dart';
 import 'package:event_management/screens/user/user_chose.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<LoginBloc>.value(value: LoginBloc()),
         BlocProvider<FillupBloc>.value(value: FillupBloc()),
+        BlocProvider<AllUserBlocBloc>.value(value: AllUserBlocBloc())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
