@@ -68,15 +68,22 @@ class PostCard extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                height: 200,
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage(
-                          'assets/image/beautiful-woman-long-red-dress-walks-around-city-with-her-husband.jpg',
-                        ))),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Card(
+                  elevation: 5,
+                  child: Container(
+                    height: 200,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: const DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage(
+                              'assets/image/beautiful-woman-long-red-dress-walks-around-city-with-her-husband.jpg',
+                            ))),
+                  ),
+                ),
               ),
               // Image.asset(
               //   'assets/image/5dcc5d9bce6550c6fc59b3c4cffae51c.jpg',
@@ -86,10 +93,13 @@ class PostCard extends StatelessWidget {
                   children: [
                     IconButton(
                         onPressed: () {},
-                        icon: const Icon(Icons.thumb_up_alt_outlined)),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.thumb_down_alt_outlined))
+                        icon: const Icon(Icons.favorite, color: Colors.red)),
+                    const Text(
+                      'Total Like',
+                      style: TextStyle(color: grey),
+                    ),
+                    const Spacer(),
+                    // const Text('Date', style: TextStyle(color: grey))
                   ],
                 ),
               ),

@@ -1,6 +1,8 @@
+import 'dart:developer';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:event_management/screens/chat/person_chat/chatting_screen.dart';
 import 'package:event_management/screens/profile/professions/profession.dart';
-import 'package:event_management/screens/profile/user_profile.dart';
 import 'package:flutter/material.dart';
 
 import '../../../const/color.dart';
@@ -24,6 +26,7 @@ class ProfessionsCard extends StatelessWidget {
               flex: 6,
               child: GestureDetector(
                 onTap: () {
+                  log(professions.uid.toString());
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => ScreenProfessionsProfile(
                           isCleintView: true, userDetails: professions)));
@@ -96,38 +99,56 @@ class ProfessionsCard extends StatelessWidget {
                         width: double.infinity,
                         height: 80,
                         decoration: BoxDecoration(
-                            color: orange,
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10)),
-                            image: professions.coverImage!.isEmpty
-                                ? null
-                                : DecorationImage(
+                          color: orange,
+                          borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10)),
+
+                          // image: professions.coverImage!.isEmpty
+                          //     ? null
+                          //     : DecorationImage(
+                          //         fit: BoxFit.cover,
+                          //         image:
+
+                          //             NetworkImage(professions.coverImage!))
+                        ),
+                        child: professions.coverImage!.isEmpty
+                            ? const SizedBox()
+                            : ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10)),
+                                child: CachedNetworkImage(
                                     fit: BoxFit.cover,
-                                    image:
-                                        NetworkImage(professions.coverImage!))),
+                                    width: 60,
+                                    height: 60,
+                                    imageUrl: professions.coverImage!),
+                              ),
                       ),
                     ),
                     Positioned(
-                        // alignment: Alignment.centerLeft,
-                        top: 50,
-                        left: 20,
-                        child: professions.profileImage!.isEmpty
-                            ? const CircleAvatar(
-                                radius: 30,
-                                backgroundColor: grey,
-                                child: Icon(
-                                  Icons.person,
-                                  color: white,
-                                  size: 40,
-                                ),
-                              )
-                            : CircleAvatar(
-                                radius: 30,
-                                backgroundColor: grey,
-                                backgroundImage:
-                                    NetworkImage(professions.profileImage!),
-                              ))
+                      // alignment: Alignment.centerLeft,
+                      top: 50,
+                      left: 20,
+                      child: professions.profileImage!.isEmpty
+                          ? const CircleAvatar(
+                              radius: 30,
+                              backgroundColor: grey,
+                              child: Icon(
+                                Icons.person,
+                                color: white,
+                                size: 40,
+                              ),
+                            )
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(50.0),
+                              child: CachedNetworkImage(
+                                  fit: BoxFit.cover,
+                                  width: 60,
+                                  height: 60,
+                                  imageUrl: professions.profileImage!),
+                            ),
+                    )
                   ],
                 ),
               ),

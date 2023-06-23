@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../const/color.dart';
@@ -116,18 +117,32 @@ class ProfessionsProfileCleintView extends StatelessWidget {
             Align(
               alignment: Alignment.topCenter,
               child: Container(
-                  width: double.infinity,
-                  height: 150,
-                  decoration: BoxDecoration(
-                      color: orange,
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10)),
-                      image: profession.coverImage!.isEmpty
-                          ? null
-                          : DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(profession.coverImage!)))),
+                width: double.infinity,
+                height: 150,
+                decoration: BoxDecoration(
+                  color: orange,
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10)),
+                  // image: datas.coverImage != null
+                  //     ? DecorationImage(
+                  //         fit: BoxFit.cover,
+                  //         image: NetworkImage(datas.coverImage!))
+                  //     :
+                ),
+                child: profession.coverImage!.isEmpty
+                    ? const SizedBox()
+                    : ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10)),
+                        child: CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            width: 100,
+                            height: 100,
+                            imageUrl: profession.coverImage!),
+                      ),
+              ),
             ),
             Positioned(
               // alignment: Alignment.centerLeft,
@@ -146,11 +161,13 @@ class ProfessionsProfileCleintView extends StatelessWidget {
                             size: 40,
                           ),
                         )
-                      : CircleAvatar(
-                          radius: 50,
-                          backgroundColor: grey,
-                          backgroundImage:
-                              NetworkImage(profession.profileImage!),
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(50.0),
+                          child: CachedNetworkImage(
+                              fit: BoxFit.cover,
+                              width: 100,
+                              height: 100,
+                              imageUrl: profession.profileImage!),
                         ),
                   Text(profession.ownerName ?? 'Owner Name'),
                 ],

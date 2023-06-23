@@ -1,7 +1,6 @@
 import 'package:event_management/model/user_model.dart';
 import 'package:event_management/screens/profile/cleint/cleint_pro_screen.dart';
 import 'package:event_management/screens/profile/professions/profession.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,7 +22,7 @@ class ScreenUserProfile extends StatelessWidget {
             return const ScreenCleintProfile();
           }
         } else {
-          return Scaffold();
+          return const Scaffold();
         }
       },
     );

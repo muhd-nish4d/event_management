@@ -1,10 +1,8 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:event_management/Bloc/fillup/fillup_bloc.dart';
 import 'package:event_management/Bloc/log/login_bloc.dart';
 import 'package:event_management/const/sizes.dart';
-import 'package:event_management/model/user_model.dart';
 import 'package:event_management/screens/authentication/number.dart';
 import 'package:event_management/screens/bottum_nav.dart';
 import 'package:event_management/screens/user/user_chose.dart';
@@ -14,6 +12,7 @@ import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../const/color.dart';
+import '../../const/images.dart';
 
 class ScreenSplash extends StatefulWidget {
   const ScreenSplash({super.key});
@@ -40,9 +39,11 @@ class _ScreenSplashState extends State<ScreenSplash> {
                 return BlocBuilder<FillupBloc, FillupState>(
                   builder: (context, state) {
                     if (state is FilledUserState) {
-                      return ScreenMain(userDatas: state.userdatas,);
+                      return ScreenMain(
+                        userDatas: state.userdatas,
+                      );
                     } else {
-                      return ScreenUserChose();
+                      return const ScreenUserChose();
                     }
                   },
                 );
@@ -75,8 +76,8 @@ class _ScreenSplashState extends State<ScreenSplash> {
             SizedBox(
                 width: screenSize.width * .4,
                 child: Lottie.asset('assets/lottie/wedding_bride.json')),
-                itemsGapHeight,
-                Text('App Name')
+            itemsGapHeight,
+            const Text('App Name')
           ],
         ),
       ),

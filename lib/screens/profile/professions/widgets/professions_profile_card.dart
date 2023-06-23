@@ -1,10 +1,6 @@
 import 'package:event_management/screens/profile/professions/widgets/cleint_view/professions_profile_cleint_view.dart';
 import 'package:event_management/screens/profile/professions/widgets/user_view/user_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../Bloc/fillup/fillup_bloc.dart';
-import '../../../../const/color.dart';
 import '../../../../model/user_model.dart';
 
 class ProfessionsProfileCard extends StatelessWidget {

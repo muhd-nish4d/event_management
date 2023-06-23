@@ -1,3 +1,4 @@
+import 'package:event_management/const/color.dart';
 import 'package:event_management/const/sizes.dart';
 import 'package:event_management/screens/chat/person_chat/chatting_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,7 +18,7 @@ class ScreenChatPersons extends StatelessWidget {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: const Icon(Icons.arrow_back)),
+                icon: Icon(CupertinoIcons.back, color: orange)),
             const Expanded(child: CupertinoSearchTextField()),
             itemsGapWidth
           ]),

@@ -12,9 +12,13 @@ class AllUserBlocInitialState extends AllUserBlocState {}
 class AllUserBlocLoadingState extends AllUserBlocState {}
 
 class AllUserBlocLoadedState extends AllUserBlocState {
-  final List<UserModel> userDatas;
+  final Stream<QuerySnapshot<Map<String, dynamic>>>? professionsDocs;
 
-  const AllUserBlocLoadedState(this.userDatas);
+  const AllUserBlocLoadedState({required this.professionsDocs});
 }
 
-class AllUserBlocErrorState extends AllUserBlocState {}
+class AllUserBlocErrorState extends AllUserBlocState {
+  final String? error;
+
+  const AllUserBlocErrorState(this.error);
+}

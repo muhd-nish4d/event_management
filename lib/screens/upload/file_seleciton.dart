@@ -1,11 +1,14 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:all_gallery_images/model/StorageImages.dart';
 import 'package:event_management/screens/upload/selected_file.dart';
+import 'package:event_management/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:all_gallery_images/all_gallery_images.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:lottie/lottie.dart';
+
+import '../../const/color.dart';
 
 ValueNotifier<StorageImages?> images = ValueNotifier(null);
 
@@ -18,6 +21,8 @@ class ScreenFileShowing extends StatefulWidget {
 
 class _ScreenFileShowingState extends State<ScreenFileShowing> {
   StorageImages? _storageImages;
+  CroppedFile? croppedImage;
+  String? croppedImagePath;
   // late StorageImages uniqueImag;
 
   @override
@@ -32,81 +37,38 @@ class _ScreenFileShowingState extends State<ScreenFileShowing> {
 
     try {
       storageImages = await GalleryImages().getStorageImages();
-      // uniqueImag = storageImages!;
-      // uniqueImag.images?.clear();
-      // for (var element in storageImages.images!) {
-      //   if (set.add(element)) {
-      //     uniqueImag.images?.add(element);
-      //   }
-      // }
+
+      if (storageImages != null && storageImages.images != null) {
+        // Create a set to store unique images
+        final Set<String> uniqueImagePaths = {};
+        final List<Images> uniqueImages = [];
+
+        for (final image in storageImages.images!) {
+          // Check if the image path is unique
+          if (!uniqueImagePaths.contains(image.imagePath)) {
+            uniqueImagePaths.add(image.imagePath!);
+            uniqueImages.add(image);
+          }
+        }
+
+        storageImages.images = uniqueImages;
+      }
     } catch (error) {
       debugPrint(error.toString());
     }
 
-    // StorageImages? removeDuplicates(StorageImages list) {
-    //   final set = <Images>{};
-    //   StorageImages uniqueList = storageImages!;
-
-    //   uniqueList.images?.clear();
-    //   for (final item in list.images!) {
-    //     if (set.add(item)) {
-    //       uniqueList.images?.add(item);
-    //     }
-    //   }
-
-    //   return uniqueList;
-    // }
-
-    // StorageImages? nish;
-
-    // nish = removeDuplicates(storageImages!);
-
     setState(() {
-      // log(uniqueImag.images!.length.toString());
-      // _storageImages = uniqueImag;
       _storageImages = storageImages;
     });
-
-    // setState(() {
-    //   if (storageImages != null) {
-    //     final List<Images> uniqueImages = [];
-    //     final List<Images> storedImages = [];
-
-    //     for (final newImage in storageImages.images!) {
-    //       bool isDuplicate = false;
-    //       for (final oldImage in _storageImages?.images ?? []) {
-    //         if (newImage.imagePath == oldImage.imagePath) {
-    //           isDuplicate = true;
-    //           break;
-    //         }
-    //       }
-    //       if (!isDuplicate) {
-    //         uniqueImages.add(newImage);
-    //       }
-    //     }
-
-    //     if (_storageImages != null) {
-    //       _storageImages!.images?.addAll(uniqueImages);
-    //     } else {
-    //       _storageImages = StorageImages(images: uniqueImages);
-    //     }
-    //   }
-    // });
   }
 
   @override
   Widget build(BuildContext context) {
     Size phoneSize = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: AppBar(
-          actions: [
-            IconButton(
-                onPressed: () {
-                  log(_storageImages!.images!.length.toString());
-                },
-                icon: Icon(Icons.abc))
-          ],
-        ),
+        appBar: const PreferredSize(
+            preferredSize: Size(double.infinity, 90),
+            child: WidgetAppBar(itHaveBack: true)),
         body: _storageImages != null
             ? GridView.builder(
                 padding: const EdgeInsets.all(2),
@@ -118,10 +80,20 @@ class _ScreenFileShowingState extends State<ScreenFileShowing> {
                 ),
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ScreenSelectedFile(
-                            imagePath:
-                                _storageImages!.images![index].imagePath!))),
+                    onTap: () async {
+                      croppedImage = await cropImage(
+                          context, _storageImages!.images![index].imagePath!);
+                      if (croppedImage != null) {
+                        croppedImagePath = croppedImage!.path;
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ScreenSelectedFile(
+                                imagePath: croppedImagePath!)));
+                      }
+                    },
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //     builder: (context) => ScreenCropImage(
+                    //         imagePath:
+                    //             _storageImages!.images![index].imagePath!))),
                     child: Container(
                       decoration: BoxDecoration(
                           image: DecorationImage(
@@ -134,11 +106,37 @@ class _ScreenFileShowingState extends State<ScreenFileShowing> {
                   );
                 },
               )
-            :  Center(
+            : Center(
                 child: SizedBox(
                     width: phoneSize.width * .5,
-                    child: Lottie.asset(
-                        'assets/lottie/loding_circular_bar.json')),
+                    child:
+                        Lottie.asset('assets/lottie/loding_circular_bar.json')),
               ));
+  }
+
+  Future<CroppedFile> cropImage(BuildContext ctx, String imagePath) async {
+    CroppedFile? croppedFile = await ImageCropper().cropImage(
+      sourcePath: imagePath,
+      compressQuality: 85,
+      aspectRatioPresets: [CropAspectRatioPreset.ratio16x9],
+      uiSettings: [
+        AndroidUiSettings(
+            backgroundColor: white,
+            dimmedLayerColor: white,
+            hideBottomControls: true,
+            toolbarTitle: 'Cropper',
+            toolbarColor: orange,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: true),
+        IOSUiSettings(
+          title: 'Cropper',
+        ),
+        WebUiSettings(
+          context: ctx,
+        ),
+      ],
+    );
+    return croppedFile!;
   }
 }

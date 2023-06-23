@@ -15,11 +15,11 @@ ValueNotifier<int> currentIndexSelected = ValueNotifier(0);
 class ScreenMain extends StatelessWidget {
   final UserModel? userDatas;
   ScreenMain({super.key, this.userDatas});
-  List<Widget> screens = const [
-    ScreenHome(),
-    ScreenProfession(fromAnotherScreen: false),
-    ScreenFilter(),
-    ScreenUserProfile(isProfessional: true)
+  List<Widget> screens =  [
+    const ScreenHome(),
+    const ScreenProfession(fromAnotherScreen: false),
+    const ScreenFilter(),
+    const ScreenUserProfile(isProfessional: true)
   ];
   @override
   Widget build(BuildContext context) {

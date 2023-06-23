@@ -1,11 +1,8 @@
 import 'dart:developer';
 
-import 'package:event_management/Bloc/fillup/fillup_bloc.dart';
 import 'package:event_management/const/color.dart';
-import 'package:event_management/screens/authentication/number.dart';
 import 'package:event_management/screens/bottum_nav.dart';
 import 'package:event_management/screens/user/user_chose.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';

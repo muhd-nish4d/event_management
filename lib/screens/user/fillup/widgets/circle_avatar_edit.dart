@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:event_management/screens/user/fillup/fillup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 

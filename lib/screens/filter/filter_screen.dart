@@ -16,6 +16,7 @@ class ScreenFilter extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       children: [
         FilterCard(
+            filterKey: 'Event Management',
             title: 'Event Management',
             color: cardColorEventManagement,
             image: filterEventManagement,
@@ -26,12 +27,14 @@ class ScreenFilter extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             FilterCard(
+                filterKey: 'Venue',
                 title: 'Venue',
                 image: filterVenue,
                 color: cardColorVenue,
                 width: screenSize.width * .46,
                 isGrid: true),
             FilterCard(
+                filterKey: 'Food & Beverage',
                 title: 'Food &\nBeverage',
                 image: filterFood,
                 color: cardColorFood,
@@ -44,12 +47,14 @@ class ScreenFilter extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             FilterCard(
+                filterKey: 'Outfit',
                 title: 'Outfit',
                 image: filterFashion,
                 color: fashionCard,
                 width: screenSize.width * .46,
                 isGrid: true),
             FilterCard(
+                filterKey: 'Jewellery',
                 title: 'Jewellery',
                 image: filterRing,
                 color: cardColorJweld,
@@ -62,12 +67,14 @@ class ScreenFilter extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             FilterCard(
+                filterKey: 'Makeup',
                 title: 'Makeup',
                 image: filterMakeUp,
                 color: cardColorMakeUp,
                 width: screenSize.width * .46,
                 isGrid: true),
             FilterCard(
+                filterKey: 'Photography',
                 title: 'Photographers',
                 image: filterCameraMan,
                 color: cardColorCamera,
@@ -80,12 +87,14 @@ class ScreenFilter extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             FilterCard(
+                filterKey: 'Catering',
                 title: 'Catering',
                 image: filterServe,
                 color: cardColorserv,
                 width: screenSize.width * .46,
                 isGrid: true),
             FilterCard(
+                filterKey: 'Band',
                 title: 'Band',
                 image: filterBand,
                 color: cardColorBand,
@@ -98,6 +107,7 @@ class ScreenFilter extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             FilterCard(
+                filterKey: 'Cards & Invitations',
                 title: 'Cards &\nInvitation',
                 image: filterCard,
                 color: cardColorCard,

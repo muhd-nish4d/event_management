@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -132,18 +133,32 @@ class ProfessionsProfileUserView extends StatelessWidget {
                   Align(
                     alignment: Alignment.topCenter,
                     child: Container(
-                        width: double.infinity,
-                        height: 150,
-                        decoration: BoxDecoration(
-                            color: orange,
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10)),
-                            image: datas.coverImage != null
-                                ? DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(datas.coverImage!))
-                                : null)),
+                      width: double.infinity,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: orange,
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10)),
+                        // image: datas.coverImage != null
+                        //     ? DecorationImage(
+                        //         fit: BoxFit.cover,
+                        //         image: NetworkImage(datas.coverImage!))
+                        //     :
+                      ),
+                      child: datas.companyName!.isEmpty
+                          ? const SizedBox()
+                          : ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10)),
+                              child: CachedNetworkImage(
+                                  fit: BoxFit.cover,
+                                  width: 100,
+                                  height: 100,
+                                  imageUrl: datas.coverImage!),
+                            ),
+                    ),
                   ),
                   Positioned(
                     // alignment: Alignment.centerLeft,
@@ -162,12 +177,20 @@ class ProfessionsProfileUserView extends StatelessWidget {
                                   size: 40,
                                 ),
                               )
-                            : CircleAvatar(
-                                radius: 50,
-                                backgroundColor: grey,
-                                backgroundImage:
-                                    NetworkImage(datas.profileImage!),
+                            : ClipRRect(
+                                borderRadius: BorderRadius.circular(50.0),
+                                child: CachedNetworkImage(
+                                    fit: BoxFit.cover,
+                                    width: 100,
+                                    height: 100,
+                                    imageUrl: datas.profileImage!),
                               ),
+                        // CircleAvatar(
+                        //     radius: 50,
+                        //     backgroundColor: grey,
+                        //     backgroundImage:
+
+                        //   ),
                         Text(datas.ownerName ?? 'Owner Name'),
                       ],
                     ),

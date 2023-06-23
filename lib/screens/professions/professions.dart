@@ -1,35 +1,49 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_management/screens/professions/widgets/professions_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../Bloc/all_user/all_user_bloc_bloc.dart';
+import '../../const/color.dart';
 import '../../model/user_model.dart';
 
-class ScreenProfession extends StatelessWidget {
+class ScreenProfession extends StatefulWidget {
   final bool fromAnotherScreen;
-  const ScreenProfession({super.key, required this.fromAnotherScreen});
+  final String? filterKey;
+  const ScreenProfession(
+      {super.key, required this.fromAnotherScreen, this.filterKey});
+
+  @override
+  State<ScreenProfession> createState() => _ScreenProfessionState();
+}
+
+class _ScreenProfessionState extends State<ScreenProfession> {
+  TextEditingController searchTe = TextEditingController();
+
+  String searchedQuery = '';
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<AllUserBlocBloc>(context).add(UserInitialEvent());
     return Column(
       children: [
         Padding(
           padding: const EdgeInsets.all(10.0),
           child: Row(
             children: [
-              fromAnotherScreen
+              widget.fromAnotherScreen
                   ? IconButton(
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      icon: const Icon(Icons.arrow_back))
+                      icon: Icon(CupertinoIcons.back, color: orange))
                   : const SizedBox(),
-              const Expanded(child: CupertinoSearchTextField()),
+              Expanded(
+                  child: CupertinoSearchTextField(
+                controller: searchTe,
+                onChanged: (value) {
+                  setState(() {
+                    searchedQuery = value;
+                  });
+                },
+              )),
             ],
           ),
         ),
@@ -40,43 +54,62 @@ class ScreenProfession extends StatelessWidget {
                 return Text(snapshot.error.toString());
               }
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Text('Loading...');
+                return const Expanded(child:  Center(child: Text('Loading...')));
               }
 
-              var professionsDocs = snapshot.data?.docs
-                  .where((doc) => doc['userType'] == 'profession')
-                  .toList();
+              var professionsDocs = search(searchedQuery, snapshot);
+              // snapshot.data?.docs
+              //     .where((doc) => doc['userType'] == 'profession')
+              //     .toList();
 
               return Expanded(
-                  child: GridView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    childAspectRatio: .75,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
-                    crossAxisCount: 2),
-                itemBuilder: (context, index) {
-                  var userData = professionsDocs?[index].data();
-                  var professions =
-                      UserModel.formMap(userData as Map<String, dynamic>);
-                  // log(hi.userType.toString());
-                  return ProfessionsCard(professions: professions);
-                },
-                itemCount: professionsDocs?.length,
-              ));
+                  child: professionsDocs.isEmpty
+                      ? const Center(child: Text('No providers here'))
+                      : GridView.builder(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  childAspectRatio: .75,
+                                  mainAxisSpacing: 10,
+                                  crossAxisSpacing: 10,
+                                  crossAxisCount: 2),
+                          itemBuilder: (context, index) {
+                            var userData = professionsDocs?[index].data();
+                            var professions = UserModel.formMap(
+                                userData as Map<String, dynamic>);
+                            // log(hi.userType.toString());
+                            return ProfessionsCard(professions: professions);
+                          },
+                          itemCount: professionsDocs?.length,
+                        ));
             })
-        // BlocBuilder<AllUserBlocBloc, AllUserBlocState>(
-        //   builder: (context, state) {
-        //     if (state is AllUserBlocLoadingState) {
-        //       return CircularProgressIndicator();
-        //     }
-        //     if (state is AllUserBlocLoadedState) {
-        //       Text('data');
-        //     }
-        //     return Container();
-        //   },
-        // )
       ],
     );
+  }
+
+  search(String que, AsyncSnapshot<QuerySnapshot<Object?>> snap) {
+    if (que.isEmpty && widget.filterKey != null) {
+      return snap.data?.docs.where((doc) {
+        return doc['userType'] == 'profession' &&
+            doc['profession'] == widget.filterKey;
+      }).toList();
+    }
+    dynamic docs;
+    if (widget.filterKey != null) {
+      docs = snap.data?.docs.where((element) {
+        return element['profession'] == widget.filterKey;
+      });
+    } else {
+      docs = snap.data?.docs;
+    }
+    return docs.where(
+      (doc) {
+        return doc['userType'] == 'profession' &&
+            doc['companyName']
+                .toString()
+                .toLowerCase()
+                .contains(que.toLowerCase());
+      },
+    ).toList();
   }
 }

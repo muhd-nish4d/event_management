@@ -15,7 +15,7 @@ class ScreenBookings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Bookings")),
+      appBar: AppBar(title: const Text("Bookings")),
         body: ValueListenableBuilder(
             valueListenable: currentSelectedScreen,
             builder: (context, value, child) {

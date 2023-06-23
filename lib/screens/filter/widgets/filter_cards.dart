@@ -10,20 +10,26 @@ class FilterCard extends StatelessWidget {
       required this.color,
       required this.width,
       required this.title,
-      required this.isGrid});
+      required this.isGrid,
+      required this.filterKey});
   final String image;
   final Color color;
   final double width;
   final String title;
   final bool isGrid;
+  final String filterKey;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) =>
-                const Scaffold(body: SafeArea(child: ScreenProfession(fromAnotherScreen: true,)))));
+            builder: (context) => Scaffold(
+                    body: SafeArea(
+                        child: ScreenProfession(
+                  fromAnotherScreen: true,
+                  filterKey: filterKey,
+                )))));
       },
       child: Stack(
         alignment: isGrid
@@ -34,7 +40,7 @@ class FilterCard extends StatelessWidget {
               height: 110,
               width: width,
               decoration: BoxDecoration(
-                  boxShadow: const [BoxShadow(blurRadius: 4)],
+                  boxShadow: const [BoxShadow(blurRadius: 4,color: grey)],
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
                       fit: BoxFit.cover, image: AssetImage(image)))),

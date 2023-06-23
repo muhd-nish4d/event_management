@@ -66,7 +66,7 @@ class FillupBloc extends Bloc<FillupEvent, FillupState> {
       saveUserDataToSP(userDatas);
       emit(FilledUserState(userDatas));
     } catch (e) {
-      emit(ErrorWhileFillingState());
+        (ErrorWhileFillingState());
       log(e.toString());
     }
 

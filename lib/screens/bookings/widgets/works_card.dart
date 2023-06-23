@@ -13,11 +13,11 @@ class WidgetCardWorks extends StatelessWidget {
           data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
           child: ExpansionTile(
             backgroundColor: Colors.red[50],
-            childrenPadding: EdgeInsets.all(10),
+            childrenPadding: const EdgeInsets.all(10),
             expandedAlignment: Alignment.topLeft,
             expandedCrossAxisAlignment: CrossAxisAlignment.start,
-            leading: CircleAvatar(child: Icon(Icons.person)),
-            title: Text('User Name'),
+            leading: const CircleAvatar(child: Icon(Icons.person)),
+            title: const Text('User Name'),
             children: const [
               Text('Date'),
               Text('Place'),

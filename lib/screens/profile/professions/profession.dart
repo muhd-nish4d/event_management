@@ -6,6 +6,7 @@ import 'package:event_management/screens/profile/professions/tab_views/work/book
 import 'package:event_management/screens/profile/professions/widgets/professions_profile_card.dart';
 import 'package:event_management/screens/settings/settigs_menu.dart';
 import 'package:event_management/screens/upload/file_seleciton.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -108,7 +109,7 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      icon: const Icon(Icons.arrow_back))
+                      icon: Icon(CupertinoIcons.back, color: orange))
                   : ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
@@ -169,16 +170,16 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
           ];
         },
         body: widget.isCleintView
-            ? TabBarView(controller: tabController, children: const [
-                WidgetProfessionsPosts(),
-                UsersTile(),
-                UsersTile(),
+            ? TabBarView(controller: tabController, children: [
+                WidgetProfessionsPosts(user: widget.userDetails?.uid),
+                const UsersTile(),
+                const UsersTile(),
               ])
-            : TabBarView(controller: tabController, children: const [
-                WidgetProfessionsPosts(),
-                UsersTile(),
-                UsersTile(),
-                WidgetBookedWorks()
+            : TabBarView(controller: tabController, children: [
+                WidgetProfessionsPosts(user: widget.userDetails?.uid),
+                const UsersTile(),
+                const UsersTile(),
+                const WidgetBookedWorks()
               ]),
         //  ValueListenableBuilder(
         //   valueListenable: tabController,

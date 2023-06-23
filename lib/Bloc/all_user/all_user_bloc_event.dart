@@ -7,4 +7,6 @@ abstract class AllUserBlocEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class UserInitialEvent extends AllUserBlocEvent{}
+class UserInitialEvent extends AllUserBlocEvent {}
+
+class UserSearchEvent extends AllUserBlocEvent {}

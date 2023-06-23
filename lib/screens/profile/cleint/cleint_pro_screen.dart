@@ -33,7 +33,7 @@ class ScreenCleintProfile extends StatelessWidget {
               IconButton(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ScreenSettingsMenu()));
+                        builder: (context) => const ScreenSettingsMenu()));
                   },
                   icon: const Icon(Icons.menu_outlined))
             ],
@@ -42,7 +42,7 @@ class ScreenCleintProfile extends StatelessWidget {
           BlocBuilder<FillupBloc, FillupState>(
             builder: (context, state) {
               if (state is FillupLodingState) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else if (state is FilledUserState) {
                 var user = state.userdatas;
                 return Row(
@@ -69,7 +69,7 @@ class ScreenCleintProfile extends StatelessWidget {
                       children: [
                         Text(
                           user.ownerName ?? 'User Name',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20),
                         ),
                         const SizedBox(
@@ -83,7 +83,7 @@ class ScreenCleintProfile extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            Icon(Icons.phone),
+                            const Icon(Icons.phone),
                             Text(user.phoneNumber ?? 'Phone No'),
                           ],
                         ),

@@ -29,6 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   all_gallery_images: ^0.1.0+1
+  cached_network_image: 3.2.3
   cloud_firestore: 4.8.0
   cupertino_icons: 1.0.2
   equatable: 2.0.5
@@ -41,12 +42,15 @@ dependencies:
   google_fonts: 4.0.3
   google_nav_bar: 5.0.6
   grouped_list: 5.1.2
-  image_picker: ^0.8.8
+  image_cropper: 4.0.1
+  image_picker: 0.8.8
   intl: 0.18.1
   lottie: 2.3.2
   pinput: 2.2.31
   restart_app: ^1.1.2
   shared_preferences: 2.1.2
+  transparent_image: 2.0.1
+  uuid: ^3.0.7
 
 dev_dependencies:
   flutter_lints: ^2.0.0

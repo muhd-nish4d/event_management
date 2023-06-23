@@ -121,7 +121,7 @@ class ScreenChat extends StatelessWidget {
                     final data = await showDatePicker(
                         context: context,
                         initialDate: DateTime.now(),
-                        firstDate: DateTime.now().subtract(Duration(days: 1)),
+                        firstDate: DateTime.now().subtract(const Duration(days: 1)),
                         lastDate: DateTime.now());
                     Timer(const Duration(milliseconds: 60), () {
                       _showMyDialog(context);

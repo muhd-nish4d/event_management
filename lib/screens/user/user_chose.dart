@@ -1,10 +1,6 @@
-import 'dart:developer';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_management/const/color.dart';
 import 'package:event_management/const/sizes.dart';
 import 'package:event_management/screens/user/fillup/fillup_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../const/images.dart';
@@ -30,7 +26,7 @@ class ScreenUserChose extends StatelessWidget {
                   navigate: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) =>
-                            ScreenUserFillUp(type: UserType.cleint)));
+                            const ScreenUserFillUp(type: UserType.cleint)));
                   },
                   screenSize: screenSize,
                   icon: Icons.person,
@@ -40,7 +36,7 @@ class ScreenUserChose extends StatelessWidget {
                   navigate: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) =>
-                            ScreenUserFillUp(type: UserType.profession)));
+                            const ScreenUserFillUp(type: UserType.profession)));
                   },
                   screenSize: screenSize,
                   icon: Icons.work,

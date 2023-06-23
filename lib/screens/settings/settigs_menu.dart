@@ -1,7 +1,5 @@
 import 'package:event_management/const/color.dart';
-import 'package:event_management/screens/authentication/number.dart';
 import 'package:event_management/screens/splash/splash_screen.dart';
-import 'package:event_management/screens/user/fillup/fillup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
