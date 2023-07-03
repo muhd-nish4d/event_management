@@ -1,17 +1,22 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:event_management/const/color.dart';
 import 'package:event_management/model/post_model.dart';
 import 'package:event_management/screens/posts/posts_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../model/user_model.dart';
+
 class WidgetProfessionsPosts extends StatelessWidget {
-  final String? user;
+  final UserModel? user;
   const WidgetProfessionsPosts({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
     return StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+        stream: firestore.collection('posts').snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Text(snapshot.error.toString());
@@ -20,12 +25,12 @@ class WidgetProfessionsPosts extends StatelessWidget {
             return const Center(child: Text('Loading...'));
           }
           var eachUserData = snapshot.data?.docs
-              .where((element) => element['creatorId'] == user);
+              .where((element) => element['creatorId'] == user!.uid);
 
           return eachUserData!.isEmpty
-              ? Text('No Posts')
+              ? const Text('No Posts')
               : GridView.builder(
-                  padding: EdgeInsets.all(5),
+                  padding: const EdgeInsets.all(5),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       crossAxisSpacing: 4,
@@ -39,17 +44,24 @@ class WidgetProfessionsPosts extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const ScreenPostsView()));
+                                builder: (context) => ScreenPostsView(
+                                      user: user!,
+                                    )));
                       },
-                      child: Container(
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image:
-                                      NetworkImage(imageDetail.imagePath!)))),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(5),
+                        child: CachedNetworkImage(
+                            placeholder: (context, url) => Container(
+                                  color: grey.withOpacity(0.5),
+                                ),
+                            fit: BoxFit.cover,
+                            width: 60,
+                            height: 60,
+                            imageUrl: imageDetail.imagePath!),
+                      ),
                     );
                   },
-                  itemCount: eachUserData!.length,
+                  itemCount: eachUserData.length,
                 );
         });
   }

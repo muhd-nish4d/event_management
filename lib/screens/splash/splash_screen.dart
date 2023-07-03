@@ -12,7 +12,6 @@ import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../const/color.dart';
-import '../../const/images.dart';
 
 class ScreenSplash extends StatefulWidget {
   const ScreenSplash({super.key});

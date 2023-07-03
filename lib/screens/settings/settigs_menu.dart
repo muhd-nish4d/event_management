@@ -3,7 +3,6 @@ import 'package:event_management/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 import '../../Bloc/log/login_bloc.dart';
 
 class ScreenSettingsMenu extends StatelessWidget {
@@ -23,7 +22,6 @@ class ScreenSettingsMenu extends StatelessWidget {
           BlocConsumer<LoginBloc, LoginState>(
             listener: (context, state) {
               if (state is LoggedOutState) {
-
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
@@ -41,11 +39,35 @@ class ScreenSettingsMenu extends StatelessWidget {
                   icon: Icons.logout,
                   isRed: true,
                   onTap: () {
-                    BlocProvider.of<LoginBloc>(context).add(LogOutEvent());
+                    alertDialoague(context);
                     // BlocProvider.of<LoginBloc>(context).logOut();
                   });
             },
           ),
+        ],
+      ),
+    );
+  }
+
+  void alertDialoague(BuildContext ctx) {
+    showDialog(
+      context: ctx,
+      builder: (context) => AlertDialog(
+        title: const Text('Log Out'),
+        content: const Text('Are you sure you want to log out?'),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Cancel')),
+          TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+
+                BlocProvider.of<LoginBloc>(context).add(LogOutEvent());
+              },
+              child: const Text('Yes'))
         ],
       ),
     );

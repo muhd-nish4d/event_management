@@ -1,6 +1,7 @@
 import 'package:event_management/model/user_model.dart';
 import 'package:event_management/screens/bookings/bottom_navigation.dart';
 import 'package:event_management/screens/chat/person_chat/chatting_screen.dart';
+import 'package:event_management/screens/profile/professions/tab_views/follow/follwing.dart';
 import 'package:event_management/screens/profile/professions/tab_views/posts/posts_profession.dart';
 import 'package:event_management/screens/profile/professions/tab_views/work/booked_works.dart';
 import 'package:event_management/screens/profile/professions/widgets/professions_profile_card.dart';
@@ -56,7 +57,8 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
                             child: ElevatedButton(
                               onPressed: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => const ScreenChat()));
+                                    builder: (context) =>
+                                        ScreenChat(user: widget.userDetails!)));
                               },
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: orange,
@@ -171,13 +173,15 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
         },
         body: widget.isCleintView
             ? TabBarView(controller: tabController, children: [
-                WidgetProfessionsPosts(user: widget.userDetails?.uid),
-                const UsersTile(),
+                WidgetProfessionsPosts(user: widget.userDetails),
+                WidgetProfessionsFollow(
+                    followers: widget.userDetails?.follow ?? []),
                 const UsersTile(),
               ])
             : TabBarView(controller: tabController, children: [
-                WidgetProfessionsPosts(user: widget.userDetails?.uid),
-                const UsersTile(),
+                WidgetProfessionsPosts(user: widget.userDetails),
+                WidgetProfessionsFollow(
+                    followers: widget.userDetails?.follow ?? []),
                 const UsersTile(),
                 const WidgetBookedWorks()
               ]),

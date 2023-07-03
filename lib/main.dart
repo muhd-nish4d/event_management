@@ -1,5 +1,6 @@
 import 'package:event_management/Bloc/all_user/all_user_bloc_bloc.dart';
 import 'package:event_management/Bloc/fillup/fillup_bloc.dart';
+import 'package:event_management/Bloc/image_fetch/image_fetch_bloc.dart';
 import 'package:event_management/Bloc/upload_image/post_image_bloc.dart';
 import 'package:event_management/screens/splash/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
         BlocProvider<LoginBloc>.value(value: LoginBloc()),
         BlocProvider<FillupBloc>.value(value: FillupBloc()),
         BlocProvider<AllUserBlocBloc>.value(value: AllUserBlocBloc()),
-        BlocProvider<PostImageBloc>.value(value: PostImageBloc())
+        BlocProvider<PostImageBloc>.value(value: PostImageBloc()),
+        BlocProvider<ImageFetchBloc>.value(value: ImageFetchBloc())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

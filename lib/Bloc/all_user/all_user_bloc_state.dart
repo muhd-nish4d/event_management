@@ -12,9 +12,21 @@ class AllUserBlocInitialState extends AllUserBlocState {}
 class AllUserBlocLoadingState extends AllUserBlocState {}
 
 class AllUserBlocLoadedState extends AllUserBlocState {
-  final Stream<QuerySnapshot<Map<String, dynamic>>>? professionsDocs;
+  final List<UserModel> allUser;
 
-  const AllUserBlocLoadedState({required this.professionsDocs});
+  const AllUserBlocLoadedState({required this.allUser});
+}
+
+class AllProfessionsLoadedState extends AllUserBlocState {
+  final List<UserModel> allProfessions;
+
+  const AllProfessionsLoadedState({required this.allProfessions});
+}
+
+class AllProfessionsSearchState extends AllUserBlocState {
+  final List<UserModel> searchedProfessions;
+
+  const AllProfessionsSearchState({required this.searchedProfessions});
 }
 
 class AllUserBlocErrorState extends AllUserBlocState {

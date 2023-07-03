@@ -19,12 +19,17 @@ class WidgetAppBar extends StatelessWidget {
     SizedBox empty = const SizedBox();
     return Container(
       width: double.infinity,
-      height: 90,
-      decoration: const BoxDecoration(
-          boxShadow: [
-            BoxShadow(blurStyle: BlurStyle.outer, blurRadius: 4, color: grey)
+      height: 60,
+      decoration: BoxDecoration(
+          color: Colors.indigo[100],
+          boxShadow: const [
+            BoxShadow(
+              blurStyle: BlurStyle.outer,
+              blurRadius: 4,
+              color: grey,
+            )
           ],
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(10),
               bottomRight: Radius.circular(10))),
       child: Row(

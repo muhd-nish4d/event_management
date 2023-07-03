@@ -1,18 +1,57 @@
-// import 'package:event_management/widgets/user_listtile.dart';
-// import 'package:flutter/cupertino.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter/src/widgets/framework.dart';
-// import 'package:flutter/src/widgets/placeholder.dart';
+import 'dart:developer';
 
-// class WidgetProfessionsFollow extends StatelessWidget {
-//   const WidgetProfessionsFollow({super.key});
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:event_management/widgets/circular_progress_indicator.dart';
+import 'package:event_management/widgets/user_listtile.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListView.builder(
-//       itemBuilder: (context, index) {
-//         return UsersTile();
-//       },
-//     );
-//   }
-// }
+import '../../../../../model/user_model.dart';
+
+class WidgetProfessionsFollow extends StatelessWidget {
+  WidgetProfessionsFollow({super.key, required this.followers});
+  final List<dynamic> followers;
+  late UserModel user;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return FutureBuilder<UserModel?>(
+          future: getUserDetails(followers[index]),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CustomProgressIndicator();
+            } else if (snapshot.hasData) {
+              UserModel? user = snapshot.data;
+              return UsersTile(userDetails: user);
+            } else {
+              return SizedBox(); // or handle the error case
+            }
+          },
+        );
+      },
+      itemCount: followers.length,
+    );
+  }
+
+  Future<UserModel?> getUserDetails(String uid) async {
+    try {
+      DocumentSnapshot snapshot =
+          await FirebaseFirestore.instance.collection('users').doc(uid).get();
+
+      if (snapshot.exists) {
+        // User document found, create UserModel instance
+        Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+        return UserModel.formMap(data);
+      } else {
+        // User document not found
+        return null;
+      }
+    } catch (e) {
+      // Error occurred
+      print('Error fetching user details: $e');
+      return null;
+    }
+  }
+}

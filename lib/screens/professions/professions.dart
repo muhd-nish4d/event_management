@@ -1,9 +1,14 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_management/screens/professions/widgets/professions_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../Bloc/all_user/all_user_bloc_bloc.dart';
 import '../../const/color.dart';
 import '../../model/user_model.dart';
+import '../../widgets/circular_progress_indicator.dart';
 
 class ScreenProfession extends StatefulWidget {
   final bool fromAnotherScreen;
@@ -16,9 +21,14 @@ class ScreenProfession extends StatefulWidget {
 }
 
 class _ScreenProfessionState extends State<ScreenProfession> {
-  TextEditingController searchTe = TextEditingController();
 
   String searchedQuery = '';
+
+  // @override
+  // void initState() {
+  //   BlocProvider.of<AllUserBlocBloc>(context).add(UserProfessionsEvent());
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +47,9 @@ class _ScreenProfessionState extends State<ScreenProfession> {
                   : const SizedBox(),
               Expanded(
                   child: CupertinoSearchTextField(
-                controller: searchTe,
                 onChanged: (value) {
+                  // BlocProvider.of<AllUserBlocBloc>(context)
+                  //     .add(UserSearchEvent(value));
                   setState(() {
                     searchedQuery = value;
                   });
@@ -47,6 +58,56 @@ class _ScreenProfessionState extends State<ScreenProfession> {
             ],
           ),
         ),
+        // BlocBuilder<AllUserBlocBloc, AllUserBlocState>(
+        //   builder: (context, state) {
+        //     if (state is AllProfessionsLoadedState) {
+        //       // log('All user bloc loaded');
+        //       return Expanded(
+        //           child: state.allProfessions.isEmpty
+        //               ? const Center(child: Text('No providers here'))
+        //               // : Text('${state.allUser.length}')
+        //               : GridView.builder(
+        //                   padding: const EdgeInsets.symmetric(horizontal: 10),
+        //                   gridDelegate:
+        //                       const SliverGridDelegateWithFixedCrossAxisCount(
+        //                           childAspectRatio: .75,
+        //                           mainAxisSpacing: 10,
+        //                           crossAxisSpacing: 10,
+        //                           crossAxisCount: 2),
+        //                   itemBuilder: (context, index) {
+        //                     var userData = state.allProfessions[index];
+        //                     return ProfessionsCard(professions: userData);
+        //                   },
+        //                   itemCount: state.allProfessions.length,
+        //                 ));
+        //     } else if (state is AllUserBlocLoadingState) {
+        //       return const Expanded(child: CustomProgressIndicator());
+        //     } else if (state is AllUserBlocErrorState) {
+        //       return Text(state.error!);
+        //     } else if (state is AllProfessionsSearchState) {
+        //       return Expanded(
+        //           child: state.searchedProfessions.isEmpty
+        //               ? const Center(child: Text('No providers here'))
+        //               // : Text('${state.allUser.length}')
+        //               : GridView.builder(
+        //                   padding: const EdgeInsets.symmetric(horizontal: 10),
+        //                   gridDelegate:
+        //                       const SliverGridDelegateWithFixedCrossAxisCount(
+        //                           childAspectRatio: .75,
+        //                           mainAxisSpacing: 10,
+        //                           crossAxisSpacing: 10,
+        //                           crossAxisCount: 2),
+        //                   itemBuilder: (context, index) {
+        //                     var userData = state.searchedProfessions[index];
+        //                     return ProfessionsCard(professions: userData);
+        //                   },
+        //                   itemCount: state.searchedProfessions.length,
+        //                 ));
+        //     } else {
+        //       return const Center(child: Text('Loading...'));
+        //     }
+        //   },
+        // )
         StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance.collection('users').snapshots(),
             builder: (context, snapshot) {
@@ -54,7 +115,7 @@ class _ScreenProfessionState extends State<ScreenProfession> {
                 return Text(snapshot.error.toString());
               }
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Expanded(child:  Center(child: Text('Loading...')));
+                return const Expanded(child: CustomProgressIndicator());
               }
 
               var professionsDocs = search(searchedQuery, snapshot);

@@ -3,17 +3,34 @@ import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:event_management/screens/chat/person_chat/chatting_screen.dart';
 import 'package:event_management/screens/profile/professions/profession.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../const/color.dart';
 import '../../../model/user_model.dart';
+import '../../../static/statics.dart';
 
-class ProfessionsCard extends StatelessWidget {
+class ProfessionsCard extends StatefulWidget {
+  ProfessionsCard({super.key, required this.professions});
   final UserModel professions;
-  const ProfessionsCard({super.key, required this.professions});
+
+  @override
+  State<ProfessionsCard> createState() => _ProfessionsCardState();
+}
+
+class _ProfessionsCardState extends State<ProfessionsCard> {
+  final String? currentUserUid = FirebaseAuth.instance.currentUser!.uid;
+  late bool isFollowed;
+
+  @override
+  void initState() {
+    isFollowed = widget.professions.isFollowed(currentUserUid!);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    log(isFollowed.toString());
     return Card(
       elevation: 5,
       child: SizedBox(
@@ -26,10 +43,11 @@ class ProfessionsCard extends StatelessWidget {
               flex: 6,
               child: GestureDetector(
                 onTap: () {
-                  log(professions.uid.toString());
+                  log(widget.professions.uid.toString());
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => ScreenProfessionsProfile(
-                          isCleintView: true, userDetails: professions)));
+                          isCleintView: true,
+                          userDetails: widget.professions)));
                 },
                 child: Stack(
                   // alignment: Alignment.center,
@@ -52,14 +70,17 @@ class ProfessionsCard extends StatelessWidget {
                                 const SizedBox(
                                   height: 100,
                                 ),
-                                Text(professions.ownerName ?? 'Owner Name'),
+                                Text(widget.professions.ownerName ??
+                                    'Owner Name'),
                                 Text(
-                                  professions.companyName ?? 'Company Name',
+                                  widget.professions.companyName ??
+                                      'Company Name',
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18),
                                 ),
-                                Text(professions.profession ?? 'Profession'),
+                                Text(widget.professions.profession ??
+                                    'Profession'),
                                 Row(
                                   children: const [
                                     Icon(
@@ -112,7 +133,7 @@ class ProfessionsCard extends StatelessWidget {
 
                           //             NetworkImage(professions.coverImage!))
                         ),
-                        child: professions.coverImage!.isEmpty
+                        child: widget.professions.coverImage!.isEmpty
                             ? const SizedBox()
                             : ClipRRect(
                                 borderRadius: const BorderRadius.only(
@@ -122,7 +143,7 @@ class ProfessionsCard extends StatelessWidget {
                                     fit: BoxFit.cover,
                                     width: 60,
                                     height: 60,
-                                    imageUrl: professions.coverImage!),
+                                    imageUrl: widget.professions.coverImage!),
                               ),
                       ),
                     ),
@@ -130,7 +151,7 @@ class ProfessionsCard extends StatelessWidget {
                       // alignment: Alignment.centerLeft,
                       top: 50,
                       left: 20,
-                      child: professions.profileImage!.isEmpty
+                      child: widget.professions.profileImage!.isEmpty
                           ? const CircleAvatar(
                               radius: 30,
                               backgroundColor: grey,
@@ -146,7 +167,7 @@ class ProfessionsCard extends StatelessWidget {
                                   fit: BoxFit.cover,
                                   width: 60,
                                   height: 60,
-                                  imageUrl: professions.profileImage!),
+                                  imageUrl: widget.professions.profileImage!),
                             ),
                     )
                   ],
@@ -177,15 +198,24 @@ class ProfessionsCard extends StatelessWidget {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ScreenChat()));
+                                        builder: (context) => ScreenChat(
+                                              user: widget.professions,
+                                            )));
                               },
                               child: const Text('Chat'),
                             ),
                             const VerticalDivider(),
                             TextButton(
-                              onPressed: () {},
-                              child: const Text('Follow'),
+                              onPressed: () {
+                                if (isFollowed) {
+                                  // Perform unfollow action
+                                  Utils.unfollowUser(widget.professions.uid!);
+                                } else {
+                                  // Perform follow action
+                                  Utils.followUser(widget.professions.uid!);
+                                }
+                              },
+                              child: Text(isFollowed ? 'Unfollow' : 'Follow'),
                             )
                           ],
                         ),

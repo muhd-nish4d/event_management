@@ -15,7 +15,7 @@ ValueNotifier<int> currentIndexSelected = ValueNotifier(0);
 class ScreenMain extends StatelessWidget {
   final UserModel? userDatas;
   ScreenMain({super.key, this.userDatas});
-  List<Widget> screens =  [
+  List<Widget> screens = [
     const ScreenHome(),
     const ScreenProfession(fromAnotherScreen: false),
     const ScreenFilter(),
@@ -25,6 +25,7 @@ class ScreenMain extends StatelessWidget {
   Widget build(BuildContext context) {
     BlocProvider.of<FillupBloc>(context).add(FillUpInitialEvent());
     return Scaffold(
+        backgroundColor: Colors.deepPurple[50],
         body: ValueListenableBuilder(
             valueListenable: currentIndexSelected,
             builder: (context, value, child) {

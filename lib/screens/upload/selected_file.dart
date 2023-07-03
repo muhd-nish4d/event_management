@@ -47,7 +47,7 @@ class ScreenSelectedFile extends StatelessWidget {
                           creatorId: null,
                           creatorImageId: null,
                           imagePath: null,
-                          // likeBy: ['njan'],
+                          likes: [],
                           totalLikes: 0,
                           timestamp: DateTime.now().millisecondsSinceEpoch);
                       BlocProvider.of<PostImageBloc>(context)

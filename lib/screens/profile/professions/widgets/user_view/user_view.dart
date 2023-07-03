@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -8,12 +10,15 @@ class ProfessionsProfileCleintView extends StatelessWidget {
   const ProfessionsProfileCleintView({
     super.key,
     required this.profession,
+    required this.postCount,
   });
 
   final UserModel profession;
+  final int postCount;
 
   @override
   Widget build(BuildContext context) {
+    log(postCount.toString());
     return Card(
       elevation: 5,
       child: SizedBox(
@@ -93,7 +98,10 @@ class ProfessionsProfileCleintView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Column(
-                                children: const [Text('5'), Text('Posts')],
+                                children: [
+                                  Text(postCount.toString()),
+                                  const Text('Posts')
+                                ],
                               ),
                               const VerticalDivider(),
                               Column(

@@ -4,7 +4,7 @@ class Post {
   String? creatorId;
   String? creatorImageId;
   String? imagePath;
-  // List<String>? likeBy;
+  List<String>? likes;
   int? totalLikes;
   int? timestamp;
 
@@ -14,7 +14,7 @@ class Post {
       required this.creatorId,
       required this.creatorImageId,
       required this.imagePath,
-      // required this.likeBy,
+      required this.likes,
       required this.totalLikes,
       required this.timestamp});
 
@@ -25,7 +25,7 @@ class Post {
         creatorId: map['creatorId'],
         creatorImageId: map['creatorImageId'],
         imagePath: map['imagePath'],
-        // likeBy: map['likeBy'],
+        likes: map['likes'],
         totalLikes: map['totalLikes'],
         timestamp: map['timestamp']);
   }
@@ -36,7 +36,7 @@ class Post {
       'creatorId': creatorId,
       'creatorImageId': creatorImageId,
       'imagePath': imagePath,
-      // 'likeBy': likeBy,
+      'likeBy': likes,
       'totalLikes': totalLikes,
       'timestamp': timestamp,
     };

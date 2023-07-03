@@ -269,6 +269,7 @@ class _ScreenUserFillUpState extends State<ScreenUserFillUp> {
   // store data to database
   void storeUserData() {
     UserModel userModel = UserModel(
+        follow: [],
         userType: widget.type,
         companyName: companyController?.text,
         ownerName: ownerController.text.trim(),

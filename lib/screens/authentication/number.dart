@@ -107,11 +107,11 @@ class ScreenLogin extends StatelessWidget {
                             width: phoneSize.width * .2,
                             height: phoneSize.width * .2,
                             child: LottieBuilder.asset(
-                              'assets/lottie/loading_plane_lot.json'),
-                        );
-                      }
-                      return ElevatedButton(
-                        onPressed: () async {
+                                'assets/lottie/loading_plane_lot.json'),
+                          );
+                        }
+                        return ElevatedButton(
+                          onPressed: () async {
                             if (phoneNumber.isEmpty ||
                                 phoneNumber.length != 10) {
                               ScaffoldMessenger.of(context).showSnackBar(

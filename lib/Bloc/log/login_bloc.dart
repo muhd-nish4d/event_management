@@ -12,7 +12,7 @@ import '../../model/user_model.dart';
 part 'login_event.dart';
 part 'login_state.dart';
 
-class LoginBloc extends Bloc<LoginEvent, LoginState> {
+class   LoginBloc extends Bloc<LoginEvent, LoginState> {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   LoginBloc() : super(LogInitialState()) {
     User? currentUser = firebaseAuth.currentUser;

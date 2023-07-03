@@ -8,11 +8,13 @@ class UserModel {
   String? phoneNumber;
   String? userBio;
   String? profileImage;
+  List<dynamic>? follow;
   String? coverImage;
   String? uid;
 
   UserModel(
-      {required this.userType,
+      {required this.follow,
+      required this.userType,
       required this.companyName,
       required this.ownerName,
       required this.profession,
@@ -22,14 +24,19 @@ class UserModel {
       required this.coverImage,
       required this.uid});
 
+  bool isFollowed(String currentUserId) {
+    return follow!.contains(currentUserId);
+  }
+
   factory UserModel.formMap(Map<String, dynamic> map) {
     UserType type;
     if (map['userType'] == 'cleint') {
       type = UserType.cleint;
-    }else{
+    } else {
       type = UserType.profession;
     }
     return UserModel(
+        follow: map['followers'] ?? [],
         userType: type,
         companyName: map['companyName'] ?? '',
         ownerName: map['ownerName'] ?? '',

@@ -9,4 +9,10 @@ abstract class AllUserBlocEvent extends Equatable {
 
 class UserInitialEvent extends AllUserBlocEvent {}
 
-class UserSearchEvent extends AllUserBlocEvent {}
+class UserProfessionsEvent extends AllUserBlocEvent {}
+
+class UserSearchEvent extends AllUserBlocEvent {
+  final String query;
+
+  const UserSearchEvent(this.query);
+}

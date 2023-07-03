@@ -1,77 +1,91 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:event_management/screens/profile/professions/profession.dart';
 import 'package:flutter/material.dart';
 
 import '../const/color.dart';
+import '../model/user_model.dart';
 
 class UsersTile extends StatelessWidget {
   const UsersTile({
     super.key,
+    this.userDetails,
   });
+  final UserModel? userDetails;
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      itemBuilder: (context, index) {
-        return ListTile(
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      const ScreenProfessionsProfile(isCleintView: true,userDetails: null),
-                ));
-          },
-          leading: const CircleAvatar(
-            child: Icon(
-              Icons.person,
-              color: white,
-            ),
-          ),
-          title: const Text('Company Name'),
-          subtitle: Row(
-            children: [
-              const Text('Profession'),
-              Row(
-                children: const [
-                  Icon(
-                    Icons.star,
-                    color: Colors.yellow,
-                    size: 15,
-                  ),
-                  Icon(
-                    Icons.star,
-                    color: Colors.yellow,
-                    size: 15,
-                  ),
-                  Icon(
-                    Icons.star,
-                    color: Colors.yellow,
-                    size: 15,
-                  ),
-                  Icon(
-                    Icons.star,
-                    color: Colors.yellow,
-                    size: 15,
-                  ),
-                  Icon(
-                    Icons.star,
-                    color: grey,
-                    size: 15,
+    return ListTile(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ScreenProfessionsProfile(
+                    isCleintView: true, userDetails: userDetails),
+              ));
+        },
+        leading: userDetails!.profileImage != ''
+            ? ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: CachedNetworkImage(
+                    placeholder: (context, url) => Container(
+                          color: grey.withOpacity(0.5),
+                        ),
+                    fit: BoxFit.cover,
+                    width: 50,
+                    height: 50,
+                    imageUrl: userDetails!.profileImage!),
+              )
+            : const CircleAvatar(
+                child: Icon(
+                  Icons.person,
+                  color: white,
+                ),
+              ),
+        title: Text(userDetails!.userType == UserType.profession
+            ? userDetails!.companyName == ''
+                ? 'Company Name'
+                : userDetails!.companyName!
+            : userDetails!.ownerName!),
+        subtitle: userDetails!.userType == UserType.profession
+            ? Row(
+                children: [
+                  Text(userDetails!.profession!),
+                  Row(
+                    children: const [
+                      Icon(
+                        Icons.star,
+                        color: Colors.yellow,
+                        size: 15,
+                      ),
+                      Icon(
+                        Icons.star,
+                        color: Colors.yellow,
+                        size: 15,
+                      ),
+                      Icon(
+                        Icons.star,
+                        color: Colors.yellow,
+                        size: 15,
+                      ),
+                      Icon(
+                        Icons.star,
+                        color: Colors.yellow,
+                        size: 15,
+                      ),
+                      Icon(
+                        Icons.star,
+                        color: grey,
+                        size: 15,
+                      )
+                    ],
                   )
                 ],
               )
-            ],
-          ),
-          trailing: IconButton(
-              onPressed: () {}, icon: const Icon(Icons.person_add_alt_1_sharp)),
-        );
-      },
-      separatorBuilder: (context, index) {
-        return const Divider(
-          height: 0,
-        );
-      },
-      itemCount: 10,
-    );
+            : const SizedBox(),
+        trailing: userDetails!.userType == UserType.profession
+            ? IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.person_add_alt_1_sharp))
+            : const SizedBox());
   }
 }
