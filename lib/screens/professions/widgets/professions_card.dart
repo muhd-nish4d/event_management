@@ -10,44 +10,32 @@ import '../../../const/color.dart';
 import '../../../model/user_model.dart';
 import '../../../static/statics.dart';
 
-class ProfessionsCard extends StatefulWidget {
+class ProfessionsCard extends StatelessWidget {
   ProfessionsCard({super.key, required this.professions});
   final UserModel professions;
 
-  @override
-  State<ProfessionsCard> createState() => _ProfessionsCardState();
-}
-
-class _ProfessionsCardState extends State<ProfessionsCard> {
   final String? currentUserUid = FirebaseAuth.instance.currentUser!.uid;
-  late bool isFollowed;
 
-  @override
-  void initState() {
-    isFollowed = widget.professions.isFollowed(currentUserUid!);
-    super.initState();
-  }
+  ValueNotifier<bool> isFollowed = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
+    isFollowed.value = professions.isFollowed(currentUserUid!);
     log(isFollowed.toString());
     return Card(
       elevation: 5,
       child: SizedBox(
-        // decoration: BoxDecoration(
-        //     borderRadius: BorderRadius.circular(10),
-        //     boxShadow: const [BoxShadow(blurRadius: 4)]),
         child: Column(
           children: [
             Expanded(
               flex: 6,
               child: GestureDetector(
                 onTap: () {
-                  log(widget.professions.uid.toString());
+                  log(professions.uid.toString());
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => ScreenProfessionsProfile(
                           isCleintView: true,
-                          userDetails: widget.professions)));
+                          userDetails: professions)));
                 },
                 child: Stack(
                   // alignment: Alignment.center,
@@ -70,16 +58,16 @@ class _ProfessionsCardState extends State<ProfessionsCard> {
                                 const SizedBox(
                                   height: 100,
                                 ),
-                                Text(widget.professions.ownerName ??
+                                Text(professions.ownerName ??
                                     'Owner Name'),
                                 Text(
-                                  widget.professions.companyName ??
+                                  professions.companyName ??
                                       'Company Name',
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18),
                                 ),
-                                Text(widget.professions.profession ??
+                                Text(professions.profession ??
                                     'Profession'),
                                 Row(
                                   children: const [
@@ -133,7 +121,7 @@ class _ProfessionsCardState extends State<ProfessionsCard> {
 
                           //             NetworkImage(professions.coverImage!))
                         ),
-                        child: widget.professions.coverImage!.isEmpty
+                        child: professions.coverImage!.isEmpty
                             ? const SizedBox()
                             : ClipRRect(
                                 borderRadius: const BorderRadius.only(
@@ -143,7 +131,7 @@ class _ProfessionsCardState extends State<ProfessionsCard> {
                                     fit: BoxFit.cover,
                                     width: 60,
                                     height: 60,
-                                    imageUrl: widget.professions.coverImage!),
+                                    imageUrl: professions.coverImage!),
                               ),
                       ),
                     ),
@@ -151,7 +139,7 @@ class _ProfessionsCardState extends State<ProfessionsCard> {
                       // alignment: Alignment.centerLeft,
                       top: 50,
                       left: 20,
-                      child: widget.professions.profileImage!.isEmpty
+                      child: professions.profileImage!.isEmpty
                           ? const CircleAvatar(
                               radius: 30,
                               backgroundColor: grey,
@@ -167,7 +155,7 @@ class _ProfessionsCardState extends State<ProfessionsCard> {
                                   fit: BoxFit.cover,
                                   width: 60,
                                   height: 60,
-                                  imageUrl: widget.professions.profileImage!),
+                                  imageUrl: professions.profileImage!),
                             ),
                     )
                   ],
@@ -199,24 +187,30 @@ class _ProfessionsCardState extends State<ProfessionsCard> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => ScreenChat(
-                                              user: widget.professions,
+                                              user: professions,
                                             )));
                               },
                               child: const Text('Chat'),
                             ),
                             const VerticalDivider(),
-                            TextButton(
-                              onPressed: () {
-                                if (isFollowed) {
-                                  // Perform unfollow action
-                                  Utils.unfollowUser(widget.professions.uid!);
-                                } else {
-                                  // Perform follow action
-                                  Utils.followUser(widget.professions.uid!);
-                                }
-                              },
-                              child: Text(isFollowed ? 'Unfollow' : 'Follow'),
-                            )
+                            ValueListenableBuilder(
+                                valueListenable: isFollowed,
+                                builder: (context, value, child) {
+                                  return TextButton(
+                                    onPressed: () {
+                                      if (value) {
+                                        // Perform unfollow action
+                                        Utils.unfollowUser(
+                                            professions.uid!);
+                                      } else {
+                                        // Perform follow action
+                                        Utils.followUser(
+                                            professions.uid!);
+                                      }
+                                    },
+                                    child: Text(value ? 'Unfollow' : 'Follow'),
+                                  );
+                                })
                           ],
                         ),
                       )

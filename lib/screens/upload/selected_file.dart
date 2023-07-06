@@ -47,7 +47,7 @@ class ScreenSelectedFile extends StatelessWidget {
                           creatorId: null,
                           creatorImageId: null,
                           imagePath: null,
-                          likes: [],
+                          likeBy: [],
                           totalLikes: 0,
                           timestamp: DateTime.now().millisecondsSinceEpoch);
                       BlocProvider.of<PostImageBloc>(context)
@@ -78,7 +78,7 @@ class ScreenSelectedFile extends StatelessWidget {
               TextFormField(
                 controller: titleController,
                 maxLines: 4,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     border: InputBorder.none, hintText: 'Type something...'),
               ),
             ],

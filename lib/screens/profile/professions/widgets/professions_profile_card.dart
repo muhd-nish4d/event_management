@@ -33,7 +33,7 @@ class ProfessionsProfileCard extends StatelessWidget {
                     )
                   : const ProfessionsProfileUserView());
         } else if (state is ImageFetchLoadingState) {
-          return Container(
+          return const SizedBox(
             height: 405,
             child: CustomProgressIndicator(),
           );

@@ -270,6 +270,7 @@ class _ScreenUserFillUpState extends State<ScreenUserFillUp> {
   void storeUserData() {
     UserModel userModel = UserModel(
         follow: [],
+        following: [],
         userType: widget.type,
         companyName: companyController?.text,
         ownerName: ownerController.text.trim(),

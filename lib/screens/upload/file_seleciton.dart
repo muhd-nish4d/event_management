@@ -33,7 +33,6 @@ class _ScreenFileShowingState extends State<ScreenFileShowing> {
 
   Future<void> getImagesFromGallery() async {
     StorageImages? storageImages;
-    // final set = <Images>{};
 
     try {
       storageImages = await GalleryImages().getStorageImages();

@@ -3,24 +3,25 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_management/const/color.dart';
 import 'package:event_management/model/chat_model.dart';
-import 'package:event_management/screens/chat/person_chat/const/massege.dart';
 import 'package:event_management/screens/chat/person_chat/widgets/appbar.dart';
 import 'package:event_management/screens/chat/person_chat/widgets/booking_button.dart';
 import 'package:event_management/screens/chat/person_chat/widgets/event_req_card.dart';
+import 'package:event_management/static/statics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:grouped_list/grouped_list.dart';
-import 'package:intl/intl.dart';
 
+import '../../../model/event_reqbooking_model.dart';
 import '../../../model/user_model.dart';
-import 'model/massege_model.dart';
 
 class ScreenChat extends StatelessWidget {
   ScreenChat({super.key, required this.user, this.chatRoomId});
   final UserModel user;
   final String? chatRoomId;
+
   TextEditingController chatMessageController = TextEditingController();
+
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
@@ -35,6 +36,7 @@ class ScreenChat extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
+              flex: 2,
               child: StreamBuilder<QuerySnapshot>(
                 stream: firebaseFirestore
                     .collection('chatRoom')
@@ -44,7 +46,7 @@ class ScreenChat extends StatelessWidget {
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
                   final messages = snapshot.data!.docs;
                   return ListView.builder(
@@ -56,13 +58,33 @@ class ScreenChat extends StatelessWidget {
 
                       // final sender = message['sender'];
                       // final text = message['message'];
-                      return ListTile(
-                        title: Text(message.sender!),
-                        subtitle: Text(message.message!),
-                        onTap: () {
-                          // Handle tapping on a message if needed
-                        },
+                      return Align(
+                        alignment: message.sender == auth.currentUser?.uid
+                            ? Alignment.centerRight
+                            : Alignment.centerLeft,
+                        child: Card(
+                            color: message.sender == auth.currentUser?.uid
+                                ? orange
+                                : Colors.grey[50],
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                message.message!,
+                                style: TextStyle(
+                                    color:
+                                        message.sender == auth.currentUser?.uid
+                                            ? white
+                                            : black),
+                              ),
+                            )),
                       );
+                      // ListTile(
+                      //   title: Text(message.sender!),
+                      //   subtitle: Text(message.message!),
+                      //   onTap: () {
+                      //     // Handle tapping on a message if needed
+                      //   },
+                      // );
                     },
                   );
                 },
@@ -117,7 +139,54 @@ class ScreenChat extends StatelessWidget {
               //   },
               // )
             ),
-            const Visibility(visible: false, child: EventReqCard()),
+            StreamBuilder<List<EventBookingReq>>(
+              stream: Utils.getBookingRequestsStream(
+                  user.uid!), // Replace with your own stream
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<EventBookingReq>> snapshot) {
+                if (snapshot.hasError) {
+                  // Handle the error state
+                  return Text('Error: ${snapshot.error}');
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  // Show a loading indicator while waiting for data
+                  return const CircularProgressIndicator();
+                }
+
+                List<EventBookingReq> bookingRequests = snapshot.data ?? [];
+
+                if (bookingRequests.isEmpty) {
+                  // Show a message when there are no booking requests
+                  return const Text('');
+                }
+
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: bookingRequests.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    EventBookingReq bookingReq = bookingRequests[index];
+                    log('sender ${bookingReq.senderId} == ${user.uid}');
+                    log('reci ${bookingReq.recipientId} == ${auth.currentUser?.uid}');
+                    // Retrieve event details from the booking request or fetch from Firestore
+
+                    // String eventType = bookingReq.;
+                    // DateTime eventDate = bookingReq.eventDate;
+
+                    return Visibility(
+                      visible: bookingReq.senderId == user.uid &&
+                              bookingReq.recipientId == auth.currentUser?.uid &&
+                              bookingReq.status == 'notResponded'
+                          ? true
+                          : false,
+                      child: EventReqCard(eventDetails: bookingReq),
+                    );
+                  },
+                );
+              },
+            ),
+
+            // const Visibility(visible: false, child: EventReqCard()),
             Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
@@ -132,7 +201,10 @@ class ScreenChat extends StatelessWidget {
                         contentPadding: EdgeInsets.all(10)))),
             Row(
               children: [
-                const Expanded(child: BookingEventButton()),
+                Expanded(
+                    child: BookingEventButton(
+                  recipientId: user.uid!,
+                )),
                 IconButton(
                   onPressed: () {
                     _sendMessage();

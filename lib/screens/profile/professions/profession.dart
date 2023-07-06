@@ -14,7 +14,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../Bloc/fillup/fillup_bloc.dart';
 import '../../../const/color.dart';
 import '../../../const/sizes.dart';
-import '../../../widgets/user_listtile.dart';
 
 class ScreenProfessionsProfile extends StatefulWidget {
   final bool isCleintView;
@@ -176,13 +175,15 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
                 WidgetProfessionsPosts(user: widget.userDetails),
                 WidgetProfessionsFollow(
                     followers: widget.userDetails?.follow ?? []),
-                const UsersTile(),
+                WidgetProfessionsFollow(
+                    followers: widget.userDetails?.following ?? []),
               ])
             : TabBarView(controller: tabController, children: [
                 WidgetProfessionsPosts(user: widget.userDetails),
                 WidgetProfessionsFollow(
                     followers: widget.userDetails?.follow ?? []),
-                const UsersTile(),
+                WidgetProfessionsFollow(
+                    followers: widget.userDetails?.following ?? []),
                 const WidgetBookedWorks()
               ]),
         //  ValueListenableBuilder(

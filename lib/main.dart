@@ -2,6 +2,7 @@ import 'package:event_management/Bloc/all_user/all_user_bloc_bloc.dart';
 import 'package:event_management/Bloc/fillup/fillup_bloc.dart';
 import 'package:event_management/Bloc/image_fetch/image_fetch_bloc.dart';
 import 'package:event_management/Bloc/upload_image/post_image_bloc.dart';
+import 'package:event_management/bloc/follow_unfollow/followunfollow_bloc.dart';
 import 'package:event_management/screens/splash/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,8 @@ class MyApp extends StatelessWidget {
         BlocProvider<FillupBloc>.value(value: FillupBloc()),
         BlocProvider<AllUserBlocBloc>.value(value: AllUserBlocBloc()),
         BlocProvider<PostImageBloc>.value(value: PostImageBloc()),
-        BlocProvider<ImageFetchBloc>.value(value: ImageFetchBloc())
+        BlocProvider<ImageFetchBloc>.value(value: ImageFetchBloc()),
+        BlocProvider<FollowUnfollowBloc>.value(value: FollowUnfollowBloc())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
+
+import '../model/event_reqbooking_model.dart';
 
 class Utils {
   static String getUniqueId() {
@@ -26,10 +30,20 @@ class Utils {
       'followers': FieldValue.arrayUnion([currentUserId]),
     }).then((value) {
       // Update the UI or show a success message
-      print('Successfully followed user $userId');
+      log('Successfully followed user $userId');
     }).catchError((error) {
       // Handle error
-      print('Error following user $userId: $error');
+      log('Error following user $userId: $error');
+    });
+
+    firebaseFirestore.collection('users').doc(currentUserId).update({
+      'following': FieldValue.arrayUnion([userId]),
+    }).then((value) {
+      // Update the UI or show a success message
+      log('Successfully followed user $userId');
+    }).catchError((error) {
+      // Handle error
+      log('Error following user $userId: $error');
     });
   }
 
@@ -44,10 +58,104 @@ class Utils {
       'followers': FieldValue.arrayRemove([currentUserId]),
     }).then((value) {
       // Update the UI or show a success message
-      print('Successfully unfollowed user $userId');
+      log('Successfully unfollowed user $userId');
     }).catchError((error) {
       // Handle error
-      print('Error unfollowing user $userId: $error');
+      log('Error unfollowing user $userId: $error');
+    });
+
+    firebaseFirestore.collection('users').doc(currentUserId).update({
+      'following': FieldValue.arrayRemove([userId]),
+    }).then((value) {
+      // Update the UI or show a success message
+      log('Successfully unfollowed user $userId');
+    }).catchError((error) {
+      // Handle error
+      log('Error unfollowing user $userId: $error');
+    });
+  }
+
+  static void likeUserPost(String imageId) {
+    final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
+    // Get the current user's UID
+    final String currentUserId = firebaseAuth.currentUser?.uid ?? '';
+
+    // Update the follow relationship in Firestore
+    firebaseFirestore.collection('posts').doc(imageId).update({
+      'likeBy': FieldValue.arrayUnion([currentUserId]),
+    }).then((value) {
+      // Update the UI or show a success message
+      log('Successfully  user $imageId');
+    }).catchError((error) {
+      // Handle error
+      log('Error following user $imageId: $error');
+    });
+  }
+
+  static void unLikeUserPost(String imageId) {
+    final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
+    final String currentUserId = firebaseAuth.currentUser?.uid ?? '';
+
+    firebaseFirestore.collection('posts').doc(imageId).update({
+      'likeBy': FieldValue.arrayRemove([currentUserId]),
+    }).then((value) {
+      log('Successfully removed user $imageId');
+    }).catchError((error) {
+      log('Error following user $imageId: $error');
+    });
+  }
+
+  static Future<String?> getPostIdByImage(String imageId) async {
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('posts')
+          .where('id', isEqualTo: imageId)
+          .limit(1)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+        String postId = documentSnapshot.id;
+        return postId;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      log('Error getting post ID: $e');
+      return null;
+    }
+  }
+
+  static Future<void> sendReqForEventBook(EventBookingReq req) async {
+    final String currentUser = FirebaseAuth.instance.currentUser?.uid ?? '';
+    req.senderId = currentUser;
+    try {
+      await FirebaseFirestore.instance
+          .collection('bookingRequests')
+          .add(req.toMap());
+      log('sender   ${req.senderId.toString()}');
+      log('resp   ${req.recipientId.toString()}');
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Stream<List<EventBookingReq>> getBookingRequestsStream(String recipientUser) {
+    final String currentUser = FirebaseAuth.instance.currentUser?.uid ?? '';
+    return FirebaseFirestore.instance
+        .collection('bookingRequests')
+        .where('senderId', isEqualTo: currentUser)
+        .where('recipientId', isEqualTo: recipientUser)
+        .where('status', isEqualTo: 'notResponded')
+        .snapshots()
+        .map((querySnapshot) {
+      return querySnapshot.docs
+          .map((doc) => EventBookingReq.fromMap(doc.data()))
+          .toList();
     });
   }
 }

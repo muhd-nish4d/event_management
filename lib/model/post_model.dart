@@ -4,7 +4,7 @@ class Post {
   String? creatorId;
   String? creatorImageId;
   String? imagePath;
-  List<String>? likes;
+  List<dynamic>? likeBy;
   int? totalLikes;
   int? timestamp;
 
@@ -14,9 +14,13 @@ class Post {
       required this.creatorId,
       required this.creatorImageId,
       required this.imagePath,
-      required this.likes,
+      required this.likeBy,
       required this.totalLikes,
       required this.timestamp});
+
+  bool isLiked(String userId) {
+    return likeBy!.contains(userId);
+  }
 
   factory Post.fromMap(Map<String, dynamic> map) {
     return Post(
@@ -25,7 +29,7 @@ class Post {
         creatorId: map['creatorId'],
         creatorImageId: map['creatorImageId'],
         imagePath: map['imagePath'],
-        likes: map['likes'],
+        likeBy: map['likeBy'],
         totalLikes: map['totalLikes'],
         timestamp: map['timestamp']);
   }
@@ -36,7 +40,7 @@ class Post {
       'creatorId': creatorId,
       'creatorImageId': creatorImageId,
       'imagePath': imagePath,
-      'likeBy': likes,
+      'likeBy': likeBy,
       'totalLikes': totalLikes,
       'timestamp': timestamp,
     };

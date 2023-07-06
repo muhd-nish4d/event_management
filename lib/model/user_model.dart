@@ -9,11 +9,13 @@ class UserModel {
   String? userBio;
   String? profileImage;
   List<dynamic>? follow;
+  List<dynamic>? following;
   String? coverImage;
   String? uid;
 
   UserModel(
-      {required this.follow,
+      {required this.following,
+      required this.follow,
       required this.userType,
       required this.companyName,
       required this.ownerName,
@@ -36,6 +38,7 @@ class UserModel {
       type = UserType.profession;
     }
     return UserModel(
+        following: map['following'] ?? [],
         follow: map['followers'] ?? [],
         userType: type,
         companyName: map['companyName'] ?? '',

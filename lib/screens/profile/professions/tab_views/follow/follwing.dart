@@ -9,30 +9,32 @@ import 'package:flutter/material.dart';
 import '../../../../../model/user_model.dart';
 
 class WidgetProfessionsFollow extends StatelessWidget {
-  WidgetProfessionsFollow({super.key, required this.followers});
+  const WidgetProfessionsFollow({super.key, required this.followers});
   final List<dynamic> followers;
-  late UserModel user;
+  // late UserModel user;
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        return FutureBuilder<UserModel?>(
-          future: getUserDetails(followers[index]),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CustomProgressIndicator();
-            } else if (snapshot.hasData) {
-              UserModel? user = snapshot.data;
-              return UsersTile(userDetails: user);
-            } else {
-              return SizedBox(); // or handle the error case
-            }
-          },
-        );
-      },
-      itemCount: followers.length,
-    );
+    return followers.isEmpty
+        ? const Center(child: Text('No followers'))
+        : ListView.builder(
+            itemBuilder: (context, index) {
+              return FutureBuilder<UserModel?>(
+                future: getUserDetails(followers[index]),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CustomProgressIndicator();
+                  } else if (snapshot.hasData) {
+                    UserModel? user = snapshot.data;
+                    return UsersTile(userDetails: user);
+                  } else {
+                    return SizedBox(); // or handle the error case
+                  }
+                },
+              );
+            },
+            itemCount: followers.length,
+          );
   }
 
   Future<UserModel?> getUserDetails(String uid) async {

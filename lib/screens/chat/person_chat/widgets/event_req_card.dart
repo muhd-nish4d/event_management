@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../../../../model/event_reqbooking_model.dart';
+
 class EventReqCard extends StatelessWidget {
   const EventReqCard({
     super.key,
+    required this.eventDetails,
   });
+  final EventBookingReq eventDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +19,10 @@ class EventReqCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Event Type',
+               Text(eventDetails.partyType ?? 'Event Type',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              const Text('About Event'),
-              const Text('10 / Apr / 2022'),
+              Text(eventDetails.aboutParty ?? ''),
+              Text(eventDetails.date?.substring(0, 10) ?? ''),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [

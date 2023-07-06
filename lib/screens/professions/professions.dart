@@ -1,11 +1,7 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_management/screens/professions/widgets/professions_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../Bloc/all_user/all_user_bloc_bloc.dart';
 import '../../const/color.dart';
 import '../../model/user_model.dart';
 import '../../widgets/circular_progress_indicator.dart';
@@ -21,7 +17,6 @@ class ScreenProfession extends StatefulWidget {
 }
 
 class _ScreenProfessionState extends State<ScreenProfession> {
-
   String searchedQuery = '';
 
   // @override
@@ -45,8 +40,7 @@ class _ScreenProfessionState extends State<ScreenProfession> {
                       },
                       icon: Icon(CupertinoIcons.back, color: orange))
                   : const SizedBox(),
-              Expanded(
-                  child: CupertinoSearchTextField(
+              Expanded(child: CupertinoSearchTextField(
                 onChanged: (value) {
                   // BlocProvider.of<AllUserBlocBloc>(context)
                   //     .add(UserSearchEvent(value));
