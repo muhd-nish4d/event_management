@@ -38,7 +38,7 @@ class CircleAvatarEdit extends StatelessWidget {
             Icons.edit,
             color: white,
           ),
-          style: IconButton.styleFrom(backgroundColor: orange),
+          style: IconButton.styleFrom(backgroundColor: primaryColor),
         )
       ],
     );

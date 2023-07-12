@@ -27,7 +27,7 @@ class ScreenOTP extends StatelessWidget {
           color: Color.fromRGBO(30, 60, 87, 1),
           fontWeight: FontWeight.w600),
       decoration: BoxDecoration(
-        border: Border.all(color: orange),
+        border: Border.all(color: primaryColor),
         borderRadius: BorderRadius.circular(20),
       ),
     );

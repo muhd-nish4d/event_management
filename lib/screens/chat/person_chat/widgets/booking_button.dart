@@ -39,7 +39,7 @@ class BookingEventButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          backgroundColor: orange),
+          backgroundColor: primaryColor),
       child: const Text('Book your Party', style: TextStyle(color: white)),
     );
   }

@@ -15,7 +15,7 @@ ValueNotifier<int> currentIndexSelected = ValueNotifier(0);
 class ScreenMain extends StatelessWidget {
   final UserModel? userDatas;
   ScreenMain({super.key, this.userDatas});
-  List<Widget> screens = [
+  final List<Widget> screens = [
     const ScreenHome(),
     const ScreenProfession(fromAnotherScreen: false),
     const ScreenFilter(),
@@ -26,22 +26,20 @@ class ScreenMain extends StatelessWidget {
     // BlocProvider.of<FillupBloc>(context).close();
     // BlocProvider.of<FillupBloc>(context).add(FillUpInitialEvent());
     return Scaffold(
-        backgroundColor: Colors.deepPurple[50],
         body: ValueListenableBuilder(
             valueListenable: currentIndexSelected,
             builder: (context, value, child) {
               return SafeArea(child: screens[value]);
             }),
-        bottomNavigationBar: Container(
-          decoration: const BoxDecoration(boxShadow: [
-            BoxShadow(blurRadius: 1, blurStyle: BlurStyle.outer)
-          ]),
+        bottomNavigationBar: Card(
+          margin: EdgeInsets.all(10),
+          color: seconderyColor,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: GNav(
               selectedIndex: currentIndexSelected.value,
               activeColor: white,
-              tabBackgroundColor: orange,
+              tabBackgroundColor: Colors.indigo,
               tabBorderRadius: 10,
               padding: const EdgeInsets.all(10),
               tabs: const [

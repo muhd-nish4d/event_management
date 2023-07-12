@@ -49,7 +49,7 @@ class _ScreenChatPersonsState extends State<ScreenChatPersons> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: Icon(CupertinoIcons.back, color: orange)),
+                            icon: Icon(CupertinoIcons.back, color: primaryColor)),
                         const Expanded(child: CupertinoSearchTextField()),
                         itemsGapWidth
                       ]),
@@ -71,7 +71,7 @@ class _ScreenChatPersonsState extends State<ScreenChatPersons> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: Icon(CupertinoIcons.back, color: orange)),
+                            icon: Icon(CupertinoIcons.back, color: primaryColor)),
                         const Expanded(child: CupertinoSearchTextField()),
                         itemsGapWidth
                       ]),
@@ -90,7 +90,7 @@ class _ScreenChatPersonsState extends State<ScreenChatPersons> {
     //             onPressed: () {
     //               Navigator.pop(context);
     //             },
-    //             icon: Icon(CupertinoIcons.back, color: orange)),
+    //             icon: Icon(CupertinoIcons.back, color: primaryColor)),
     //         const Expanded(child: CupertinoSearchTextField()),
     //         itemsGapWidth
     //       ]),

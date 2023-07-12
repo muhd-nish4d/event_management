@@ -13,6 +13,7 @@ import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../const/color.dart';
+import '../../const/images.dart';
 
 class ScreenSplash extends StatefulWidget {
   const ScreenSplash({super.key});
@@ -71,19 +72,13 @@ class _ScreenSplashState extends State<ScreenSplash> {
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: orange,
+      backgroundColor: primaryColor,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-                width: screenSize.width * .4,
-                child: Lottie.asset('assets/lottie/wedding_bride.json')),
-            itemsGapHeight,
-            const Text('App Name')
-          ],
-        ),
-      ),
+          child: Container(
+        width: screenSize.width * .5,
+        decoration: const BoxDecoration(
+            image: DecorationImage(image: AssetImage(appLogo))),
+      )),
     );
   }
 }

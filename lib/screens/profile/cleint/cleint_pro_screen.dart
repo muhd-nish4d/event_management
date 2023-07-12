@@ -28,7 +28,7 @@ class ScreenCleintProfile extends StatelessWidget {
                       ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: orange,
+                            backgroundColor: primaryColor,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10))),
                         child: const Text(

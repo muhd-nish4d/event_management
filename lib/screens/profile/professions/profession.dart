@@ -9,7 +9,6 @@ import 'package:event_management/screens/settings/settigs_menu.dart';
 import 'package:event_management/screens/upload/file_seleciton.dart';
 import 'package:event_management/static/statics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,6 +49,7 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
+              backgroundColor: seconderyColor,
               automaticallyImplyLeading: false,
               actions: [
                 widget.isCleintView
@@ -70,7 +70,7 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
                                                 )));
                                   },
                                   style: ElevatedButton.styleFrom(
-                                      backgroundColor: orange,
+                                      backgroundColor: primaryColor,
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(10))),
@@ -84,7 +84,7 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
                               ElevatedButton(
                                 onPressed: () {},
                                 style: ElevatedButton.styleFrom(
-                                    backgroundColor: orange,
+                                    backgroundColor: primaryColor,
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(10))),
@@ -97,9 +97,9 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
                             ],
                           )
                         : const Padding(
-                          padding:  EdgeInsets.only(right: 10),
-                          child:  BookingsButton(),
-                        )
+                            padding: EdgeInsets.only(right: 10),
+                            child: BookingsButton(),
+                          )
                     : Row(
                         children: [
                           IconButton(
@@ -126,7 +126,7 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      icon: Icon(CupertinoIcons.back, color: orange))
+                      icon: Icon(CupertinoIcons.back, color: primaryColor))
                   : const BookingsButton(),
               floating: true,
               pinned: false,
@@ -141,8 +141,8 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
                 length: widget.isCleintView ? 3 : 4, // Number of tabs
                 child: TabBar(
                     controller: tabController,
-                    indicatorColor: orange,
-                    labelColor: orange,
+                    indicatorColor: primaryColor,
+                    labelColor: primaryColor,
                     tabs: widget.isCleintView
                         ? const [
                             Tab(
@@ -235,7 +235,7 @@ class BookingsButton extends StatelessWidget {
             MaterialPageRoute(builder: (context) => const ScreenBookings()));
       },
       style: ElevatedButton.styleFrom(
-          backgroundColor: orange,
+          backgroundColor: primaryColor,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
       child: const Text(

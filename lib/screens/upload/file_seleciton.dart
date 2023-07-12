@@ -124,7 +124,7 @@ class _ScreenFileShowingState extends State<ScreenFileShowing> {
             dimmedLayerColor: white,
             hideBottomControls: true,
             toolbarTitle: 'Cropper',
-            toolbarColor: orange,
+            toolbarColor: primaryColor,
             toolbarWidgetColor: Colors.white,
             initAspectRatio: CropAspectRatioPreset.original,
             lockAspectRatio: true),

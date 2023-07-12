@@ -28,7 +28,7 @@ class ScreenChat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: orange,
+          backgroundColor: primaryColor,
           title: WidgetChatAppBarTitle(userDetails: user)),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -64,7 +64,7 @@ class ScreenChat extends StatelessWidget {
                             : Alignment.centerLeft,
                         child: Card(
                             color: message.sender == auth.currentUser?.uid
-                                ? orange
+                                ? primaryColor
                                 : Colors.grey[50],
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -99,7 +99,7 @@ class ScreenChat extends StatelessWidget {
               //     height: 40,
               //     child: Center(
               //       child: Card(
-              //         color: orange,
+              //         color: primaryColor,
               //         child: Padding(
               //           padding: const EdgeInsets.all(8.0),
               //           child: Text(
@@ -207,7 +207,7 @@ class ScreenChat extends StatelessWidget {
                     color: white,
                   ),
                   style: IconButton.styleFrom(
-                      backgroundColor: orange,
+                      backgroundColor: primaryColor,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10))),
                 )

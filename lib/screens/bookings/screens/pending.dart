@@ -28,8 +28,8 @@ class _ScreenPendingState extends State<ScreenPending>
         //   child: TabBar(
         //     isScrollable: true,
         //     controller: tabController,
-        //     indicatorColor: orange,
-        //     labelColor: orange,
+        //     indicatorColor: primaryColor,
+        //     labelColor: primaryColor,
         //     tabs: const [
         //       Tab(
         //         text: 'All',

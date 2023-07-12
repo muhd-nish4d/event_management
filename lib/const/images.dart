@@ -1,3 +1,6 @@
+//App logo
+const String appLogo = 'assets/image/appLogo.png';
+
 //Back Ground Image
 const String backgroundImage = 'assets/image/back_ground_image.jpg';
 

@@ -21,7 +21,7 @@ class WidgetAppBar extends StatelessWidget {
       width: double.infinity,
       height: 60,
       decoration: BoxDecoration(
-          color: Colors.indigo[100],
+          color: primaryColor,
           boxShadow: const [
             BoxShadow(
               blurStyle: BlurStyle.outer,
@@ -44,7 +44,7 @@ class WidgetAppBar extends StatelessWidget {
                       },
                       icon: Icon(
                         leadingIcon ?? CupertinoIcons.back,
-                        color: orange,
+                        color: primaryColor,
                       )),
                 )
               : empty,

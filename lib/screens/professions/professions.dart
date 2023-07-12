@@ -35,7 +35,7 @@ class _ScreenProfessionState extends State<ScreenProfession> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      icon: Icon(CupertinoIcons.back, color: orange))
+                      icon: Icon(CupertinoIcons.back, color: primaryColor))
                   : const SizedBox(),
               Expanded(child: CupertinoSearchTextField(
                 onChanged: (value) {

@@ -30,7 +30,7 @@ class ScreenBookings extends StatelessWidget {
             child: GNav(
               selectedIndex: currentSelectedScreen.value,
               activeColor: white,
-              tabBackgroundColor: orange,
+              tabBackgroundColor: primaryColor,
               tabBorderRadius: 10,
               tabMargin: const EdgeInsets.symmetric(horizontal: 50),
               padding: const EdgeInsets.all(10),

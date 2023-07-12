@@ -71,7 +71,7 @@ class UserChoseButtonStyle extends StatelessWidget {
       width: screenSize.width * .8,
       child: OutlinedButton(
           style: OutlinedButton.styleFrom(
-              // backgroundColor: orange,
+              // backgroundColor: primaryColor,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10))),
           onPressed: navigate,
@@ -81,14 +81,14 @@ class UserChoseButtonStyle extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: orange,
+                color: primaryColor,
                 size: 50,
               ),
               Text(
                 userType,
                 textAlign: TextAlign.start,
                 style:  TextStyle(
-                  color: orange,
+                  color: primaryColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                 ),

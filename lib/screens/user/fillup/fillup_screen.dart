@@ -71,7 +71,7 @@ class _ScreenUserFillUpState extends State<ScreenUserFillUp> {
                                   return Container(
                                       decoration: value == null
                                           ? BoxDecoration(
-                                              color: orange,
+                                              color: primaryColor,
                                               boxShadow: const [
                                                 BoxShadow(
                                                     blurRadius: 4,
@@ -148,7 +148,7 @@ class _ScreenUserFillUpState extends State<ScreenUserFillUp> {
                     //   decoration: InputDecoration(
                     //       prefixIcon: Icon(
                     //         Icons.person,
-                    //         color: orange,
+                    //         color: primaryColor,
                     //       ),
                     //       hintText: widget.type == UserType.profession
                     //           ? 'Company name'
@@ -241,7 +241,7 @@ class _ScreenUserFillUpState extends State<ScreenUserFillUp> {
                           alignment: Alignment.centerRight,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: orange,
+                                backgroundColor: primaryColor,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10))),
                             onPressed: () {
@@ -354,7 +354,7 @@ class WidgetForFillupSingle extends StatelessWidget {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
-          prefixIcon: Icon(icon, color: orange),
+          prefixIcon: Icon(icon, color: primaryColor),
           hintText: hint,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
@@ -383,11 +383,11 @@ class WidgetFillupTextFieldForTwo extends StatelessWidget {
           prefixIcon: widget.type == UserType.profession
               ? Icon(
                   Icons.factory,
-                  color: orange,
+                  color: primaryColor,
                 )
               : Icon(
                   Icons.person,
-                  color: orange,
+                  color: primaryColor,
                 ),
           hintText:
               widget.type == UserType.profession ? 'Company name' : 'Uesr name',

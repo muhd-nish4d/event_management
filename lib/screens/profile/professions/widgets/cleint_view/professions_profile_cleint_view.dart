@@ -136,7 +136,7 @@ class ProfessionsProfileUserView extends StatelessWidget {
                       width: double.infinity,
                       height: 150,
                       decoration: BoxDecoration(
-                        color: orange,
+                        color: primaryColor,
                         borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(10),
                             topRight: Radius.circular(10)),

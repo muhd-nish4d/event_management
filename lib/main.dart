@@ -12,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'Bloc/log/login_bloc.dart';
+import 'const/color.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +26,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    log('main');
     return MultiBlocProvider(
       providers: [
         BlocProvider<LoginBloc>.value(value: LoginBloc()),
@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Event Management',
         theme: ThemeData(
+          scaffoldBackgroundColor: seconderyColor,
           textTheme: GoogleFonts.rubikTextTheme(),
           useMaterial3: true,
           primarySwatch: Colors.orange,

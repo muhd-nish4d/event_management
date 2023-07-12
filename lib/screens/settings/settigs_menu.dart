@@ -1,4 +1,5 @@
 import 'package:event_management/const/color.dart';
+import 'package:event_management/screens/settings/screens/privacy_policy.dart';
 import 'package:event_management/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,13 +13,35 @@ class ScreenSettingsMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          backgroundColor: seconderyColor,
           title: const Text('Settings',
               style: TextStyle(fontWeight: FontWeight.bold))),
       body: Column(
         children: [
-          SettingsTiles(text: 'Edit profile', icon: Icons.edit, onTap: () {}),
+          // SettingsTiles(text: 'Edit profile', icon: Icons.edit, onTap: () {}),
           SettingsTiles(text: 'Help', icon: Icons.help, onTap: () {}),
-          SettingsTiles(text: 'About', icon: Icons.info, onTap: () {}),
+          SettingsTiles(
+              text: 'Privacy Policy',
+              icon: Icons.view_list_rounded,
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const ScreenPrivacyPolicy(isAbout: false),
+                    ));
+              }),
+          SettingsTiles(
+              text: 'About',
+              icon: Icons.info,
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const ScreenPrivacyPolicy(isAbout: true),
+                    ));
+              }),
           BlocConsumer<LoginBloc, LoginState>(
             listener: (context, state) {
               if (state is LoggedOutState) {

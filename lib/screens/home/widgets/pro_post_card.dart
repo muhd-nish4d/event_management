@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:event_management/const/color.dart';
 import 'package:event_management/model/user_model.dart';
@@ -85,21 +83,32 @@ class PostCard extends StatelessWidget {
                       ),
                     ),
                     const Spacer(),
-                    ValueListenableBuilder(
-                        valueListenable: isFollowed,
-                        builder: (context, value, child) {
-                          return IconButton(
-                              onPressed: () {
-                                if (value) {
-                                  Utils.unfollowUser(userData!.uid!);
-                                } else {
-                                  Utils.followUser(userData!.uid!);
-                                }
-                              },
-                              icon: Icon(value
-                                  ? Icons.person_remove_alt_1_rounded
-                                  : Icons.person_add_alt_1_rounded));
-                        })
+                    currentUser == userData!.uid
+                        ? PopupMenuButton(
+                            itemBuilder: (context) {
+                              return [
+                                PopupMenuItem(
+                                  child: const Text('Delete'),
+                                  onTap: () {},
+                                )
+                              ];
+                            },
+                          )
+                        : ValueListenableBuilder(
+                            valueListenable: isFollowed,
+                            builder: (context, value, child) {
+                              return IconButton(
+                                  onPressed: () {
+                                    if (value) {
+                                      Utils.unfollowUser(userData!.uid!);
+                                    } else {
+                                      Utils.followUser(userData!.uid!);
+                                    }
+                                  },
+                                  icon: Icon(value
+                                      ? Icons.person_remove_alt_1_rounded
+                                      : Icons.person_add_alt_1_rounded));
+                            })
                   ],
                 ),
               ),
