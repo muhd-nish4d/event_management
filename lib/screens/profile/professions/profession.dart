@@ -7,6 +7,9 @@ import 'package:event_management/screens/profile/professions/tab_views/work/book
 import 'package:event_management/screens/profile/professions/widgets/professions_profile_card.dart';
 import 'package:event_management/screens/settings/settigs_menu.dart';
 import 'package:event_management/screens/upload/file_seleciton.dart';
+import 'package:event_management/static/statics.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,6 +31,7 @@ class ScreenProfessionsProfile extends StatefulWidget {
 
 class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
     with SingleTickerProviderStateMixin {
+  final String currentUser = FirebaseAuth.instance.currentUser?.uid ?? 'd';
   late TabController tabController;
 
   @override
@@ -49,41 +53,53 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
               automaticallyImplyLeading: false,
               actions: [
                 widget.isCleintView
-                    ? Row(
-                        children: [
-                          SizedBox(
-                            width: size.width * .5,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        ScreenChat(user: widget.userDetails!)));
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: orange,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10))),
-                              child: const Text(
-                                "Book your's",
-                                style: TextStyle(color: white),
+                    ? currentUser != widget.userDetails!.uid
+                        ? Row(
+                            children: [
+                              SizedBox(
+                                width: size.width * .5,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    final chatRoomId = Utils.createChatRoomId(
+                                        resp: widget.userDetails!.uid!);
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                            builder: (context) => ScreenChat(
+                                                  user: widget.userDetails!,
+                                                  chatRoomId: chatRoomId,
+                                                )));
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: orange,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10))),
+                                  child: const Text(
+                                    "Book your's",
+                                    style: TextStyle(color: white),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          itemsGapWidth,
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: orange,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10))),
-                            child: const Text(
-                              'Follow',
-                              style: TextStyle(color: white),
-                            ),
-                          ),
-                          const SizedBox(width: 15)
-                        ],
-                      )
+                              itemsGapWidth,
+                              ElevatedButton(
+                                onPressed: () {},
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: orange,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10))),
+                                child: const Text(
+                                  'Follow',
+                                  style: TextStyle(color: white),
+                                ),
+                              ),
+                              const SizedBox(width: 15)
+                            ],
+                          )
+                        : const Padding(
+                          padding:  EdgeInsets.only(right: 10),
+                          child:  BookingsButton(),
+                        )
                     : Row(
                         children: [
                           IconButton(
@@ -111,20 +127,7 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
                         Navigator.of(context).pop();
                       },
                       icon: Icon(CupertinoIcons.back, color: orange))
-                  : ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ScreenBookings()));
-                      },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: orange,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10))),
-                      child: const Text(
-                        'Bookings',
-                        style: TextStyle(color: white),
-                      ),
-                    ),
+                  : const BookingsButton(),
               floating: true,
               pinned: false,
             ),
@@ -214,6 +217,30 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
         //   },
         //   // child:
         // ),
+      ),
+    );
+  }
+}
+
+class BookingsButton extends StatelessWidget {
+  const BookingsButton({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const ScreenBookings()));
+      },
+      style: ElevatedButton.styleFrom(
+          backgroundColor: orange,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+      child: const Text(
+        'Bookings',
+        style: TextStyle(color: white),
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 import '../model/event_reqbooking_model.dart';
@@ -144,12 +145,13 @@ class Utils {
     }
   }
 
-  static Stream<List<EventBookingReq>> getBookingRequestsStream(String recipientUser) {
+  static Stream<List<EventBookingReq>> getBookingRequestsStream(
+      String recipientUser) {
     final String currentUser = FirebaseAuth.instance.currentUser?.uid ?? '';
     return FirebaseFirestore.instance
         .collection('bookingRequests')
-        .where('senderId', isEqualTo: currentUser)
-        .where('recipientId', isEqualTo: recipientUser)
+        .where('senderId', isEqualTo: recipientUser)
+        .where('recipientId', isEqualTo: currentUser)
         .where('status', isEqualTo: 'notResponded')
         .snapshots()
         .map((querySnapshot) {
@@ -157,5 +159,26 @@ class Utils {
           .map((doc) => EventBookingReq.fromMap(doc.data()))
           .toList();
     });
+  }
+
+  static String createChatRoomId({required String resp}) {
+    final String currentUser = FirebaseAuth.instance.currentUser?.uid ?? '';
+    log(currentUser);
+    log(resp);
+    if (currentUser[0].toLowerCase().codeUnits[0] >
+        resp[0].toLowerCase().codeUnits[0]) {
+      return '$currentUser$resp';
+    } else {
+      return '$resp$currentUser';
+    }
+  }
+
+  static String? dateTimeConvert(String date) {
+    final parsedDate = DateTime.parse(date);
+    try {
+      return DateFormat.yMMMEd().format(parsedDate);
+    } catch (e) {
+      return null;
+    }
   }
 }

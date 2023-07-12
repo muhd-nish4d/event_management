@@ -3,7 +3,7 @@ class EventBookingReq {
   final String? location;
   final String? amount;
   final String? aboutParty;
-  final String? date;
+  String? date;
   String? senderId;
   final String? recipientId;
   final String? status;

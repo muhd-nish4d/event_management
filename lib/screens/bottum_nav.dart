@@ -23,7 +23,8 @@ class ScreenMain extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<FillupBloc>(context).add(FillUpInitialEvent());
+    // BlocProvider.of<FillupBloc>(context).close();
+    // BlocProvider.of<FillupBloc>(context).add(FillUpInitialEvent());
     return Scaffold(
         backgroundColor: Colors.deepPurple[50],
         body: ValueListenableBuilder(

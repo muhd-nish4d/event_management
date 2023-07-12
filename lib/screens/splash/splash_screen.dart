@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:event_management/Bloc/fillup/fillup_bloc.dart';
 import 'package:event_management/Bloc/log/login_bloc.dart';
@@ -26,34 +27,37 @@ class _ScreenSplashState extends State<ScreenSplash> {
   void initState() {
     Timer(
       const Duration(seconds: 3),
-      () async {
-        await precacheImage(
-            const AssetImage('assets/image/back_ground_image.jpg'), context);
-        Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (context) {
-          return BlocBuilder<LoginBloc, LoginState>(
-            builder: (context, state) {
-              if (state is LoggedInState) {
-                BlocProvider.of<FillupBloc>(context).add(FillUpInitialEvent());
-                return BlocBuilder<FillupBloc, FillupState>(
-                  builder: (context, state) {
-                    if (state is FilledUserState) {
-                      return ScreenMain(
-                        userDatas: state.userdatas,
-                      );
-                    } else {
-                      return const ScreenUserChose();
-                    }
-                  },
-                );
-              } else if (state is LoggedOutState) {
-                return ScreenLogin();
-              } else {
-                return ScreenLogin();
-              }
-            },
-          );
-        }));
+      () {
+        precacheImage(
+                const AssetImage('assets/image/back_ground_image.jpg'), context)
+            .then((value) {
+          Navigator.of(context)
+              .pushReplacement(MaterialPageRoute(builder: (context) {
+            return BlocBuilder<LoginBloc, LoginState>(
+              builder: (context, state) {
+                if (state is LoggedInState) {
+                  BlocProvider.of<FillupBloc>(context)
+                      .add(FillUpInitialEvent());
+                  return BlocBuilder<FillupBloc, FillupState>(
+                    builder: (context, state) {
+                      if (state is FilledUserState) {
+                        return ScreenMain(
+                          userDatas: state.userdatas,
+                        );
+                      } else {
+                        return const ScreenUserChose();
+                      }
+                    },
+                  );
+                } else if (state is LoggedOutState) {
+                  return ScreenLogin();
+                } else {
+                  return ScreenLogin();
+                }
+              },
+            );
+          }));
+        });
       },
     );
 
@@ -81,12 +85,5 @@ class _ScreenSplashState extends State<ScreenSplash> {
         ),
       ),
     );
-  }
-
-  Future<void> getSharedPreferencesData() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-
-    // Retrieving a String value
-    stringValue = sharedPreferences.getString('user_model');
   }
 }

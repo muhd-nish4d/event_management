@@ -38,17 +38,17 @@ class WidgetChatAppBarTitle extends StatelessWidget {
             Text(userDetails.companyName ?? 'Company Name',
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, color: white)),
-            Row(
-              children: [
-                Text(userDetails.profession ?? 'Profession',
-                    style: const TextStyle(fontSize: 15, color: white)),
-                Icon(Icons.star, color: Colors.yellow, size: 15),
-                Icon(Icons.star, color: Colors.yellow, size: 15),
-                Icon(Icons.star, color: Colors.yellow, size: 15),
-                Icon(Icons.star, color: Colors.yellow, size: 15),
-                Icon(Icons.star, color: grey, size: 15),
-              ],
-            )
+            // Row(
+            //   children: [
+            //     Text(userDetails.profession ?? 'Profession',
+            //         style: const TextStyle(fontSize: 15, color: white)),
+            //     Icon(Icons.star, color: Colors.yellow, size: 15),
+            //     Icon(Icons.star, color: Colors.yellow, size: 15),
+            //     Icon(Icons.star, color: Colors.yellow, size: 15),
+            //     Icon(Icons.star, color: Colors.yellow, size: 15),
+            //     Icon(Icons.star, color: grey, size: 15),
+            //   ],
+            // )
           ],
         )
       ],

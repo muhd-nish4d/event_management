@@ -173,14 +173,7 @@ class ScreenChat extends StatelessWidget {
                     // String eventType = bookingReq.;
                     // DateTime eventDate = bookingReq.eventDate;
 
-                    return Visibility(
-                      visible: bookingReq.senderId == user.uid &&
-                              bookingReq.recipientId == auth.currentUser?.uid &&
-                              bookingReq.status == 'notResponded'
-                          ? true
-                          : false,
-                      child: EventReqCard(eventDetails: bookingReq),
-                    );
+                    return EventReqCard(eventDetails: bookingReq);
                   },
                 );
               },

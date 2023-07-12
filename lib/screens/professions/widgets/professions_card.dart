@@ -21,7 +21,6 @@ class ProfessionsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     isFollowed.value = professions.isFollowed(currentUserUid!);
-    log(isFollowed.toString());
     return Card(
       elevation: 5,
       child: SizedBox(
@@ -34,8 +33,7 @@ class ProfessionsCard extends StatelessWidget {
                   log(professions.uid.toString());
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => ScreenProfessionsProfile(
-                          isCleintView: true,
-                          userDetails: professions)));
+                          isCleintView: true, userDetails: professions)));
                 },
                 child: Stack(
                   // alignment: Alignment.center,
@@ -58,46 +56,43 @@ class ProfessionsCard extends StatelessWidget {
                                 const SizedBox(
                                   height: 100,
                                 ),
-                                Text(professions.ownerName ??
-                                    'Owner Name'),
+                                Text(professions.ownerName ?? 'Owner Name'),
                                 Text(
-                                  professions.companyName ??
-                                      'Company Name',
+                                  professions.companyName ?? 'Company Name',
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18),
                                 ),
-                                Text(professions.profession ??
-                                    'Profession'),
-                                Row(
-                                  children: const [
-                                    Icon(
-                                      Icons.star,
-                                      color: Colors.yellow,
-                                      size: 15,
-                                    ),
-                                    Icon(
-                                      Icons.star,
-                                      color: Colors.yellow,
-                                      size: 15,
-                                    ),
-                                    Icon(
-                                      Icons.star,
-                                      color: Colors.yellow,
-                                      size: 15,
-                                    ),
-                                    Icon(
-                                      Icons.star,
-                                      color: Colors.yellow,
-                                      size: 15,
-                                    ),
-                                    Icon(
-                                      Icons.star,
-                                      color: grey,
-                                      size: 15,
-                                    )
-                                  ],
-                                )
+                                Text(professions.profession ?? 'Profession'),
+                                // Row(
+                                //   children: const [
+                                //     Icon(
+                                //       Icons.star,
+                                //       color: Colors.yellow,
+                                //       size: 15,
+                                //     ),
+                                //     Icon(
+                                //       Icons.star,
+                                //       color: Colors.yellow,
+                                //       size: 15,
+                                //     ),
+                                //     Icon(
+                                //       Icons.star,
+                                //       color: Colors.yellow,
+                                //       size: 15,
+                                //     ),
+                                //     Icon(
+                                //       Icons.star,
+                                //       color: Colors.yellow,
+                                //       size: 15,
+                                //     ),
+                                //     Icon(
+                                //       Icons.star,
+                                //       color: grey,
+                                //       size: 15,
+                                //     )
+                                //   ],
+                                // )
                               ],
                             ),
                           ),
@@ -183,11 +178,15 @@ class ProfessionsCard extends StatelessWidget {
                           children: [
                             TextButton(
                               onPressed: () {
+                                final roomId = Utils.createChatRoomId(
+                                    resp: professions.uid!);
+                                log(roomId);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => ScreenChat(
                                               user: professions,
+                                              chatRoomId: roomId,
                                             )));
                               },
                               child: const Text('Chat'),
@@ -200,12 +199,10 @@ class ProfessionsCard extends StatelessWidget {
                                     onPressed: () {
                                       if (value) {
                                         // Perform unfollow action
-                                        Utils.unfollowUser(
-                                            professions.uid!);
+                                        Utils.unfollowUser(professions.uid!);
                                       } else {
                                         // Perform follow action
-                                        Utils.followUser(
-                                            professions.uid!);
+                                        Utils.followUser(professions.uid!);
                                       }
                                     },
                                     child: Text(value ? 'Unfollow' : 'Follow'),

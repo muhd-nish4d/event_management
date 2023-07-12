@@ -28,7 +28,7 @@ class WidgetProfessionsFollow extends StatelessWidget {
                     UserModel? user = snapshot.data;
                     return UsersTile(userDetails: user);
                   } else {
-                    return SizedBox(); // or handle the error case
+                    return const SizedBox(); // or handle the error case
                   }
                 },
               );

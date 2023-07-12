@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:event_management/screens/profile/cleint/cleint_pro_screen.dart';
 import 'package:event_management/screens/profile/professions/profession.dart';
 import 'package:flutter/material.dart';
 
@@ -19,9 +20,14 @@ class UsersTile extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ScreenProfessionsProfile(
-                    isCleintView: true, userDetails: userDetails),
-              ));
+                  builder: (context) =>
+                      userDetails!.userType == UserType.profession
+                          ? ScreenProfessionsProfile(
+                              isCleintView: true, userDetails: userDetails)
+                          : Scaffold(
+                              body: ScreenCleintProfile(
+                              user: userDetails,
+                            ))));
         },
         leading: userDetails!.profileImage != ''
             ? ClipRRect(
@@ -50,35 +56,35 @@ class UsersTile extends StatelessWidget {
             ? Row(
                 children: [
                   Text(userDetails!.profession!),
-                  Row(
-                    children: const [
-                      Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                        size: 15,
-                      ),
-                      Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                        size: 15,
-                      ),
-                      Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                        size: 15,
-                      ),
-                      Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                        size: 15,
-                      ),
-                      Icon(
-                        Icons.star,
-                        color: grey,
-                        size: 15,
-                      )
-                    ],
-                  )
+                  // Row(
+                  //   children: const [
+                  //     Icon(
+                  //       Icons.star,
+                  //       color: Colors.yellow,
+                  //       size: 15,
+                  //     ),
+                  //     Icon(
+                  //       Icons.star,
+                  //       color: Colors.yellow,
+                  //       size: 15,
+                  //     ),
+                  //     Icon(
+                  //       Icons.star,
+                  //       color: Colors.yellow,
+                  //       size: 15,
+                  //     ),
+                  //     Icon(
+                  //       Icons.star,
+                  //       color: Colors.yellow,
+                  //       size: 15,
+                  //     ),
+                  //     Icon(
+                  //       Icons.star,
+                  //       color: grey,
+                  //       size: 15,
+                  //     )
+                  //   ],
+                  // )
                 ],
               )
             : const SizedBox(),

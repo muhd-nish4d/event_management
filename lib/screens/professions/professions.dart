@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_management/screens/professions/widgets/professions_card.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../const/color.dart';
@@ -18,12 +21,6 @@ class ScreenProfession extends StatefulWidget {
 
 class _ScreenProfessionState extends State<ScreenProfession> {
   String searchedQuery = '';
-
-  // @override
-  // void initState() {
-  //   BlocProvider.of<AllUserBlocBloc>(context).add(UserProfessionsEvent());
-  //   super.initState();
-  // }
 
   @override
   Widget build(BuildContext context) {

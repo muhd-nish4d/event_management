@@ -61,35 +61,35 @@ class ProfessionsProfileCleintView extends StatelessWidget {
                             Text(profession.phoneNumber ?? 'Phone Number'),
                           ],
                         ),
-                        Row(
-                          children: const [
-                            Icon(
-                              Icons.star,
-                              color: Colors.yellow,
-                              size: 15,
-                            ),
-                            Icon(
-                              Icons.star,
-                              color: Colors.yellow,
-                              size: 15,
-                            ),
-                            Icon(
-                              Icons.star,
-                              color: Colors.yellow,
-                              size: 15,
-                            ),
-                            Icon(
-                              Icons.star,
-                              color: Colors.yellow,
-                              size: 15,
-                            ),
-                            Icon(
-                              Icons.star,
-                              color: grey,
-                              size: 15,
-                            )
-                          ],
-                        ),
+                        // Row(
+                        //   children: const [
+                        //     Icon(
+                        //       Icons.star,
+                        //       color: Colors.yellow,
+                        //       size: 15,
+                        //     ),
+                        //     Icon(
+                        //       Icons.star,
+                        //       color: Colors.yellow,
+                        //       size: 15,
+                        //     ),
+                        //     Icon(
+                        //       Icons.star,
+                        //       color: Colors.yellow,
+                        //       size: 15,
+                        //     ),
+                        //     Icon(
+                        //       Icons.star,
+                        //       color: Colors.yellow,
+                        //       size: 15,
+                        //     ),
+                        //     Icon(
+                        //       Icons.star,
+                        //       color: grey,
+                        //       size: 15,
+                        //     )
+                        //   ],
+                        // ),
                         const SizedBox(height: 20),
                         SizedBox(
                           height: 40,

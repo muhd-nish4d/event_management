@@ -8,14 +8,14 @@ import '../../const/color.dart';
 ValueNotifier<int> currentSelectedScreen = ValueNotifier(0);
 
 class ScreenBookings extends StatelessWidget {
-  ScreenBookings({super.key});
+  const ScreenBookings({super.key});
 
-  List pages = const [ScreenPending(), ScreenOwer()];
+  final List pages = const [ScreenPending(), ScreenOwer()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Bookings")),
+        appBar: AppBar(title: const Text("Bookings")),
         body: ValueListenableBuilder(
             valueListenable: currentSelectedScreen,
             builder: (context, value, child) {

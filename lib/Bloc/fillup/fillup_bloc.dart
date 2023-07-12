@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../model/user_model.dart';
@@ -20,11 +20,16 @@ class FillupBloc extends Bloc<FillupEvent, FillupState> {
   final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
   FillupBloc() : super(FillupInitialState()) {
     on<FillUpInitialEvent>((event, emit) async {
+      log('FillupInitialEvent');
       emit(FillupLodingState());
+
       String? data = await getSharedPreferencesData();
+      log('after fectching');
       if (data != null) {
         Map<String, dynamic> userData = jsonDecode(data);
+        log('convert to map');
         UserModel userModel = UserModel.formMap(userData);
+        log('convert to User Model');
         emit(FilledUserState(userModel));
       } else {
         emit(FillupInitialState());
@@ -66,7 +71,7 @@ class FillupBloc extends Bloc<FillupEvent, FillupState> {
       saveUserDataToSP(userDatas);
       emit(FilledUserState(userDatas));
     } catch (e) {
-        (ErrorWhileFillingState());
+      (ErrorWhileFillingState());
       log(e.toString());
     }
 
@@ -80,10 +85,10 @@ class FillupBloc extends Bloc<FillupEvent, FillupState> {
     return downloadUrl;
   }
 
-    Future<void> saveUserDataToSP(UserModel user) async {
-      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-      await sharedPreferences.setString('user_model', jsonEncode(user.toMap()));
-    }
+  Future<void> saveUserDataToSP(UserModel user) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setString('user_model', jsonEncode(user.toMap()));
+  }
 
   Future<String?> getSharedPreferencesData() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();

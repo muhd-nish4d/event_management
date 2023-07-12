@@ -35,8 +35,7 @@ class ScreenLogin extends StatelessWidget {
                     width: phoneSize.width * .5,
                     child: Lottie.asset(
                         'assets/lottie/otp_verification_lot.json')),
-                // ignore: prefer_const_constructors
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 const Text(
                   "Phone Verification",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),

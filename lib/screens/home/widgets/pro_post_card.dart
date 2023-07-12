@@ -15,10 +15,12 @@ class PostCard extends StatelessWidget {
   final UserModel? userData;
   PostCard({super.key, required this.postDetails, required this.userData});
   ValueNotifier<bool> isLiked = ValueNotifier(false);
+  ValueNotifier<bool> isFollowed = ValueNotifier(false);
   final String? currentUser = FirebaseAuth.instance.currentUser?.uid;
 
   @override
   Widget build(BuildContext context) {
+    isFollowed.value = userData!.isFollowed(currentUser!);
     isLiked.value = postDetails!.isLiked(currentUser!);
     return Padding(
       padding: const EdgeInsets.all(0.0),
@@ -83,9 +85,21 @@ class PostCard extends StatelessWidget {
                       ),
                     ),
                     const Spacer(),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.person_add_alt_1))
+                    ValueListenableBuilder(
+                        valueListenable: isFollowed,
+                        builder: (context, value, child) {
+                          return IconButton(
+                              onPressed: () {
+                                if (value) {
+                                  Utils.unfollowUser(userData!.uid!);
+                                } else {
+                                  Utils.followUser(userData!.uid!);
+                                }
+                              },
+                              icon: Icon(value
+                                  ? Icons.person_remove_alt_1_rounded
+                                  : Icons.person_add_alt_1_rounded));
+                        })
                   ],
                 ),
               ),
@@ -141,7 +155,8 @@ class PostCard extends StatelessWidget {
                                 }
                               },
                               icon: value
-                                  ? const Icon(Icons.favorite, color: Colors.red)
+                                  ? const Icon(Icons.favorite,
+                                      color: Colors.red)
                                   : const Icon(Icons.favorite_outline_sharp));
                         }),
                     Text(

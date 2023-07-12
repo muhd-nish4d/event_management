@@ -22,49 +22,49 @@ class _ScreenOwerState extends State<ScreenOwer>
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
-        DefaultTabController(
-          length: 10, // Number of tabs
-          child: TabBar(
-            isScrollable: true,
-            controller: tabController,
-            indicatorColor: orange,
-            labelColor: orange,
-            tabs: const [
-              Tab(
-                text: 'All',
-              ),
-              Tab(
-                icon: Icon(Icons.place),
-              ),
-              Tab(
-                icon: Icon(Icons.food_bank_rounded),
-              ),
-              Tab(
-                icon: Icon(Icons.checkroom_rounded),
-              ),
-              Tab(
-                icon: Icon(Icons.watch),
-              ),
-              Tab(
-                icon: Icon(Icons.face_2),
-              ),
-              Tab(
-                icon: Icon(Icons.camera_alt),
-              ),
-              Tab(
-                icon: Icon(Icons.people_alt_rounded),
-              ),
-              Tab(
-                icon: Icon(Icons.mic_external_on),
-              ),
-              Tab(
-                icon: Icon(Icons.card_giftcard_rounded),
-              ),
-            ],
-          ),
-        ),
-        const Expanded(
+      children: const [
+        // DefaultTabController(
+        //   length: 10, // Number of tabs
+        //   child: TabBar(
+        //     isScrollable: true,
+        //     controller: tabController,
+        //     indicatorColor: orange,
+        //     labelColor: orange,
+        //     tabs: const [
+        //       Tab(
+        //         text: 'All',
+        //       ),
+        //       Tab(
+        //         icon: Icon(Icons.place),
+        //       ),
+        //       Tab(
+        //         icon: Icon(Icons.food_bank_rounded),
+        //       ),
+        //       Tab(
+        //         icon: Icon(Icons.checkroom_rounded),
+        //       ),
+        //       Tab(
+        //         icon: Icon(Icons.watch),
+        //       ),
+        //       Tab(
+        //         icon: Icon(Icons.face_2),
+        //       ),
+        //       Tab(
+        //         icon: Icon(Icons.camera_alt),
+        //       ),
+        //       Tab(
+        //         icon: Icon(Icons.people_alt_rounded),
+        //       ),
+        //       Tab(
+        //         icon: Icon(Icons.mic_external_on),
+        //       ),
+        //       Tab(
+        //         icon: Icon(Icons.card_giftcard_rounded),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        Expanded(
           child: WidgetCardWorks(),
           // child: TabBarView(controller: tabController, children: const [
           //   SizedBox(

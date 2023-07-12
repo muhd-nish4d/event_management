@@ -1,10 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
-
-import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../model/user_model.dart';
@@ -12,7 +11,7 @@ import '../../model/user_model.dart';
 part 'login_event.dart';
 part 'login_state.dart';
 
-class   LoginBloc extends Bloc<LoginEvent, LoginState> {
+class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   LoginBloc() : super(LogInitialState()) {
     User? currentUser = firebaseAuth.currentUser;
@@ -77,9 +76,9 @@ class   LoginBloc extends Bloc<LoginEvent, LoginState> {
             .doc(userCredential.user!.uid)
             .get();
 
-        UserModel usersss =
-            UserModel.formMap(documentSnapshot.data() as Map<String, dynamic>);
         if (documentSnapshot.exists) {
+          UserModel usersss = UserModel.formMap(
+              documentSnapshot.data() as Map<String, dynamic>);
           saveUserDataToSP(usersss);
           emit(UserFilledState());
         } else {
