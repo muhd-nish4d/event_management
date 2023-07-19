@@ -72,7 +72,7 @@ class FillupBloc extends Bloc<FillupEvent, FillupState> {
       emit(FilledUserState(userDatas));
     } catch (e) {
       (ErrorWhileFillingState());
-      log(e.toString());
+      log('heare ${e.toString()}');
     }
 
     //uplaod to database

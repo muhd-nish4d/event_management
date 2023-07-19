@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:event_management/const/color.dart';
@@ -32,7 +33,7 @@ class _ScreenUserFillUpState extends State<ScreenUserFillUp> {
   ValueNotifier<String?> professionsDropDownNotifier = ValueNotifier(null);
 
   //  companyName,
-  TextEditingController? companyController = TextEditingController();
+  TextEditingController companyController = TextEditingController();
 
   TextEditingController ownerController = TextEditingController();
 
@@ -40,13 +41,18 @@ class _ScreenUserFillUpState extends State<ScreenUserFillUp> {
 
   TextEditingController bioController = TextEditingController();
 
+  TextEditingController emptyController = TextEditingController();
+
   ValueNotifier<File?> userCoverImageNotifier = ValueNotifier(null);
   ValueNotifier<File?> userProfileImageNotifier = ValueNotifier(null);
 
   @override
   void initState() {
-    phoneController =
-        TextEditingController(text: firebaseAuth.currentUser?.phoneNumber);
+    log(firebaseAuth.currentUser.toString());
+    if (firebaseAuth.currentUser != null) {
+      phoneController =
+          TextEditingController(text: firebaseAuth.currentUser?.phoneNumber);
+    }
     super.initState();
   }
 
@@ -272,7 +278,7 @@ class _ScreenUserFillUpState extends State<ScreenUserFillUp> {
         follow: [],
         following: [],
         userType: widget.type,
-        companyName: companyController?.text,
+        companyName: companyController.text,
         ownerName: ownerController.text.trim(),
         profession: professionsDropDownNotifier.value ?? '',
         phoneNumber: phoneController.text.trim(),

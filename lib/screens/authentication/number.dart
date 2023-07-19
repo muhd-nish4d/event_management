@@ -2,12 +2,14 @@ import 'dart:developer';
 
 import 'package:event_management/Bloc/log/login_bloc.dart';
 import 'package:event_management/const/color.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../const/images.dart';
 import '../../widgets/image_background.dart';
+import '../user/user_chose.dart';
 import 'otp.dart';
 
 class ScreenLogin extends StatelessWidget {
@@ -139,12 +141,38 @@ class ScreenLogin extends StatelessWidget {
                       },
                     ),
                   ),
-                )
+                ),
+                TextButton(
+                    onPressed: () async {
+                      _signInAsGuest().then((value) {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => const ScreenUserChose(),
+                        ));
+                      });
+                    },
+                    child: Text('As a Guest'))
               ],
             ),
           ),
         ),
       ),
     ));
+  }
+
+  Future<void> _signInAsGuest() async {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    try {
+      UserCredential userCredential = await auth.signInAnonymously();
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        print('Signed in with temporary account: ${user.uid}');
+      } else {
+        print('Not signed in');
+      }
+      // User is now logged in as a guest. You can handle the navigation to the main app screen here.
+    } catch (e) {
+      // Handle any errors that might occur during the login process.
+      log('Error logging in as guest: $e');
+    }
   }
 }

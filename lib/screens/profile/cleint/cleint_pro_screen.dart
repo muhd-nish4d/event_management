@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../Bloc/fillup/fillup_bloc.dart';
 import '../../../const/color.dart';
-import '../../../widgets/user_listtile.dart';
 
 class ScreenCleintProfile extends StatelessWidget {
   const ScreenCleintProfile({super.key, this.user});
@@ -176,9 +175,11 @@ class ScreenCleintProfile extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             const Divider(),
-            Expanded(
-              child: WidgetProfessionsFollow(followers: user!.following!),
-            )
+            user != null
+                ? Expanded(
+                    child: WidgetProfessionsFollow(followers: user!.following!),
+                  )
+                : const SizedBox()
           ],
         ),
       ),

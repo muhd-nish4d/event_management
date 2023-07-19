@@ -7,7 +7,7 @@ abstract class LoginEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoginInitialEvent extends LoginEvent{}
+class LoginInitialEvent extends LoginEvent {}
 
 class PhoneNumberSubmittedEvent extends LoginEvent {
   final String phoneNumber;
@@ -21,4 +21,6 @@ class OtpVerificationEvent extends LoginEvent {
   const OtpVerificationEvent(this.otp);
 }
 
-class LogOutEvent extends LoginEvent{}
+class LoginAsaGuest extends LoginEvent {}
+
+class LogOutEvent extends LoginEvent {}

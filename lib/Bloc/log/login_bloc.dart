@@ -38,6 +38,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         log(e.toString());
       }
     });
+
+    on<LoginAsaGuest>((event, emit) {
+
+    });
   }
 
   String? phoneVerificationId;
