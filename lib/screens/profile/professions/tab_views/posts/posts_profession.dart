@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_management/const/color.dart';
 import 'package:event_management/model/post_model.dart';
 import 'package:event_management/screens/posts/posts_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../model/user_model.dart';
@@ -16,7 +15,10 @@ class WidgetProfessionsPosts extends StatelessWidget {
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     return StreamBuilder(
-        stream: firestore.collection('posts').snapshots(),
+        stream: firestore
+            .collection('posts')
+            .orderBy('timestamp', descending: true)
+            .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Text(snapshot.error.toString());
@@ -30,6 +32,7 @@ class WidgetProfessionsPosts extends StatelessWidget {
           return eachUserData!.isEmpty
               ? const Text('No Posts')
               : GridView.builder(
+                
                   padding: const EdgeInsets.all(5),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,

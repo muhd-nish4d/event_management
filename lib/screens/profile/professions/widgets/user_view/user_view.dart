@@ -23,9 +23,6 @@ class ProfessionsProfileCleintView extends StatelessWidget {
       elevation: 5,
       child: SizedBox(
         height: 400,
-        // decoration: BoxDecoration(
-        //     borderRadius: BorderRadius.circular(10),
-        //     boxShadow: const [BoxShadow(blurRadius: 5)]),
         child: Stack(
           // alignment: Alignment.center,
           children: [
@@ -105,11 +102,17 @@ class ProfessionsProfileCleintView extends StatelessWidget {
                               ),
                               const VerticalDivider(),
                               Column(
-                                children: const [Text('52'), Text('Followers')],
+                                children: [
+                                  Text(profession.follow!.length.toString()),
+                                  const Text('Followers')
+                                ],
                               ),
                               const VerticalDivider(),
                               Column(
-                                children: const [Text('43'), Text('Following')],
+                                children: [
+                                  Text(profession.following!.length.toString()),
+                                  const Text('Following')
+                                ],
                               ),
                               const VerticalDivider(),
                               Column(
