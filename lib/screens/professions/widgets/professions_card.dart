@@ -30,7 +30,6 @@ class ProfessionsCard extends StatelessWidget {
               flex: 6,
               child: GestureDetector(
                 onTap: () {
-                  log(professions.uid.toString());
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => ScreenProfessionsProfile(
                           isCleintView: true, userDetails: professions)));
@@ -172,45 +171,62 @@ class ProfessionsCard extends StatelessWidget {
                       const Divider(
                         height: 0,
                       ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            TextButton(
-                              onPressed: () {
-                                final roomId = Utils.createChatRoomId(
-                                    resp: professions.uid!);
-                                log(roomId);
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ScreenChat(
-                                              user: professions,
-                                              chatRoomId: roomId,
-                                            )));
-                              },
-                              child: const Text('Chat'),
-                            ),
-                            const VerticalDivider(),
-                            ValueListenableBuilder(
-                                valueListenable: isFollowed,
-                                builder: (context, value, child) {
-                                  return TextButton(
+                      professions.uid != currentUserUid
+                          ? Expanded(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  TextButton(
                                     onPressed: () {
-                                      if (value) {
-                                        // Perform unfollow action
-                                        Utils.unfollowUser(professions.uid!);
-                                      } else {
-                                        // Perform follow action
-                                        Utils.followUser(professions.uid!);
-                                      }
+                                      final roomId = Utils.createChatRoomId(
+                                          resp: professions.uid!);
+                                      log(roomId);
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => ScreenChat(
+                                                    user: professions,
+                                                    chatRoomId: roomId,
+                                                  )));
                                     },
-                                    child: Text(value ? 'Unfollow' : 'Follow'),
-                                  );
-                                })
-                          ],
-                        ),
-                      )
+                                    child: const Text('Chat'),
+                                  ),
+                                  const VerticalDivider(),
+                                  ValueListenableBuilder(
+                                      valueListenable: isFollowed,
+                                      builder: (context, value, child) {
+                                        return TextButton(
+                                          onPressed: () {
+                                            if (value) {
+                                              // Perform unfollow action
+                                              Utils.unfollowUser(
+                                                  professions.uid!);
+                                            } else {
+                                              // Perform follow action
+                                              Utils.followUser(
+                                                  professions.uid!);
+                                            }
+                                          },
+                                          child: Text(
+                                              value ? 'Unfollow' : 'Follow'),
+                                        );
+                                      })
+                                ],
+                              ),
+                            )
+                          : Expanded(
+                              child: TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ScreenProfessionsProfile(
+                                                    isCleintView: true,
+                                                    userDetails: professions)));
+                                  },
+                                  child: Text("View your's")),
+                            )
                     ],
                   ),
                 )),

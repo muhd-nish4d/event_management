@@ -2,6 +2,7 @@
     package="com.example.event_management">
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="event_management"
         android:name="${applicationName}"

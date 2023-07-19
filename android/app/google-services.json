@@ -1,26 +1,36 @@
 {
   "project_info": {
-    "project_number": "100792286798",
-    "project_id": "eventmanagement-b9c82",
-    "storage_bucket": "eventmanagement-b9c82.appspot.com"
+    "project_number": "790485401453",
+    "project_id": "nish4deventbooking",
+    "storage_bucket": "nish4deventbooking.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:100792286798:android:bcd99e7c7fae784f66cd1f",
+        "mobilesdk_app_id": "1:790485401453:android:be4f2587cab92a4f2d6464",
         "android_client_info": {
-          "package_name": "com.example.event_management"
+          "package_name": "com.nishad.event_management"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "790485401453-96g09eeftp2nr5fleu0qrs2obuqc4btc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyDPd2917bCY6cDWxE8IehXG3fU_vGvWXRg"
+          "current_key": "AIzaSyDw18GwuDniDe9GVZDFMSnBGXa8z8A_CR0"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "790485401453-96g09eeftp2nr5fleu0qrs2obuqc4btc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
