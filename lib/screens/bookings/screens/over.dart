@@ -1,7 +1,11 @@
 import 'package:event_management/screens/bookings/widgets/works_card.dart';
 import 'package:flutter/material.dart';
+
+import '../../../model/user_model.dart';
+
 class ScreenOwer extends StatefulWidget {
-  const ScreenOwer({super.key});
+  const ScreenOwer({super.key, required this.user});
+  final UserModel user;
 
   @override
   State<ScreenOwer> createState() => _ScreenOwerState();
@@ -19,7 +23,7 @@ class _ScreenOwerState extends State<ScreenOwer>
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: const [
+      children: [
         // DefaultTabController(
         //   length: 10, // Number of tabs
         //   child: TabBar(
@@ -62,7 +66,10 @@ class _ScreenOwerState extends State<ScreenOwer>
         //   ),
         // ),
         Expanded(
-          child: WidgetCardWorks(isOver: true),
+          child: WidgetCardWorks(
+              isOver: true,
+              isProfessioner:
+                  widget.user.userType == UserType.profession ? true : false),
           // child: TabBarView(controller: tabController, children: const [
           //   SizedBox(
           //     child: Center(

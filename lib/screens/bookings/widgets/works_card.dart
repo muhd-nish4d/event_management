@@ -9,8 +9,10 @@ import 'package:flutter/material.dart';
 import '../../../model/event_reqbooking_model.dart';
 
 class WidgetCardWorks extends StatelessWidget {
-  const WidgetCardWorks({super.key, required this.isOver});
+  const WidgetCardWorks(
+      {super.key, required this.isOver, required this.isProfessioner});
   final bool isOver;
+  final bool isProfessioner;
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +104,7 @@ class WidgetCardWorks extends StatelessWidget {
 
 // Build a query to filter the documents based on user and status
     QuerySnapshot querySnapshot = await requestCollection
-        .where('recipientId', isEqualTo: user.uid)
+        .where(isProfessioner ? 'recipientId' : 'senderId', isEqualTo: user.uid)
         .where('status', isEqualTo: 'accepted')
         .get();
 

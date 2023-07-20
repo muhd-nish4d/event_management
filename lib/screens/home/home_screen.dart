@@ -21,15 +21,15 @@ class ScreenHome extends StatelessWidget {
             itHaveBack: false,
             trailing: Row(
               children: [
-                IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const ScreenNotifiaction()));
-                    },
-                    icon: const Icon(Icons.notifications)),
+                // IconButton(
+                //     onPressed: () {
+                //       Navigator.push(
+                //           context,
+                //           MaterialPageRoute(
+                //               builder: (context) =>
+                //                   const ScreenNotifiaction()));
+                //     },
+                //     icon: const Icon(Icons.notifications)),
                 IconButton(
                     onPressed: () {
                       Navigator.push(

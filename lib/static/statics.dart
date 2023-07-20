@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
+import '../model/chat_model.dart';
 import '../model/event_reqbooking_model.dart';
 
 class Utils {
@@ -197,13 +198,35 @@ class Utils {
           await documentSnapshot.reference.delete();
         }
         log('Document(s) with the image link deleted successfully.');
-
-
       } else {
         log('No document found with the provided image link.');
       }
     } catch (e) {
       log('Error deleting document: $e');
+    }
+  }
+
+  static void sendMessage(
+      {required String message, required String chatroomId}) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    FirebaseAuth auth = FirebaseAuth.instance;
+    String? currentUser = auth.currentUser?.uid;
+    if (message.isNotEmpty) {
+      try {
+        final newMessage = ChatMessage(
+            sender: currentUser,
+            message: message,
+            timeStamp: DateTime.now().microsecondsSinceEpoch.toString(),
+            dateTime: DateTime.now().toString());
+        await firebaseFirestore
+            .collection('chatRoom')
+            .doc(chatroomId)
+            .collection('chats')
+            .add(newMessage.toMap());
+        log('message uploaded');
+      } catch (e) {
+        log(e.toString());
+      }
     }
   }
 }

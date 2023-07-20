@@ -9,8 +9,10 @@ class EventReqCard extends StatelessWidget {
   const EventReqCard({
     super.key,
     required this.eventDetails,
+    required this.chatRoomId,
   });
   final EventBookingReq eventDetails;
+  final String chatRoomId;
 
   @override
   Widget build(BuildContext context) {

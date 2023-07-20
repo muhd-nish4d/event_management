@@ -96,9 +96,9 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
                               const SizedBox(width: 15)
                             ],
                           )
-                        : const Padding(
+                        : Padding(
                             padding: EdgeInsets.only(right: 10),
-                            child: BookingsButton(),
+                            child: BookingsButton(id: widget.userDetails!),
                           )
                     : Row(
                         children: [
@@ -127,7 +127,7 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
                         Navigator.of(context).pop();
                       },
                       icon: Icon(CupertinoIcons.back, color: primaryColor))
-                  : const BookingsButton(),
+                  : BookingsButton(id: widget.userDetails!),
               floating: true,
               pinned: false,
             ),
@@ -187,7 +187,9 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
                     followers: widget.userDetails?.follow ?? []),
                 WidgetProfessionsFollow(
                     followers: widget.userDetails?.following ?? []),
-                 WidgetBookedWorks(professionDetais: currentUser,)
+                WidgetBookedWorks(
+                  professionDetais: currentUser,
+                )
               ]),
         //  ValueListenableBuilder(
         //   valueListenable: tabController,
@@ -225,14 +227,18 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
 class BookingsButton extends StatelessWidget {
   const BookingsButton({
     super.key,
+    required this.id,
   });
+  final UserModel id;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const ScreenBookings()));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => ScreenBookings(
+                  userId: id,
+                )));
       },
       style: ElevatedButton.styleFrom(
           backgroundColor: primaryColor,

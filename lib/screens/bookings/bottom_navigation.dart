@@ -4,16 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../../const/color.dart';
+import '../../model/user_model.dart';
 
 ValueNotifier<int> currentSelectedScreen = ValueNotifier(0);
 
 class ScreenBookings extends StatelessWidget {
-  const ScreenBookings({super.key});
-
-  final List pages = const [ScreenPending(), ScreenOwer()];
+  ScreenBookings({super.key, required this.userId});
+  final UserModel userId;
 
   @override
   Widget build(BuildContext context) {
+    final List pages = [
+      ScreenPending(user: userId),
+      ScreenOwer(
+        user: userId,
+      )
+    ];
     return Scaffold(
         appBar: AppBar(title: const Text("Bookings")),
         body: ValueListenableBuilder(

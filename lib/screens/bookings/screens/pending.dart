@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-
-import '../../../const/color.dart';
+import '../../../model/user_model.dart';
 import '../widgets/works_card.dart';
 
 class ScreenPending extends StatefulWidget {
-  const ScreenPending({super.key});
+  const ScreenPending({super.key, required this.user});
+  final UserModel user;
 
   @override
   State<ScreenPending> createState() => _ScreenPendingState();
@@ -22,7 +22,7 @@ class _ScreenPendingState extends State<ScreenPending>
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: const [
+      children:  [
         // DefaultTabController(
         //   length: 10, // Number of tabs
         //   child: TabBar(
@@ -65,7 +65,10 @@ class _ScreenPendingState extends State<ScreenPending>
         //   ),
         // ),
         Expanded(
-          child: WidgetCardWorks(isOver: false),
+          child: WidgetCardWorks(
+              isOver: false,
+              isProfessioner:
+                  widget.user.userType == UserType.profession ? true : false),
           // child: TabBarView(controller: tabController, children: const [
           //   SizedBox(
           //     child: WidgetCardWorks(),

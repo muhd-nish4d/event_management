@@ -5,9 +5,6 @@ import 'package:event_management/screens/profile/professions/profession.dart';
 import 'package:event_management/widgets/circular_progress_indicator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../Bloc/fillup/fillup_bloc.dart';
 
 class ScreenUserProfile extends StatelessWidget {
   final bool isProfessional;
@@ -23,7 +20,7 @@ class ScreenUserProfile extends StatelessWidget {
             return ScreenProfessionsProfile(
                 isCleintView: false, userDetails: snapshot.data);
           } else {
-            return const ScreenCleintProfile();
+            return ScreenCleintProfile();
           }
         } else if (snapshot.hasError) {
           return Center(child: Text(snapshot.error.toString()));

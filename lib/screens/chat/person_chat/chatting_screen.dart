@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_management/const/color.dart';
 import 'package:event_management/model/chat_model.dart';
+import 'package:event_management/screens/chat/person_chat/model/massege_model.dart';
 import 'package:event_management/screens/chat/person_chat/widgets/appbar.dart';
 import 'package:event_management/screens/chat/person_chat/widgets/booking_button.dart';
 import 'package:event_management/screens/chat/person_chat/widgets/event_req_card.dart';
@@ -182,7 +183,10 @@ class ScreenChat extends StatelessWidget {
                     // String eventType = bookingReq.;
                     // DateTime eventDate = bookingReq.eventDate;
 
-                    return EventReqCard(eventDetails: bookingReq);
+                    return EventReqCard(
+                      eventDetails: bookingReq,
+                      chatRoomId: chatRoomId!,
+                    );
                   },
                 );
               },
@@ -209,7 +213,11 @@ class ScreenChat extends StatelessWidget {
                 )),
                 IconButton(
                   onPressed: () {
-                    _sendMessage();
+                    final String messageForSent =
+                        chatMessageController.text.trim();
+                    Utils.sendMessage(
+                        message: messageForSent, chatroomId: chatRoomId!);
+                    chatMessageController.clear();
                   },
                   icon: const Icon(
                     Icons.share,
@@ -226,29 +234,5 @@ class ScreenChat extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void _sendMessage() async {
-    final String messageText = chatMessageController.text.trim();
-
-    String? currentUser = auth.currentUser?.uid;
-    if (messageText.isNotEmpty) {
-      try {
-        final newMessage = ChatMessage(
-            sender: currentUser,
-            message: messageText,
-            timeStamp: DateTime.now().microsecondsSinceEpoch.toString(),
-            dateTime: DateTime.now().toString());
-        await firebaseFirestore
-            .collection('chatRoom')
-            .doc(chatRoomId)
-            .collection('chats')
-            .add(newMessage.toMap())
-            .then((value) => chatMessageController.clear());
-        log('message uploaded');
-      } catch (e) {
-        log(e.toString());
-      }
-    }
   }
 }
