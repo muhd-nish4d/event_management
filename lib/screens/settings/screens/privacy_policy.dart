@@ -30,7 +30,7 @@ class ScreenPrivacyPolicy extends StatelessWidget {
                             children: const [
                               Text('EventHub'),
                               Text('Developed by Muhammed Nishad'),
-                              Text('Version 1.0.0')
+                              Text('Version 3(1.0.0)')
                             ],
                           )
                         : const SingleChildScrollView(

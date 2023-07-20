@@ -3,6 +3,7 @@ import 'package:event_management/screens/settings/screens/privacy_policy.dart';
 import 'package:event_management/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 
 import '../../Bloc/log/login_bloc.dart';
 
@@ -19,7 +20,14 @@ class ScreenSettingsMenu extends StatelessWidget {
       body: Column(
         children: [
           // SettingsTiles(text: 'Edit profile', icon: Icons.edit, onTap: () {}),
-          SettingsTiles(text: 'Help', icon: Icons.help, onTap: () {}),
+          SettingsTiles(text: 'Help', icon: Icons.help, onTap: () async{
+            Email email = Email(
+              body: 'Help',
+              subject: 'Feedback about EventHub',
+              recipients: ['nishadunlind@gmial.com']
+            );
+            await FlutterEmailSender.send(email);
+          }),
           SettingsTiles(
               text: 'Privacy Policy',
               icon: Icons.view_list_rounded,

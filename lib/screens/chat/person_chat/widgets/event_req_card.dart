@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:event_management/static/statics.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../model/event_reqbooking_model.dart';
@@ -60,14 +61,6 @@ class EventReqCard extends StatelessWidget {
         .where('senderId', isEqualTo: eventDetails.senderId)
         .where('recipientId', isEqualTo: eventDetails.recipientId)
         .where('partyType', isEqualTo: eventDetails.partyType);
-    // &&
-    //     'recipientId' == eventDetails.recipientId &&
-    //     'partyType' == eventDetails.partyType &&
-    //     'date' == eventDetails.date &&
-    //     'about' == eventDetails.aboutParty &&
-    //     'amount' == eventDetails.amount &&
-    //     'place' == eventDetails.location &&
-    //     'status' == eventDetails.status);
 
     QuerySnapshot querySnapshot = await query.get();
 
@@ -80,6 +73,12 @@ class EventReqCard extends StatelessWidget {
         'status': 'accepted',
       }).then((value) {
         log('Field updated successfully!');
+        final parsedDate = Utils.dateTimeConvert(eventDetails.date!);
+        Utils.sendMessage(
+            message:
+                "Thank you for choosing us! We're excited to confirm your ${eventDetails.partyType} on $parsedDate at ${eventDetails.location}. Looking forward to making it a memorable experience for you!",
+            chatroomId: chatRoomId,
+            isRequest: true);
       }).catchError((error) {
         log('Error updating field: $error');
       });
@@ -96,14 +95,6 @@ class EventReqCard extends StatelessWidget {
         .where('senderId', isEqualTo: eventDetails.senderId)
         .where('recipientId', isEqualTo: eventDetails.recipientId)
         .where('partyType', isEqualTo: eventDetails.partyType);
-    // &&
-    //     'recipientId' == eventDetails.recipientId &&
-    //     'partyType' == eventDetails.partyType &&
-    //     'date' == eventDetails.date &&
-    //     'about' == eventDetails.aboutParty &&
-    //     'amount' == eventDetails.amount &&
-    //     'place' == eventDetails.location &&
-    //     'status' == eventDetails.status);
 
     QuerySnapshot querySnapshot = await query.get();
 
@@ -116,6 +107,12 @@ class EventReqCard extends StatelessWidget {
         'status': 'declined',
       }).then((value) {
         log('Field updated successfully!');
+        final parsedDate = Utils.dateTimeConvert(eventDetails.date!);
+        Utils.sendMessage(
+            message:
+                "We regret to inform you that we are unable to accommodate your ${eventDetails.partyType} request for $parsedDate at ${eventDetails.location}. We apologize for any inconvenience caused and hope to serve you in the future",
+            chatroomId: chatRoomId,
+            isRequest: true);
       }).catchError((error) {
         log('Error updating field: $error');
       });

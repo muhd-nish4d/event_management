@@ -207,7 +207,9 @@ class Utils {
   }
 
   static void sendMessage(
-      {required String message, required String chatroomId}) async {
+      {required String message,
+      required String chatroomId,
+      bool isRequest = false}) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     FirebaseAuth auth = FirebaseAuth.instance;
     String? currentUser = auth.currentUser?.uid;
@@ -217,7 +219,8 @@ class Utils {
             sender: currentUser,
             message: message,
             timeStamp: DateTime.now().microsecondsSinceEpoch.toString(),
-            dateTime: DateTime.now().toString());
+            dateTime: DateTime.now().toString(),
+            itsForRequest: isRequest);
         await firebaseFirestore
             .collection('chatRoom')
             .doc(chatroomId)

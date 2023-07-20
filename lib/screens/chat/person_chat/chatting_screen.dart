@@ -60,15 +60,16 @@ class ScreenChat extends StatelessWidget {
                       // final sender = message['sender'];
                       // final text = message['message'];
                       var dateTimeco = DateTime.parse(message.dateTime!);
-
                       return Align(
                         alignment: message.sender == auth.currentUser?.uid
                             ? Alignment.centerRight
                             : Alignment.centerLeft,
                         child: Card(
-                            color: message.sender == auth.currentUser?.uid
-                                ? primaryColor
-                                : Colors.grey[50],
+                            color: message.itsForRequest
+                                ? Colors.indigo[600]
+                                : message.sender == auth.currentUser?.uid
+                                    ? primaryColor
+                                    : Colors.grey[50],
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Column(
@@ -77,7 +78,10 @@ class ScreenChat extends StatelessWidget {
                                 children: [
                                   Text(
                                     message.message!,
-                                    style: const TextStyle(color: black),
+                                    style: TextStyle(
+                                        color: message.itsForRequest
+                                            ? white
+                                            : black),
                                   ),
                                   Text(
                                     '${dateTimeco.hour}:${dateTimeco.minute}',
