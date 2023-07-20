@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 import '../../../model/event_reqbooking_model.dart';
 
 class WidgetCardWorks extends StatelessWidget {
-  const WidgetCardWorks({super.key});
+  const WidgetCardWorks({super.key, required this.isOver});
+  final bool isOver;
 
   @override
   Widget build(BuildContext context) {
@@ -23,29 +24,63 @@ class WidgetCardWorks extends StatelessWidget {
             itemBuilder: (context, index) {
               final request = snapshot.data![index];
               final String? date = Utils.dateTimeConvert(request.date!);
-              return Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                child: Theme(
-                  data: Theme.of(context)
-                      .copyWith(dividerColor: Colors.transparent),
-                  child: ExpansionTile(
-                    backgroundColor: Colors.red[50],
-                    childrenPadding: const EdgeInsets.all(10),
-                    expandedAlignment: Alignment.topLeft,
-                    expandedCrossAxisAlignment: CrossAxisAlignment.start,
-                    leading: const CircleAvatar(child: Icon(Icons.person)),
-                    title: Text(request.partyType ?? 'Party'),
-                    children: [
-                      Text(date ?? 'Date'),
-                      Text(request.location ?? 'Location'),
-                      // Text('Event type'),
-                      Text(request.partyType ?? 'Event bio'),
-                      Text(request.amount ?? 'Amount'),
-                    ],
-                  ),
-                ),
-              );
+              final dateforOver = DateTime.parse(request.date!);
+
+              return isOver
+                  ? DateTime.now().isAfter(dateforOver)
+                      ? Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Theme(
+                            data: Theme.of(context)
+                                .copyWith(dividerColor: Colors.transparent),
+                            child: ExpansionTile(
+                              backgroundColor: Colors.red[50],
+                              childrenPadding: const EdgeInsets.all(10),
+                              expandedAlignment: Alignment.topLeft,
+                              expandedCrossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                              leading:
+                                  const CircleAvatar(child: Icon(Icons.person)),
+                              title: Text(request.partyType ?? 'Party'),
+                              children: [
+                                Text(date ?? 'Date'),
+                                Text(request.location ?? 'Location'),
+                                // Text('Event type'),
+                                Text(request.partyType ?? 'Event bio'),
+                                Text(request.amount ?? 'Amount'),
+                              ],
+                            ),
+                          ),
+                        )
+                      : const SizedBox()
+                  : DateTime.now().isBefore(dateforOver)
+                      ? Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Theme(
+                            data: Theme.of(context)
+                                .copyWith(dividerColor: Colors.transparent),
+                            child: ExpansionTile(
+                              backgroundColor: Colors.red[50],
+                              childrenPadding: const EdgeInsets.all(10),
+                              expandedAlignment: Alignment.topLeft,
+                              expandedCrossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                              leading:
+                                  const CircleAvatar(child: Icon(Icons.person)),
+                              title: Text(request.partyType ?? 'Party'),
+                              children: [
+                                Text(date ?? 'Date'),
+                                Text(request.location ?? 'Location'),
+                                // Text('Event type'),
+                                Text(request.partyType ?? 'Event bio'),
+                                Text(request.amount ?? 'Amount'),
+                              ],
+                            ),
+                          ),
+                        )
+                      : const SizedBox();
             },
             itemCount: snapshot.data!.length,
           );

@@ -64,8 +64,8 @@ class _ScreenPendingState extends State<ScreenPending>
         //     ],
         //   ),
         // ),
-         Expanded(
-          child: WidgetCardWorks(),
+        Expanded(
+          child: WidgetCardWorks(isOver: false),
           // child: TabBarView(controller: tabController, children: const [
           //   SizedBox(
           //     child: WidgetCardWorks(),

@@ -181,4 +181,29 @@ class Utils {
       return null;
     }
   }
+
+  static Future<void> deletePost(String imageLink) async {
+    try {
+      // Create a query to find the document with the matching image link
+      var querySnapshot = await FirebaseFirestore.instance
+          .collection('post')
+          .where('imagePath', isEqualTo: imageLink)
+          .get();
+
+      // Check if there is a document with the matching image link
+      if (querySnapshot.docs.isNotEmpty) {
+        // Delete the document(s) found in the query results
+        for (var documentSnapshot in querySnapshot.docs) {
+          await documentSnapshot.reference.delete();
+        }
+        log('Document(s) with the image link deleted successfully.');
+
+        
+      } else {
+        log('No document found with the provided image link.');
+      }
+    } catch (e) {
+      log('Error deleting document: $e');
+    }
+  }
 }

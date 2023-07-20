@@ -1,8 +1,5 @@
 import 'package:event_management/screens/bookings/widgets/works_card.dart';
 import 'package:flutter/material.dart';
-
-import '../../../const/color.dart';
-
 class ScreenOwer extends StatefulWidget {
   const ScreenOwer({super.key});
 
@@ -65,7 +62,7 @@ class _ScreenOwerState extends State<ScreenOwer>
         //   ),
         // ),
         Expanded(
-          child: WidgetCardWorks(),
+          child: WidgetCardWorks(isOver: true),
           // child: TabBarView(controller: tabController, children: const [
           //   SizedBox(
           //     child: Center(
