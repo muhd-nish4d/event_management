@@ -89,7 +89,9 @@ class PostCard extends StatelessWidget {
                               return [
                                 PopupMenuItem(
                                   child: const Text('Delete'),
-                                  onTap: () {},
+                                  onTap: () {
+                                    Utils.deletePost(postDetails!.imagePath!);
+                                  },
                                 )
                               ];
                             },

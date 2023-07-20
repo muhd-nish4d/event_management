@@ -186,7 +186,7 @@ class Utils {
     try {
       // Create a query to find the document with the matching image link
       var querySnapshot = await FirebaseFirestore.instance
-          .collection('post')
+          .collection('posts')
           .where('imagePath', isEqualTo: imageLink)
           .get();
 
@@ -198,7 +198,7 @@ class Utils {
         }
         log('Document(s) with the image link deleted successfully.');
 
-        
+
       } else {
         log('No document found with the provided image link.');
       }

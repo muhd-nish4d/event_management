@@ -30,9 +30,8 @@ class WidgetProfessionsPosts extends StatelessWidget {
               .where((element) => element['creatorId'] == user!.uid);
 
           return eachUserData!.isEmpty
-              ? const Text('No Posts')
+              ? const Center(child: Text('No Posts'))
               : GridView.builder(
-                
                   padding: const EdgeInsets.all(5),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
