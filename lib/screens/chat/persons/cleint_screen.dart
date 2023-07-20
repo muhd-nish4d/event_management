@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:event_management/const/sizes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,8 +13,9 @@ import '../../../widgets/circular_progress_indicator.dart';
 import '../person_chat/chatting_screen.dart';
 
 class CleintsLists extends StatelessWidget {
-  const CleintsLists({super.key, required this.userType});
+  CleintsLists({super.key, required this.userType});
   final String userType;
+  final String currnetUse = FirebaseAuth.instance.currentUser?.uid ?? '';
 
   @override
   Widget build(BuildContext context) {
@@ -27,46 +29,47 @@ class CleintsLists extends StatelessWidget {
           return ListView.builder(
             itemBuilder: (context, index) {
               UserModel user = state.allProfessions[index];
-              return ListTile(
-                leading: user.profileImage == null
-                    ? const CircleAvatar(
-                        child: Icon(Icons.person),
-                      )
-                    : user.profileImage == ''
-                        ? const CircleAvatar(
-                            child: Icon(Icons.person),
-                          )
-                        : ClipRRect(
-                            borderRadius: BorderRadius.circular(50),
-                            child: CachedNetworkImage(
-                                placeholder: (context, url) =>
-                                    const CircleAvatar(
-                                      child: Icon(Icons.person),
-                                    ),
-                                fit: BoxFit.cover,
-                                width: 50,
-                                height: 50,
-                                imageUrl: user.profileImage!),
-                          ),
-                title: Text(user.companyName ?? 'Company Name'),
-                subtitle: Row(
-                  children: [
-                    Text(user.profession ?? 'Profession'),
-                    itemsGapWidth,
-                    const Text("'message'")
-                  ],
-                ),
-                // trailing: Text('0${index + 1} / Jan / 200$index'),
-                onTap: () {
-                  // String? currentUser = auth.currentUser?.uid;
-                  String roomId = Utils.createChatRoomId(resp: user.uid!);
-                  log(roomId);
-                  // user.uid!, currentUser!);
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>
-                          ScreenChat(user: user, chatRoomId: roomId)));
-                },
-              );
+              return user.uid == currnetUse
+                  ? const SizedBox()
+                  : ListTile(
+                      leading: user.profileImage == null
+                          ? const CircleAvatar(
+                              child: Icon(Icons.person),
+                            )
+                          : user.profileImage == ''
+                              ? const CircleAvatar(
+                                  child: Icon(Icons.person),
+                                )
+                              : ClipRRect(
+                                  borderRadius: BorderRadius.circular(50),
+                                  child: CachedNetworkImage(
+                                      placeholder: (context, url) =>
+                                          const CircleAvatar(
+                                            child: Icon(Icons.person),
+                                          ),
+                                      fit: BoxFit.cover,
+                                      width: 50,
+                                      height: 50,
+                                      imageUrl: user.profileImage!),
+                                ),
+                      title: Text(user.companyName ?? 'Company Name'),
+                      subtitle: Row(
+                        children: [
+                          Text(user.profession ?? 'Profession'),
+                          itemsGapWidth,
+                          // const Text("'message'")
+                        ],
+                      ),
+                      onTap: () {
+                        // String? currentUser = auth.currentUser?.uid;
+                        String roomId = Utils.createChatRoomId(resp: user.uid!);
+                        log(roomId);
+                        // user.uid!, currentUser!);
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                ScreenChat(user: user, chatRoomId: roomId)));
+                      },
+                    );
             },
             itemCount: state.allProfessions.length,
           );
@@ -99,7 +102,7 @@ class CleintsLists extends StatelessWidget {
                                 imageUrl: userVal.profileImage!),
                           ),
                 title: Text(userVal.ownerName ?? 'Company Name'),
-                subtitle: const Text("'message'"),
+                // subtitle: const Text("'message'"),
                 //  trailing: Text('0${index + 1} / Jan / 200$index'),
                 onTap: () {
                   // String? currentUser = auth.currentUser?.uid;

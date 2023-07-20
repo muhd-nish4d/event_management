@@ -169,7 +169,7 @@ class PostCard extends StatelessWidget {
                                   : const Icon(Icons.favorite_outline_sharp));
                         }),
                     Text(
-                      'Total Like ${postDetails?.likeBy!.length}',
+                      'Likes ${postDetails?.likeBy!.length}',
                       style: const TextStyle(color: grey),
                     ),
                     const Spacer(),

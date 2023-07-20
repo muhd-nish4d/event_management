@@ -35,7 +35,10 @@ class WidgetChatAppBarTitle extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(userDetails.companyName ?? 'Company Name',
+            Text(
+                userDetails.userType == UserType.profession
+                    ? userDetails.companyName ?? 'Company Name'
+                    : userDetails.ownerName ?? 'Owner Name',
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, color: white)),
             // Row(

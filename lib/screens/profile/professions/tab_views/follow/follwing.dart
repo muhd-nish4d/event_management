@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:event_management/const/color.dart';
 import 'package:event_management/widgets/circular_progress_indicator.dart';
 import 'package:event_management/widgets/user_listtile.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,7 +24,14 @@ class WidgetProfessionsFollow extends StatelessWidget {
                 future: getUserDetails(followers[index]),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CustomProgressIndicator();
+                    return Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Container(
+                        width: double.infinity,
+                        height: 50,
+                        color: Colors.indigo[100],
+                      ),
+                    );
                   } else if (snapshot.hasData) {
                     UserModel? user = snapshot.data;
                     return UsersTile(userDetails: user);

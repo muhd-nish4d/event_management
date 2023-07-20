@@ -58,6 +58,8 @@ class ScreenChat extends StatelessWidget {
 
                       // final sender = message['sender'];
                       // final text = message['message'];
+                      var dateTimeco = DateTime.parse(message.dateTime!);
+
                       return Align(
                         alignment: message.sender == auth.currentUser?.uid
                             ? Alignment.centerRight
@@ -68,13 +70,20 @@ class ScreenChat extends StatelessWidget {
                                 : Colors.grey[50],
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                message.message!,
-                                style: TextStyle(
-                                    color:
-                                        message.sender == auth.currentUser?.uid
-                                            ? white
-                                            : black),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    message.message!,
+                                    style: const TextStyle(color: black),
+                                  ),
+                                  Text(
+                                    '${dateTimeco.hour}:${dateTimeco.minute}',
+                                    style: const TextStyle(
+                                        color: white, fontSize: 10),
+                                  )
+                                ],
                               ),
                             )),
                       );
@@ -226,10 +235,10 @@ class ScreenChat extends StatelessWidget {
     if (messageText.isNotEmpty) {
       try {
         final newMessage = ChatMessage(
-          sender: currentUser,
-          message: messageText,
-          timeStamp: DateTime.now().microsecondsSinceEpoch.toString(),
-        );
+            sender: currentUser,
+            message: messageText,
+            timeStamp: DateTime.now().microsecondsSinceEpoch.toString(),
+            dateTime: DateTime.now().toString());
         await firebaseFirestore
             .collection('chatRoom')
             .doc(chatRoomId)

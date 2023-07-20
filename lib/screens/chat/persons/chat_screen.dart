@@ -49,7 +49,8 @@ class _ScreenChatPersonsState extends State<ScreenChatPersons> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: Icon(CupertinoIcons.back, color: primaryColor)),
+                            icon:
+                                Icon(CupertinoIcons.back, color: primaryColor)),
                         const Expanded(child: CupertinoSearchTextField()),
                         itemsGapWidth
                       ]),
@@ -57,7 +58,7 @@ class _ScreenChatPersonsState extends State<ScreenChatPersons> {
                           height: 50,
                           child: TabBar(
                               tabs: [Text('Professions'), Text('Cleints')])),
-                      const Expanded(
+                      Expanded(
                           child: TabBarView(children: [
                         CleintsLists(userType: 'profession'),
                         CleintsLists(userType: 'cleint')
@@ -71,12 +72,12 @@ class _ScreenChatPersonsState extends State<ScreenChatPersons> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: Icon(CupertinoIcons.back, color: primaryColor)),
+                            icon:
+                                Icon(CupertinoIcons.back, color: primaryColor)),
                         const Expanded(child: CupertinoSearchTextField()),
                         itemsGapWidth
                       ]),
-                      const Expanded(
-                          child: CleintsLists(userType: 'profession'))
+                      Expanded(child: CleintsLists(userType: 'profession'))
                     ],
                   )),
       ),

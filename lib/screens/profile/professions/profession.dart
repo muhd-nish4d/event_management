@@ -187,7 +187,7 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
                     followers: widget.userDetails?.follow ?? []),
                 WidgetProfessionsFollow(
                     followers: widget.userDetails?.following ?? []),
-                const WidgetBookedWorks()
+                 WidgetBookedWorks(professionDetais: currentUser,)
               ]),
         //  ValueListenableBuilder(
         //   valueListenable: tabController,
