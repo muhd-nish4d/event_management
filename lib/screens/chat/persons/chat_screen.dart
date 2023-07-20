@@ -21,7 +21,7 @@ class _ScreenChatPersonsState extends State<ScreenChatPersons> {
   late final String userType;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     FirebaseFirestore.instance
         .collection('users')
         .doc(currentUser)
@@ -37,6 +37,11 @@ class _ScreenChatPersonsState extends State<ScreenChatPersons> {
         log('Document does not exist');
       }
     });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -51,13 +56,14 @@ class _ScreenChatPersonsState extends State<ScreenChatPersons> {
                             },
                             icon:
                                 Icon(CupertinoIcons.back, color: primaryColor)),
-                        const Expanded(child: CupertinoSearchTextField()),
-                        itemsGapWidth
-                      ]),
-                      const SizedBox(
-                          height: 50,
+                        // const Expanded(child: CupertinoSearchTextField()),
+                        // itemsGapWidth
+                        const Expanded(
+                          // height: 50,
                           child: TabBar(
                               tabs: [Text('Professions'), Text('Cleints')])),
+                      ]),
+                      
                       Expanded(
                           child: TabBarView(children: [
                         CleintsLists(userType: 'profession'),
