@@ -1,10 +1,8 @@
-import 'package:event_management/Bloc/fillup/fillup_bloc.dart';
 import 'package:event_management/const/color.dart';
 import 'package:event_management/screens/home/home_screen.dart';
 import 'package:event_management/screens/professions/professions.dart';
 import 'package:event_management/screens/profile/user_profile.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../model/user_model.dart';
@@ -32,7 +30,7 @@ class ScreenMain extends StatelessWidget {
               return SafeArea(child: screens[value]);
             }),
         bottomNavigationBar: Card(
-          margin: EdgeInsets.all(10),
+          margin: const EdgeInsets.all(10),
           color: seconderyColor,
           child: Padding(
             padding: const EdgeInsets.all(8.0),

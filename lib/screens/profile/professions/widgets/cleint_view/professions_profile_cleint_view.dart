@@ -106,7 +106,7 @@ class ProfessionsProfileUserView extends StatelessWidget {
                                     Column(
                                       children: [
                                         Text(datas.follow!.length.toString()),
-                                        Text('Followers')
+                                        const Text('Followers')
                                       ],
                                     ),
                                     const VerticalDivider(),

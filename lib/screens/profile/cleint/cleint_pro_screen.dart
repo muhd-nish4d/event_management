@@ -6,10 +6,8 @@ import 'package:event_management/screens/profile/professions/tab_views/follow/fo
 import 'package:event_management/screens/settings/settigs_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../Bloc/fillup/fillup_bloc.dart';
 import '../../../const/color.dart';
+import 'dart:developer';
 
 class ScreenCleintProfile extends StatelessWidget {
   ScreenCleintProfile({super.key, this.user});
@@ -215,12 +213,12 @@ class ScreenCleintProfile extends StatelessWidget {
         return UserModel.formMap(userData);
       } else {
         // Document with the provided userId doesn't exist
-        print("User data not found.");
+        log("User data not found.");
         return null;
       }
     } catch (e) {
       // Error fetching user data
-      print("Error fetching user data: $e");
+      log("Error fetching user data: $e");
       return null;
     }
   }

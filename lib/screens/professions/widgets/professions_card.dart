@@ -225,7 +225,7 @@ class ProfessionsCard extends StatelessWidget {
                                                     isCleintView: true,
                                                     userDetails: professions)));
                                   },
-                                  child: Text("View your's")),
+                                  child: const Text("View your's")),
                             )
                     ],
                   ),

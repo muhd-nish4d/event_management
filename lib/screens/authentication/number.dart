@@ -15,7 +15,8 @@ import 'otp.dart';
 class ScreenLogin extends StatelessWidget {
   ScreenLogin({super.key});
 
-  TextEditingController countryController = TextEditingController(text: '+91');
+  final TextEditingController countryController =
+      TextEditingController(text: '+91');
   // TextEditingController phoneController = TextEditingController();
   String phoneNumber = '';
 
@@ -95,7 +96,7 @@ class ScreenLogin extends StatelessWidget {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => ScreenOTP(
                                   phoneNumber:
-                                      "${countryController.text + phoneNumber}")));
+                                      countryController.text + phoneNumber)));
                         } else if (state is ErrorState) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text(state.error)),
@@ -123,7 +124,7 @@ class ScreenLogin extends StatelessWidget {
                             } else {
                               BlocProvider.of<LoginBloc>(context).add(
                                   PhoneNumberSubmittedEvent(
-                                      "${countryController.text + phoneNumber}"));
+                                      countryController.text + phoneNumber));
                             }
 
                             // BlocProvider.of<LoginBloc>(context).sentOtp(
@@ -150,7 +151,7 @@ class ScreenLogin extends StatelessWidget {
                         ));
                       });
                     },
-                    child: Text('As a Guest'))
+                    child:const Text('As a Guest'))
               ],
             ),
           ),
@@ -162,12 +163,13 @@ class ScreenLogin extends StatelessWidget {
   Future<void> _signInAsGuest() async {
     final FirebaseAuth auth = FirebaseAuth.instance;
     try {
-      UserCredential userCredential = await auth.signInAnonymously();
+      // UserCredential userCredential = 
+      await auth.signInAnonymously();
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
-        print('Signed in with temporary account: ${user.uid}');
+        log('Signed in with temporary account: ${user.uid}');
       } else {
-        print('Not signed in');
+        log('Not signed in');
       }
       // User is now logged in as a guest. You can handle the navigation to the main app screen here.
     } catch (e) {

@@ -1,16 +1,12 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:event_management/Bloc/fillup/fillup_bloc.dart';
 import 'package:event_management/Bloc/log/login_bloc.dart';
-import 'package:event_management/const/sizes.dart';
 import 'package:event_management/screens/authentication/number.dart';
 import 'package:event_management/screens/bottum_nav.dart';
 import 'package:event_management/screens/user/user_chose.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lottie/lottie.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../const/color.dart';
 import '../../const/images.dart';

@@ -1,10 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:event_management/const/color.dart';
-import 'package:event_management/widgets/circular_progress_indicator.dart';
 import 'package:event_management/widgets/user_listtile.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../model/user_model.dart';
@@ -60,7 +57,7 @@ class WidgetProfessionsFollow extends StatelessWidget {
       }
     } catch (e) {
       // Error occurred
-      print('Error fetching user details: $e');
+      log('Error fetching user details: $e');
       return null;
     }
   }

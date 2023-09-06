@@ -1,10 +1,8 @@
 import 'dart:io';
 
 import 'package:event_management/Bloc/upload_image/post_image_bloc.dart';
-import 'package:event_management/const/color.dart';
 import 'package:event_management/model/post_model.dart';
 import 'package:event_management/screens/bottum_nav.dart';
-import 'package:event_management/screens/chat/person_chat/widgets/appbar.dart';
 import 'package:event_management/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

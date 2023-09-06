@@ -42,15 +42,15 @@ class PostCard extends StatelessWidget {
                       width: 10,
                     ),
                     userData!.profileImage == null
-                        ? const CircleAvatar(
-                            backgroundColor: grey,
-                            child: Icon(
+                        ? CircleAvatar(
+                            backgroundColor: Colors.purple[100],
+                            child: const Icon(
                               Icons.person,
                               color: Colors.white,
                             ),
                           )
                         : CircleAvatar(
-                            backgroundColor: grey,
+                            backgroundColor: Colors.purple[100],
                             backgroundImage:
                                 NetworkImage(userData!.profileImage!),
                           ),

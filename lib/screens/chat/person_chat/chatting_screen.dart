@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_management/const/color.dart';
 import 'package:event_management/model/chat_model.dart';
-import 'package:event_management/screens/chat/person_chat/model/massege_model.dart';
 import 'package:event_management/screens/chat/person_chat/widgets/appbar.dart';
 import 'package:event_management/screens/chat/person_chat/widgets/booking_button.dart';
 import 'package:event_management/screens/chat/person_chat/widgets/event_req_card.dart';
@@ -19,7 +18,7 @@ class ScreenChat extends StatelessWidget {
   final UserModel user;
   final String? chatRoomId;
 
-  TextEditingController chatMessageController = TextEditingController();
+  final TextEditingController chatMessageController = TextEditingController();
 
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 

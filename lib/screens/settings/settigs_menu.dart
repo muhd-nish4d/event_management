@@ -108,9 +108,9 @@ class ScreenSettingsMenu extends StatelessWidget {
 class SettingsTiles extends StatelessWidget {
   final String text;
   final IconData icon;
-  bool isRed;
+  final bool isRed;
   final void Function()? onTap;
-  SettingsTiles(
+  const SettingsTiles(
       {super.key,
       required this.text,
       required this.icon,

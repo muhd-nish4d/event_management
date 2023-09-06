@@ -9,7 +9,7 @@ import '../../model/user_model.dart';
 ValueNotifier<int> currentSelectedScreen = ValueNotifier(0);
 
 class ScreenBookings extends StatelessWidget {
-  ScreenBookings({super.key, required this.userId});
+ const ScreenBookings({super.key, required this.userId});
   final UserModel userId;
 
   @override

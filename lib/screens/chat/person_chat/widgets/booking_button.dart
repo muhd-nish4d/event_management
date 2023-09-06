@@ -105,9 +105,10 @@ class BookingEventButton extends StatelessWidget {
           actions: <Widget>[
             TextButton(
               child: const Text('Send Request'),
-              onPressed: () async {
-                await acceptButtonCliked();
-                Navigator.of(context).pop();
+              onPressed: () {
+                acceptButtonCliked().then((value) {
+                  Navigator.of(context).pop();
+                });
               },
             ),
           ],

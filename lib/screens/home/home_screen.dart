@@ -3,7 +3,6 @@ import 'package:event_management/model/post_model.dart';
 import 'package:event_management/model/user_model.dart';
 import 'package:event_management/screens/chat/persons/chat_screen.dart';
 import 'package:event_management/screens/home/widgets/pro_post_card.dart';
-import 'package:event_management/screens/notification/notification_screen.dart';
 import 'package:event_management/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -21,21 +20,22 @@ class ScreenHome extends StatelessWidget {
             itHaveBack: false,
             trailing: Row(
               children: [
-                // IconButton(
-                //     onPressed: () {
-                //       Navigator.push(
-                //           context,
-                //           MaterialPageRoute(
-                //               builder: (context) =>
-                //                   const ScreenNotifiaction()));
-                //     },
-                //     icon: const Icon(Icons.notifications)),
+                IconButton(
+                    onPressed: () {
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) =>
+                      //             const ScreenNotifiaction()));
+                      
+                    },
+                    icon: const Icon(Icons.notifications)),
                 IconButton(
                     onPressed: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ScreenChatPersons()));
+                              builder: (context) => const ScreenChatPersons()));
                     },
                     icon: const Icon(Icons.chat_bubble))
               ],
