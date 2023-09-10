@@ -16,6 +16,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../Bloc/fillup/fillup_bloc.dart';
 import '../../../const/color.dart';
 import '../../../const/sizes.dart';
+import '../../upload/selected_file.dart';
 
 class ScreenProfessionsProfile extends StatefulWidget {
   final bool isCleintView;
@@ -49,7 +50,7 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              backgroundColor: seconderyColor,
+              backgroundColor: white,
               automaticallyImplyLeading: false,
               actions: [
                 widget.isCleintView
@@ -104,11 +105,16 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
                         children: [
                           IconButton(
                               onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ScreenFileShowing()));
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) =>
+                                //             const ScreenFileShowing()));
+                                Utils.getImageFileImage().then((value) {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => ScreenSelectedFile(
+                                          imagePath: value)));
+                                });
                               },
                               icon: const Icon(Icons.upload)),
                           IconButton(
@@ -132,9 +138,12 @@ class _ScreenProfessionsProfileState extends State<ScreenProfessionsProfile>
               pinned: false,
             ),
             SliverToBoxAdapter(
-              child: ProfessionsProfileCard(
-                  isCleintView: widget.isCleintView,
-                  profession: widget.userDetails!),
+              child: Hero(
+                tag: 'Pro-Card${widget.userDetails!.uid}',
+                child: ProfessionsProfileCard(
+                    isCleintView: widget.isCleintView,
+                    profession: widget.userDetails!),
+              ),
             ),
             SliverToBoxAdapter(
               child: DefaultTabController(

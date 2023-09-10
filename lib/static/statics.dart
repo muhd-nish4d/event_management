@@ -14,10 +14,10 @@ class Utils {
     return const Uuid().v4().toString();
   }
 
-  static Future<XFile> getImageFileImage() async {
+  static Future<String> getImageFileImage() async {
     final pickedImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-    return pickedImage!;
+    return pickedImage!.path;
   }
 
   static void followUser(String userId) {

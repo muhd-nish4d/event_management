@@ -47,7 +47,7 @@ class ScreenOTP extends StatelessWidget {
     return Scaffold(
         body: SafeArea(
       child: WidgetBackGround(
-      image: backgroundImage,
+        image: backgroundImage,
         child: Center(
           child: SingleChildScrollView(
             child: Column(
@@ -56,8 +56,8 @@ class ScreenOTP extends StatelessWidget {
               children: [
                 SizedBox(
                     width: phoneSize.width * .5,
-                    child:
-                        Lottie.asset('assets/lottie/otp_verification_lot.json')),
+                    child: Lottie.asset(
+                        'assets/lottie/otp_verification_lot.json')),
                 const SizedBox(height: 10),
                 const Text(
                   "Phone Verification",
@@ -88,42 +88,46 @@ class ScreenOTP extends StatelessWidget {
                           // BlocProvider.of<FillupBloc>(context).add(FillUpInitialEvent());
                           Navigator.of(context)
                               .popUntil((route) => route.isFirst);
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(
-                              builder: (context) => ScreenMain()));
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => ScreenMain()));
                         } else if (state is LoggedInState) {
                           Navigator.of(context)
                               .popUntil((route) => route.isFirst);
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(
                             builder: (context) => const ScreenUserChose(),
                           ));
                         } else if (state is ErrorState) {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(SnackBar(content: Text(state.error)));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(state.error)));
                         }
                       },
                       builder: (context, state) {
                         if (state is LogLoadingState) {
-                          SizedBox(
-                            width: phoneSize.width * .3,
+                          return SizedBox(
+                            width: phoneSize.width * .2,
+                            height: phoneSize.width * .2,
                             child: LottieBuilder.asset(
                                 'assets/lottie/loading_plane_lot.json'),
                           );
+                        } else {
+                          return ElevatedButton(
+                            onPressed: () async {
+                              BlocProvider.of<LoginBloc>(context)
+                                  .add(OtpVerificationEvent(code));
+                              // BlocProvider.of<LoginBloc>(context).verifyOtp(code);
+                            },
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.indigo[400],
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10))),
+                            child: const Text(
+                              'Verify Phone Number',
+                              style: TextStyle(color: white),
+                            ),
+                          );
                         }
-                        return ElevatedButton(
-                          onPressed: () async {
-                            BlocProvider.of<LoginBloc>(context)
-                                .add(OtpVerificationEvent(code));
-                            // BlocProvider.of<LoginBloc>(context).verifyOtp(code);
-                          },
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.indigo[400],
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10))),
-                          child: const Text(
-                            'Verify Phone Number',
-                            style: TextStyle(color: white),
-                          ),
-                        );
                       },
                     ),
                   ),

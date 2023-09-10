@@ -8,37 +8,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'cleint_screen.dart';
 
-class ScreenChatPersons extends StatefulWidget {
-  const ScreenChatPersons({super.key});
+class ScreenChatPersons extends StatelessWidget {
+  ScreenChatPersons({super.key, required this.userType});
 
-  @override
-  State<ScreenChatPersons> createState() => _ScreenChatPersonsState();
-}
-
-class _ScreenChatPersonsState extends State<ScreenChatPersons> {
   final String currentUser = FirebaseAuth.instance.currentUser?.uid ?? '';
 
-  late final String userType;
-
-  @override
-  void initState() {
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(currentUser)
-        .get()
-        .then((value) {
-      if (value.exists) {
-        // Document exists, retrieve the field value
-        setState(() {
-          userType = value.get('userType');
-        });
-        log('Field value: $userType');
-      } else {
-        log('Document does not exist');
-      }
-    });
-    super.initState();
-  }
+  final String userType;
 
   @override
   Widget build(BuildContext context) {
@@ -59,11 +34,10 @@ class _ScreenChatPersonsState extends State<ScreenChatPersons> {
                         // const Expanded(child: CupertinoSearchTextField()),
                         // itemsGapWidth
                         const Expanded(
-                          // height: 50,
-                          child: TabBar(
-                              tabs: [Text('Professions'), Text('Cleints')])),
+                            // height: 50,
+                            child: TabBar(
+                                tabs: [Text('Professions'), Text('Cleints')])),
                       ]),
-                      
                       Expanded(
                           child: TabBarView(children: [
                         CleintsLists(userType: 'profession'),

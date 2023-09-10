@@ -3,6 +3,7 @@ import 'package:event_management/Bloc/fillup/fillup_bloc.dart';
 import 'package:event_management/Bloc/image_fetch/image_fetch_bloc.dart';
 import 'package:event_management/Bloc/upload_image/post_image_bloc.dart';
 import 'package:event_management/bloc/follow_unfollow/followunfollow_bloc.dart';
+import 'package:event_management/screens/splash/animated_splash_screen.dart';
 import 'package:event_management/screens/splash/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    precacheImage(const AssetImage('assets/image/appLogoEH.jpg'), context);
     return MultiBlocProvider(
       providers: [
         BlocProvider<LoginBloc>.value(value: LoginBloc()),
@@ -37,12 +39,12 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Event Management',
         theme: ThemeData(
-          scaffoldBackgroundColor: seconderyColor,
-          textTheme: GoogleFonts.rubikTextTheme(),
+          scaffoldBackgroundColor: white,
+          textTheme: GoogleFonts.salsaTextTheme(),
           useMaterial3: true,
           primarySwatch: Colors.orange,
         ),
-        home: const ScreenSplash(),
+        home: MyCustomSplashScreen(),
         // home: const ScreenUserChose(),
       ),
     );

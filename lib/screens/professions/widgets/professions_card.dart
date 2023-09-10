@@ -55,14 +55,20 @@ class ProfessionsCard extends StatelessWidget {
                                 const SizedBox(
                                   height: 100,
                                 ),
-                                Text(professions.ownerName ?? 'Owner Name'),
+                                Text(professions.ownerName ?? 'Owner Name',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis),
                                 Text(
                                   professions.companyName ?? 'Company Name',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18),
                                 ),
-                                Text(professions.profession ?? 'Profession'),
+                                Text(professions.profession ?? 'Profession',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis),
                                 // Row(
                                 //   children: const [
                                 //     Icon(
@@ -177,40 +183,56 @@ class ProfessionsCard extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      final roomId = Utils.createChatRoomId(
-                                          resp: professions.uid!);
-                                      log(roomId);
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => ScreenChat(
-                                                    user: professions,
-                                                    chatRoomId: roomId,
-                                                  )));
-                                    },
-                                    child: const Text('Chat'),
+                                  Expanded(
+                                    flex: 1,
+                                    child: TextButton(
+                                      onPressed: () {
+                                        final roomId = Utils.createChatRoomId(
+                                            resp: professions.uid!);
+                                        log(roomId);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ScreenChat(
+                                                      user: professions,
+                                                      chatRoomId: roomId,
+                                                    )));
+                                      },
+                                      child: const SizedBox(
+                                          width: double.infinity,
+                                          height: double.infinity,
+                                          child: FittedBox(
+                                              fit: BoxFit.contain,
+                                              child: Text("Chat"))),
+                                    ),
                                   ),
                                   const VerticalDivider(),
                                   ValueListenableBuilder(
                                       valueListenable: isFollowed,
                                       builder: (context, value, child) {
-                                        return TextButton(
-                                          onPressed: () {
-                                            if (value) {
-                                              // Perform unfollow action
-                                              Utils.unfollowUser(
-                                                  professions.uid!);
-                                            } else {
-                                              // Perform follow action
-                                              Utils.followUser(
-                                                  professions.uid!);
-                                            }
-                                          },
-                                          child: Text(
-                                              value ? 'Unfollow' : 'Follow'),
-                                        );
+                                        return Expanded(
+                                            flex: 1,
+                                            child: TextButton(
+                                                onPressed: () {
+                                                  if (value) {
+                                                    // Perform unfollow action
+                                                    Utils.unfollowUser(
+                                                        professions.uid!);
+                                                  } else {
+                                                    // Perform follow action
+                                                    Utils.followUser(
+                                                        professions.uid!);
+                                                  }
+                                                },
+                                                child: SizedBox(
+                                                    width: double.infinity,
+                                                    height: double.infinity,
+                                                    child: FittedBox(
+                                                        fit: BoxFit.contain,
+                                                        child: Text(value
+                                                            ? 'Unfollow'
+                                                            : 'Follow')))));
                                       })
                                 ],
                               ),
@@ -225,7 +247,12 @@ class ProfessionsCard extends StatelessWidget {
                                                     isCleintView: true,
                                                     userDetails: professions)));
                                   },
-                                  child: const Text("View your's")),
+                                  child: const SizedBox(
+                                      width: double.infinity,
+                                      height: double.infinity,
+                                      child: FittedBox(
+                                          fit: BoxFit.contain,
+                                          child: Text("View your's")))),
                             )
                     ],
                   ),
