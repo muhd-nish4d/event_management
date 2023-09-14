@@ -7,9 +7,11 @@ class EventBookingReq {
   String? senderId;
   final String? recipientId;
   final String? status;
+  final Map<String, dynamic>? feedback;
 
   EventBookingReq(
-      {required this.partyType,
+      {required this.feedback,
+      required this.partyType,
       required this.location,
       required this.amount,
       required this.aboutParty,
@@ -20,14 +22,16 @@ class EventBookingReq {
 
   factory EventBookingReq.fromMap(Map<String, dynamic> map) {
     return EventBookingReq(
-        partyType: map['partyType'],
-        location: map['place'],
-        amount: map['amount'],
-        aboutParty: map['about'],
-        date: map['date'],
-        senderId: map['senderId'],
-        recipientId: map['recipientId'],
-        status: map['status']);
+      feedback: map['feedback'],
+      partyType: map['partyType'],
+      location: map['place'],
+      amount: map['amount'],
+      aboutParty: map['about'],
+      date: map['date'],
+      senderId: map['senderId'],
+      recipientId: map['recipientId'],
+      status: map['status'],
+    );
   }
 
   Map<String, dynamic> toMap() {
@@ -35,11 +39,12 @@ class EventBookingReq {
       'partyType': partyType,
       'place': location,
       'amount': amount,
-      'about' : aboutParty,
+      'about': aboutParty,
       'date': date,
       'senderId': senderId,
       'recipientId': recipientId,
-      'status': status
+      'status': status,
+      'feedback': feedback
     };
   }
 }

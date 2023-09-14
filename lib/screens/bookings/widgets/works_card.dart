@@ -1,18 +1,23 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:event_management/const/color.dart';
+import 'package:event_management/const/sizes.dart';
+import 'package:event_management/screens/bookings/widgets/bottom_sheet.dart';
 import 'package:event_management/static/statics.dart';
 import 'package:event_management/widgets/circular_progress_indicator.dart';
+import 'package:event_management/widgets/raiting_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../model/event_reqbooking_model.dart';
 
 class WidgetCardWorks extends StatelessWidget {
-  const WidgetCardWorks(
+  WidgetCardWorks(
       {super.key, required this.isOver, required this.isProfessioner});
   final bool isOver;
   final bool isProfessioner;
+  final String currentUser = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -27,30 +32,74 @@ class WidgetCardWorks extends StatelessWidget {
               final request = snapshot.data![index];
               final String? date = Utils.dateTimeConvert(request.date!);
               final dateforOver = DateTime.parse(request.date!);
-
+              double? feedbackRating;
+              if (request.feedback != null) {
+                feedbackRating = request.feedback!['rating'];
+              }
               return isOver
                   ? DateTime.now().isAfter(dateforOver)
                       ? Card(
+                          color: white,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)),
                           child: Theme(
                             data: Theme.of(context)
                                 .copyWith(dividerColor: Colors.transparent),
                             child: ExpansionTile(
-                              backgroundColor: Colors.red[50],
+                              backgroundColor: seconderyColor,
                               childrenPadding: const EdgeInsets.all(10),
                               expandedAlignment: Alignment.topLeft,
                               expandedCrossAxisAlignment:
                                   CrossAxisAlignment.start,
-                              leading:
-                                  const CircleAvatar(child: Icon(Icons.person)),
-                              title: Text(request.partyType ?? 'Party'),
+                              // leading:
+                              //     const CircleAvatar(child: Icon(Icons.person)),
+                              title: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(request.partyType ?? 'Party'),
+                                  request.senderId == currentUser
+                                      ? TextButton(
+                                          onPressed: () {
+                                            showFeedbackBox(context, request);
+                                          },
+                                          child: Text(request.feedback == null
+                                              ? 'Add Feedback'
+                                              : 'Edit Feedback'))
+                                      : request.feedback != null
+                                          ? RatingContainer(
+                                              feedbackRating: feedbackRating!)
+                                          : const SizedBox()
+                                ],
+                              ),
                               children: [
                                 Text(date ?? 'Date'),
                                 Text(request.location ?? 'Location'),
                                 // Text('Event type'),
                                 Text(request.partyType ?? 'Event bio'),
                                 Text(request.amount ?? 'Amount'),
+                                request.feedback != null
+                                    ? Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          request.senderId == currentUser
+                                              ? RatingContainer(
+                                                  feedbackRating:
+                                                      feedbackRating!)
+                                              : const Row(
+                                                  children: [
+                                                    Expanded(child: Divider()),
+                                                    itemsGapWidth,
+                                                    Text('Feedback from User'),
+                                                    itemsGapWidth,
+                                                    Expanded(child: Divider()),
+                                                  ],
+                                                ),
+                                          Text(request.feedback!['feedback'])
+                                        ],
+                                      )
+                                    : const SizedBox()
                               ],
                             ),
                           ),
@@ -58,19 +107,20 @@ class WidgetCardWorks extends StatelessWidget {
                       : const SizedBox()
                   : DateTime.now().isBefore(dateforOver)
                       ? Card(
+                          color: white,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)),
                           child: Theme(
                             data: Theme.of(context)
                                 .copyWith(dividerColor: Colors.transparent),
                             child: ExpansionTile(
-                              backgroundColor: Colors.red[50],
+                              backgroundColor: seconderyColor,
                               childrenPadding: const EdgeInsets.all(10),
                               expandedAlignment: Alignment.topLeft,
                               expandedCrossAxisAlignment:
                                   CrossAxisAlignment.start,
-                              leading:
-                                  const CircleAvatar(child: Icon(Icons.person)),
+                              // leading:
+                              //     const CircleAvatar(child: Icon(Icons.person)),
                               title: Text(request.partyType ?? 'Party'),
                               children: [
                                 Text(date ?? 'Date'),

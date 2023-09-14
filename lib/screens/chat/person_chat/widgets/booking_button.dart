@@ -123,6 +123,7 @@ class BookingEventButton extends StatelessWidget {
     final location = partyLocationController.text.trim();
     final aboutParty = partyAboutController.text.trim();
     final request = EventBookingReq(
+      feedback: null,
       aboutParty: aboutParty,
       partyType: partyType,
       location: location,
